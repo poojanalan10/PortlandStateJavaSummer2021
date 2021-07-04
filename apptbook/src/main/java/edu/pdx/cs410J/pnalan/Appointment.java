@@ -1,34 +1,49 @@
 package edu.pdx.cs410J.pnalan;
 
 import edu.pdx.cs410J.AbstractAppointment;
+
+import java.text.ParseException;
 import java.util.*;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 import java.util.Date;
 
 public class Appointment extends AbstractAppointment {
-  public final String owner;
-  public final String description;
-  public final Date begin;
-  public final Date end;
+  private final String owner;
+  private final String description;
+  private final String beginTimeString;
+  private final String endTimeString;
+  private Date begin;
+  private Date end;
+  public Appointment(){
+    super();
+    owner = null;
+    description = null;
+    beginTimeString = null;
+    endTimeString = null;
+    begin = null;
+    end = null;
+
+  }
   /**
    * @param owner -  The person who owns the appt book
    * @param description - A description of the appointment
    * @param begin -  When the appt begins (24-hour time)
    * @param end - When the appt ends (24-hour time)
    */
-  public AppointmentBook(String owner,String description,Date begin,Date end){
-    this.owner = owner;
-    this.description = description;
-    this.beginTimeString = begin;
-    this.endTimeString = end;
-    this.begin = convertDateFormat(getBeginTimeString());
-    this.end = convertDateFormat(getEndTimeString());
+  public Appointment(final String[] args){
+    this.owner = args[1];
+    this.description = args[2];
+    this.beginTimeString = args[3];
+    this.endTimeString = args[4];
+    this.begin = convertDateFormat(this.getBeginTimeString());
+    this.end = convertDateFormat(this.getEndTimeString());
     if(begin.after(end)){
       System.err.println("Begin time cannot be greater than or equal to the end time for an appointment!");
-      System.out.exit(1);
+      System.exit(1);
     }
   }
+
   /**
    * returns the owner of the appointment book
    * @return owner
@@ -80,25 +95,25 @@ public class Appointment extends AbstractAppointment {
   }
 
   /**
-   * @param date
+   * @param dateString
    * returns a date formatted according to a particular pattern mentioned in the pattern string variable
    * @return convertedDate
    */
-  String convertDateFormat(Date date){
+  public Date convertDateFormat(String dateString){
     try{
     String pattern = "mm/dd/yyyy hh:mm";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-    String convertedDate = simpleDateFormat.format(date);
+    Date convertedDate = simpleDateFormat.parse(dateString);
     return convertedDate;
     } catch (ParseException e){
         e.printStackTrace();
         System.exit(1);
     }
-
+    return null;
   }
   public double appointmentDuration(){
     double timedifference = getEndTime().getTime() - getBeginTime().getTime();
-    double duration = TimeUnit.MILLISECONDS.toMinutes(timedifference) % 60;
+    double duration = TimeUnit.MILLISECONDS.toMinutes((long) timedifference) % 60;
     return duration;
 
   }
