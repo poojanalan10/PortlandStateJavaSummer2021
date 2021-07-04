@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.pnalan;
 
+import edu.pdx.cs410J.InvokeMainTestCase;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -15,12 +16,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * from <code>Project1IT</code> which is an integration test (and can handle the calls
  * to {@link System#exit(int)} and the like.
  */
-class Project1Test {
+class Project1Test extends InvokeMainTestCase{
 
   @Test
   void readmeCanBeReadAsResource() throws IOException {
     try (
-      InputStream readme = Project1.class.getResourceAsStream("README.txt")
+            InputStream readme = Project1.class.getResourceAsStream("README.txt")
     ) {
       assertThat(readme, not(nullValue()));
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
@@ -28,4 +29,16 @@ class Project1Test {
       assertThat(line, containsString("This is a README file!"));
     }
   }
+  @Test
+    public void invokingMainWithoutArgumentsHasExitCodeOf1(){
+    InvokeMainTestCase.MainMethodResult result = invokeMain(project1Copy.class);
+    assertThat(result.getExitCode(),equalTo(1));
+  }
+    @Test
+      public void invokingMainWithNoArgumentsPrintsMissingArgumentsToStandardError(){
+      InvokeMainTestCase.MainMethodResult result = invokeMain(project1Copy.class);
+      assertThat(result.getTextWrittenToStandardError(),containsString("Missing command line arguments"));
+      assertThat(result.getTextWrittenToStandardError(),containsString(project1Copy.USAGE_MESSAGE));
+    }
+
 }
