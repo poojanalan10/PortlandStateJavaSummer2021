@@ -10,26 +10,39 @@ import java.util.*;
 
 
 public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
+    private String owner;
     private Collection<Appointment> appointments = new ArrayList<>();
     public AppointmentBook(){
-
         super();
     }
-
-    @Override
-    public String getOwnerName() {
-        for(var app : appointments){
-            if(app != null){
-                return app.getOwner();
-            }
-        }
-        return null;
-    }
-
-    public AppointmentBook(Appointment newAppointment){
+    public AppointmentBook(String owner){
         super();
+        this.owner = owner;
+    }
+    public AppointmentBook(String owner,Appointment newAppointment){
+        super();
+        this.owner = owner;
         addAppointment(newAppointment);
     }
+    public AppointmentBook(String owner, AppointmentBook... appBook){
+        super();
+        this.owner = owner;
+        allAppointments(appBook);
+    }
+    @Override
+    public String getOwnerName() {
+        return this.owner;
+    }
+
+    /**
+     * Adds an appointment to the collection of Appointments
+     * @param app - An appointment object
+     */
+    @Override
+    public void addAppointment(Appointment app){
+        this.appointments.add(app);
+    }
+
 
     public void allAppointments(AppointmentBook... appBook){
      for(var app: appBook)   {
@@ -43,23 +56,15 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
      }
 
     /**
-     * Adds an appointment to the collection of Appointments
-     * @param app - An appointment object
-     */
-    @Override
-    public void addAppointment(Appointment app){
-        this.appointments.add(app);
-    }
-
-    /**
      * Returns all the appointments of a owner
      * @return appointments collection
      */
     @Override
-    public Collection<Appointment> getAppointments() {
-      //  Collections.sort(appointments,compareByBeginTime);
+    public Collection<Appointment> getAppointments(){
         return this.appointments;
     }
+
+
 
    /* public static Comparator<Appointment> compareByBeginTime = new Comparator<Appointment>() {
         public int compare(Appointment a, Appointment b) {

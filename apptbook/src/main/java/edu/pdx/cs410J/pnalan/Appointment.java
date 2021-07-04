@@ -9,35 +9,48 @@ import java.util.concurrent.TimeUnit;
 import java.util.Date;
 
 public class Appointment extends AbstractAppointment {
-  private final String owner;
   private final String description;
+  private String beginDate;
+  private String endDate;
   private final String beginTimeString;
   private final String endTimeString;
   private Date begin;
   private Date end;
   public Appointment(){
     super();
-    owner = null;
     description = null;
+    beginDate = null;
     beginTimeString = null;
+    endDate = null;
     endTimeString = null;
     begin = null;
     end = null;
 
   }
   /**
-   * @param owner -  The person who owns the appt book
+   *
    * @param description - A description of the appointment
    * @param begin -  When the appt begins (24-hour time)
    * @param end - When the appt ends (24-hour time)
    */
-  public Appointment(final String[] args){
-    this.owner = args[1];
+  //public Appointment(final String[] args){
+  public Appointment(String description,String beginDate,String beginTimeString,String endDate, String endTimeString){
+   /* this.owner = args[1];
     this.description = args[2];
-    this.beginTimeString = args[3];
-    this.endTimeString = args[4];
-    this.begin = convertDateFormat(this.getBeginTimeString());
-    this.end = convertDateFormat(this.getEndTimeString());
+    this.beginDate = args[3];
+    this.beginTimeString = args[4];
+    this.endDate = args[5];
+    this.endTimeString = args[6];
+    this.begin = convertDateFormat(this.getBeginDate() + " " + this.getBeginTimeString());
+    this.end = convertDateFormat(this.getEndDate() + " " + this.getEndTimeString());*/
+    //this.owner = owner;
+    this.description = description;
+    this.beginDate = beginDate;
+    this.beginTimeString = beginTimeString;
+    this.endDate =endDate;
+    this.endTimeString =endTimeString;
+    this.begin = convertDateFormat(this.getBeginDate() + " " + this.getBeginTimeString());
+    this.end = convertDateFormat(this.getEndDate() + " " + this.getEndTimeString());
     if(begin.after(end)){
       System.err.println("Begin time cannot be greater than or equal to the end time for an appointment!");
       System.exit(1);
@@ -45,12 +58,21 @@ public class Appointment extends AbstractAppointment {
   }
 
   /**
-   * returns the owner of the appointment book
-   * @return owner
+   * returns the begin date of an appointment
+   * @return beginDate
    */
-  public String getOwner(){
-    return this.owner;
+  public String getBeginDate(){
+    return beginDate;
   }
+
+  /**
+   * returns the end date of an appointment
+   * @return endDate
+   */
+  public String getEndDate(){
+    return endDate;
+  }
+
   /**
    * returns the date and begin time of the appointment
    * @return begin
@@ -104,6 +126,7 @@ public class Appointment extends AbstractAppointment {
     String pattern = "mm/dd/yyyy hh:mm";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     Date convertedDate = simpleDateFormat.parse(dateString);
+    System.out.print(convertedDate);
     return convertedDate;
     } catch (ParseException e){
         e.printStackTrace();

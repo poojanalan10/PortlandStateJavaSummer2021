@@ -29,11 +29,6 @@ public class Project1 {
   public static void main(String[] args) {
     List<String> argumentList = Arrays.asList(args);
     List<String> userInput = new ArrayList<>();
-    //String owner = userInput.get(1);
-    //String description = userInput.get(2);
-    //String beginTimeString = userInput.get(3);
-   // String endTimeString = userInput.get(4);
-    //Appointment appointment = new Appointment(args);
     var length = args.length;
 
     if(args.length == 0){
@@ -50,7 +45,7 @@ public class Project1 {
      * CASE 2
      * */
 
-    else if (length <= 6) {
+    else if (length < 7) {
       /**
        * If the user enters a README option but all data is not inputted
        */
@@ -80,14 +75,12 @@ public class Project1 {
        //System.out.println()
       }
 
-
-
+    System.out.println(args[1]);
     if(args.length == 7 & argumentList.contains("-print") & argumentList.indexOf("-print") == 0){
-      Appointment app = new Appointment(args);
-      AppointmentBook appBook = new AppointmentBook(app);
-      //System.out.println(args[1]);
+     // Appointment app = new Appointment(args);
+     // AppointmentBook appBook = new AppointmentBook(app);
       System.out.println("Appointment information");
-      System.out.println(app.toString());
+      //System.out.println(app.toString());
       System.exit(0);
 
     }
