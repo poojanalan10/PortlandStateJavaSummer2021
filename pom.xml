@@ -28,7 +28,7 @@ accordingly
   </parent>
       
   
-  <groupId>edu.pdx.cs410J.YourUserId</groupId>
+  <groupId>edu.pdx.cs410J.pnalan</groupId>
       
   
   <artifactId>PortlandStateJavaSummer2021</artifactId>
@@ -46,7 +46,7 @@ accordingly
   <description>Source code written in the Summer 2021 offering of Advanced Programming with Java</description>
       
   
-  <url>http://YourGitHubUser.github.io/PortlandStateJavaSummer2021</url>
+  <url>http://poojanalan10.github.io/PortlandStateJavaSummer2021</url>
       
   
   <modules>
@@ -81,7 +81,7 @@ accordingly
     <system>github</system>
             
     
-    <url>https://github.com/YourGitHubUser/PortlandStateJavaSummer2021/issues</url>
+    <url>https://github.com/poojanalan10/PortlandStateJavaSummer2021/issues</url>
           
   
   </issueManagement>
@@ -153,7 +153,7 @@ accordingly
   <scm>
             
     
-    <connection>scm:git:git@github.com:YourGitHubUser/PortlandStateJavaSummer2021.git</connection>
+    <connection>scm:git:git@github.com:poojanalan10/PortlandStateJavaSummer2021.git</connection>
           
   
   </scm>
@@ -171,7 +171,7 @@ accordingly
       <name>GitHub Pages</name>
                   
       
-      <url>github:http://YourGitHubUser.github.io/PortlandStateJavaSummer2021/</url>
+      <url>github:http://poojanalan10.github.io/PortlandStateJavaSummer2021/</url>
                 
     
     </site>
