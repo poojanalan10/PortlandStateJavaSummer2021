@@ -92,8 +92,10 @@ public class Project1 {
                 }
                 Appointment app = new Appointment(description,beginDate,beginTimeString,endDate,endTimeString);
                 AppointmentBook appBook = new AppointmentBook(owner, app);
-                System.out.println("Appointment information");
-                System.out.println(app.toString());
+                System.out.println("\n Appointment information:\n");
+                System.out.println(" " +app.toString());
+                System.out.println("\n Appointment Book information :\n");
+                System.out.println(" "+ appBook.toString());
                 System.exit(0);
 
             }

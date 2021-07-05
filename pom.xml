@@ -19,7 +19,7 @@ accordingly
     <artifactId>cs410j</artifactId>
             
     
-    <groupId>io.github.davidwhitlock.cs410J.YourUserId</groupId>
+    <groupId>io.github.davidwhitlock.cs410J</groupId>
             
     
     <version>2021.3.0</version>
@@ -28,7 +28,7 @@ accordingly
   </parent>
       
   
-  <groupId>edu.pdx.cs410J.YourUserId</groupId>
+  <groupId>edu.pdx.cs410J.pnalan</groupId>
       
   
   <artifactId>PortlandStateJavaSummer2021</artifactId>
@@ -56,6 +56,7 @@ accordingly
           
     
     <module>apptbook</module>
+
       
   </modules>
       
