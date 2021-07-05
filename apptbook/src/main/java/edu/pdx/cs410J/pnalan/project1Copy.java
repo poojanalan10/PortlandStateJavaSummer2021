@@ -22,6 +22,8 @@ public class project1Copy {
     public static final String MISSING_BEGIN_TIME = "Missing begin time";
     public static final String MISSING_END_DATE = "Missing end date";
     public static final String MISSING_END_TIME = "Missing end time";
+    public static final String UNRECOGNIZED_DATE_FORMAT = "Date not in requested format (hh:mm) \" unrecognized date";
+    public static final String UNRECOGNIZED_TIME_FORMAT = "Time not in requested format (hh:mm) \" unrecognized time";
 
     public static void main(String[] args) {
         List<String> argumentList = Arrays.asList(args);
@@ -120,7 +122,8 @@ public class project1Copy {
             if (Pattern.matches(dateregex, dateString)) {
                 return dateString;
             } else {
-                return "Date not in requested format(mm/dd/yyyy) / unrecognized date " + dateString;
+                printErorMessageAndExit(UNRECOGNIZED_DATE_FORMAT+" : " +dateString);
+                //return "Date not in requested format(mm/dd/yyyy) / unrecognized date " + dateString;
             }
         }
 
@@ -138,7 +141,8 @@ public class project1Copy {
             if (Pattern.matches(timeregex, TimeString)) {
                 return TimeString;
             } else {
-                return "Time not in requested format (hh:mm) / unrecognized time " + TimeString;
+                printErorMessageAndExit(UNRECOGNIZED_TIME_FORMAT+" : " +TimeString);
+                //return "Time not in requested format (hh:mm) / unrecognized time " + TimeString;
             }
         }
         return null;

@@ -75,5 +75,18 @@ class Project1Test extends InvokeMainTestCase{
     assertThat(result.getTextWrittenToStandardError(),containsString(project1Copy.USAGE_MESSAGE));
     assertThat(result.getExitCode(), equalTo(1));
   }
-
+  @Test
+    public void unrecognizedDateFormat(){
+    MainMethodResult result = invokeMain(project1Copy.class,"-print","Pooja","zoom meeting","02-03-2021","02:30","02-03-2021","03:30");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Date not in requested format (hh:mm) \" unrecognized date"));
+    assertThat(result.getTextWrittenToStandardError(),containsString(project1Copy.USAGE_MESSAGE));
+    assertThat(result.getExitCode(), equalTo(1));
+}
+  @Test
+  public void unrecognizedTimeFormat(){
+    MainMethodResult result = invokeMain(project1Copy.class,"-print","Pooja","zoom meeting","02/03/2021","230","02/03/2021","3:30");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Time not in requested format (hh:mm) \" unrecognized time"));
+    assertThat(result.getTextWrittenToStandardError(),containsString(project1Copy.USAGE_MESSAGE));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
 }
