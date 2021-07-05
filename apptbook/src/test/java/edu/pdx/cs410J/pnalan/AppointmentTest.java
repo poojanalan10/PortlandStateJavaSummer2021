@@ -14,15 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class AppointmentTest {
 
   @Test
-  void getBeginTimeStringNeedsToBeImplemented() {
-    Appointment appointment = new Appointment();
-    assertThrows(UnsupportedOperationException.class, appointment::getBeginTimeString);
-  }
-
-  @Test
   void initiallyAllAppointmentsHaveTheSameDescription() {
     Appointment appointment = new Appointment();
-    assertThat(appointment.getDescription(), containsString("not implemented"));
+    assertThat(appointment.getDescription(), equalTo(null));
   }
 
   @Test
