@@ -36,9 +36,44 @@ class Project1Test extends InvokeMainTestCase{
   }
     @Test
       public void invokingMainWithNoArgumentsPrintsMissingArgumentsToStandardError(){
-      InvokeMainTestCase.MainMethodResult result = invokeMain(project1Copy.class);
+      InvokeMainTestCase.MainMethodResult result = invokeMain(project1Copy.class,"-print");
       assertThat(result.getTextWrittenToStandardError(),containsString("Missing command line arguments"));
       assertThat(result.getTextWrittenToStandardError(),containsString(project1Copy.USAGE_MESSAGE));
     }
+    @Test
+      public void missingDescription(){
+    MainMethodResult result = invokeMain(project1Copy.class,"-print","Pooja");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Missing description"));
+    assertThat(result.getTextWrittenToStandardError(),containsString(project1Copy.USAGE_MESSAGE));
+    assertThat(result.getExitCode(), equalTo(1));
+    }
+  @Test
+  public void missingBeginDate(){
+    MainMethodResult result = invokeMain(project1Copy.class,"-print","Pooja","zoom meeting");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Missing begin date"));
+    assertThat(result.getTextWrittenToStandardError(),containsString(project1Copy.USAGE_MESSAGE));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+  @Test
+  public void missingBeginTime(){
+    MainMethodResult result = invokeMain(project1Copy.class,"-print","Pooja","zoom meeting","02/03/2021");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Missing begin time"));
+    assertThat(result.getTextWrittenToStandardError(),containsString(project1Copy.USAGE_MESSAGE));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+  @Test
+  public void missingEndDate(){
+    MainMethodResult result = invokeMain(project1Copy.class,"-print","Pooja","zoom meeting","02/03/2021","02:20");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Missing end date"));
+    assertThat(result.getTextWrittenToStandardError(),containsString(project1Copy.USAGE_MESSAGE));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+  @Test
+  public void missingEndTime(){
+    MainMethodResult result = invokeMain(project1Copy.class,"-print","Pooja","zoom meeting","02/03/2021","02:20","02/03/2021");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Missing end time"));
+    assertThat(result.getTextWrittenToStandardError(),containsString(project1Copy.USAGE_MESSAGE));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
 
 }

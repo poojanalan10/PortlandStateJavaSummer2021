@@ -50,16 +50,20 @@ public class project1Copy {
             /**
              * If the user enters print but just few of the arguments
              */
-            else if(args.length < 6) {
-                printErorMessageAndExit(TOO_FEW_ARGUMENTS);
+         /*  else if(args.length < 6) {
+               // printErorMessageAndExit(TOO_FEW_ARGUMENTS);
                 return;
+            }*/
+            else if(args.length > 6) {
+                printErorMessageAndExit(TOO_MANY_ARGUMENTS);
             }
             /**
              * If the user enters all the arguments we need to validate the entry of date and time.
              * validateDate function validates the user input of begin and end date of the appointment
              * validateTime function validates the user input of begin and end time of the appointment
              */
-            else if(args.length == 6) {
+            /*else if(args.length == 6) */
+            else {
               //  args = Arrays.copyOfRange(args, 1 , args.length);
                 for (String arg : args) {
                     if (owner == null) {
@@ -77,6 +81,22 @@ public class project1Copy {
                     }
 
                 }
+
+               if (description == null) {
+                    printErorMessageAndExit(MISSING_DESCRIPTION);
+                }
+                else if(beginDate == null) {
+                    printErorMessageAndExit(MISSING_BEGIN_DATE);
+                }
+                else if(beginTimeString == null) {
+                    printErorMessageAndExit(MISSING_BEGIN_TIME);
+                }
+                else if(endDate == null) {
+                    printErorMessageAndExit(MISSING_END_DATE);
+                }
+                else if(endTimeString == null) {
+                    printErorMessageAndExit(MISSING_END_TIME);
+                }
                 Appointment app = new Appointment(description,beginDate,beginTimeString,endDate,endTimeString);
                 AppointmentBook appBook = new AppointmentBook(owner, app);
                 System.out.println("Appointment information");
@@ -87,39 +107,24 @@ public class project1Copy {
             /**
              * if the user enters more than the required argument count of 6
              */
-           else if(args.length > 6) {
-            printErorMessageAndExit(TOO_MANY_ARGUMENTS);
-            }
+
         }
-        if(owner == null){
-            printErorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
-            return;
-        } else if (description == null) {
-            printErorMessageAndExit(MISSING_DESCRIPTION);
-        }
-        else if(beginDate == null) {
-            printErorMessageAndExit(MISSING_BEGIN_DATE);
-        }
-        else if(beginTimeString == null) {
-            printErorMessageAndExit(MISSING_BEGIN_TIME);
-        }
-        else if(endDate == null) {
-            printErorMessageAndExit(MISSING_END_DATE);
-        }
-        else if(endTimeString == null) {
-            printErorMessageAndExit(MISSING_END_TIME);
-        }
+
 
         System.exit(1);
     }
     public static String validateDate(String dateString){
     try {
         String dateregex = "^(0[1-9]|1[0-2])/(3[01][12][0-9]|0[1-9])/[0-9]{4}$";
-        if (Pattern.matches(dateregex, dateString)) {
-            return dateString;
-        } else {
-            return "Date not in requested format(mm/dd/yyyy) / unrecognized date "+ dateString;
+        if(dateString != null) {
+            if (Pattern.matches(dateregex, dateString)) {
+                return dateString;
+            } else {
+                return "Date not in requested format(mm/dd/yyyy) / unrecognized date " + dateString;
+            }
         }
+
+            return null;
     }
     catch (Exception e) {
         return e.toString();
@@ -129,11 +134,15 @@ public class project1Copy {
     public static String validateTime(String TimeString){
     try {
         String timeregex = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$";
-        if (Pattern.matches(timeregex, TimeString)) {
-            return TimeString;
-        } else {
-            return "Time not in requested format (hh:mm) / unrecognized time "+ TimeString;
+        if(TimeString != null) {
+            if (Pattern.matches(timeregex, TimeString)) {
+                return TimeString;
+            } else {
+                return "Time not in requested format (hh:mm) / unrecognized time " + TimeString;
+            }
         }
+        return null;
+
     }
     catch (Exception e) {
         return e.toString();
