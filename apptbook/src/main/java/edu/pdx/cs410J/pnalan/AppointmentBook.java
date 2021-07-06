@@ -2,28 +2,49 @@ package edu.pdx.cs410J.pnalan;
 import edu.pdx.cs410J.AbstractAppointmentBook;
 import edu.pdx.cs410J.AbstractAppointment;
 import edu.pdx.cs410J.*;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.*;
 
 
 public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
+    /**
+     * Owner of the appointments of <type>String</type>
+     */
     private String owner;
+    /**
+     * appointments collection holds a record of all the appointments
+     */
     private Collection<Appointment> appointments = new ArrayList<>();
     public AppointmentBook(){
         super();
     }
+
+    /**
+     * Constructor with a single parameter that initializes the owner name
+     * @param owner
+     */
     public AppointmentBook(String owner){
         super();
         this.owner = owner;
     }
+
+    /**
+     * Constructor with two parameters that initializes the owner name and adds a new appointment to an existing list
+     * @param owner
+     * @param newAppointment
+     */
     public AppointmentBook(String owner,Appointment newAppointment){
         super();
         this.owner = owner;
         addAppointment(newAppointment);
     }
+
+    /**
+     * This constructor takes two parameters and adds all the appointments of a owner
+     * @param owner
+     * @param appBook
+     */
     public AppointmentBook(String owner, AppointmentBook... appBook){
         super();
         this.owner = owner;
@@ -43,7 +64,10 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
         this.appointments.add(app);
     }
 
-
+    /**
+     * This method is used for adding all the appointments to the appointments collection
+     * @param appBook
+     */
     public void allAppointments(AppointmentBook... appBook){
      for(var app: appBook)   {
          if(app != null ) {
@@ -63,18 +87,5 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
     public Collection<Appointment> getAppointments(){
         return this.appointments;
     }
-
-
-
-   /* public static Comparator<Appointment> compareByBeginTime = new Comparator<Appointment>() {
-        public int compare(Appointment a, Appointment b) {
-            Date s1 = a.getBeginTime();
-            Date s2 = b.getBeginTime();
-            if(s1.compareTo(s2) == 0) {
-                return s1.compareToIgnoreCase(s2);
-            }
-            return s1.compareToIgnoreCase(s2);
-        }
-    };*/
 
 }
