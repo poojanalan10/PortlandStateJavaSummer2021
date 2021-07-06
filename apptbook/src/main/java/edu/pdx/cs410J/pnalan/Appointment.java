@@ -143,11 +143,13 @@ public class Appointment extends AbstractAppointment {
       dateString = destDf.format(date);
       System.out.print(dateString);
 */
-    } catch (ParseException e) {
+   } catch (ParseException e) {
       e.printStackTrace();
     }
     return null;
   }
+
+
 
   /**
    * Returns the duration/time for which the appointment lasts
