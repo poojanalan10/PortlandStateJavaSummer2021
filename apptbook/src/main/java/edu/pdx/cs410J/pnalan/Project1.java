@@ -41,8 +41,7 @@ public class Project1 {
         String endTimeString = null;
 
         if (Arrays.asList(args).contains("-README") & Arrays.asList(args).indexOf("-README") < 2 ) {
-            System.out.println(README);
-            System.exit(1);
+            printReadMeAndExit(README);
         }
         else if(Arrays.asList(args).contains("-print") & Arrays.asList(args).indexOf("-print") == 0) {
 
@@ -169,6 +168,16 @@ public class Project1 {
 
         System.err.println(message);
         System.err.println(USAGE_MESSAGE);
+        System.exit(1);
+    }
+
+    /**
+     * @param readmetext
+     *        it contains the readme message
+     *prints the README message to the user when the option is entered
+     */
+    public static void printReadMeAndExit(String readmetext){
+        System.out.println(readmetext);
         System.exit(1);
     }
 
