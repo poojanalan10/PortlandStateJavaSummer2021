@@ -42,6 +42,20 @@ public class AppointmentTest {
   }
 
   @Test
+  void getBeginDateStringReturnsTheAppointmentBeginDate(){
+    Appointment app = new Appointment("abc","03/05/2020","3:24","03/05/2020","4:20");
+    assertThat(app.getBeginDate(),containsString("03/05/2020"));
+
+  }
+
+  @Test
+  void getEndDateStringReturnsTheAppointmentEndDate(){
+    Appointment app = new Appointment("abc","03/05/2020","3:24","03/05/2020","4:20");
+    assertThat(app.getEndDate(),containsString("03/05/2020"));
+
+  }
+
+  @Test
   void PoojaAppointmentRecordedAs(){
     Appointment Pooja = getAppointmentOfPooja();
     assertThat(Pooja.toString(),equalTo("zoom meeting from 09:15 until 11:00"));
@@ -76,6 +90,13 @@ public class AppointmentTest {
   void checkEmptyAppointment(){
     Appointment app = new Appointment();
     assertThat(app.toString(),containsString(""));
+  }
+
+  @Test
+  void checkAppointment(){
+    Appointment app = new Appointment("abc","03/05/2020","3:24","02/02/2020","4:20");
+    assertThat(app.getBeginTimeString(),containsString(""));
+
   }
 
 
