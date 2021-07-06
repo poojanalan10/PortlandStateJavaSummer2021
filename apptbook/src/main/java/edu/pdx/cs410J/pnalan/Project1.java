@@ -6,6 +6,14 @@ import java.util.regex.Pattern;
  * The main class for the CS410J appointment book Project
  */
 public class Project1 {
+    /**
+     * @param args
+     * [options] <arguments></arguments>
+     * [-README -print] <owner> <description> <begin date> <begin time> <end date> <end time>
+     *     case 1 : args.length is 0, which means no command line arguments
+     *     case 2: args.length is > 6, which means too many arguments
+     *     case 3: expected number of arguments. arguments are assigned and checked. They are validated and errors are thrown for any unexpected format
+     */
     static final String README = "\n README \n Name: Pooja Nalan \n Project : apptbook \n This project adds an appointment to an appointment book belonging to a particular owner"
             +"\n taking the necessary details about the appointment which includes owner name, purpose of the appointment,"+"\n start date and time and end date and time ";
     private static final String argumentList = "[options] <owner> <description> <begin date> <begin time> <end date> <end time> ";
@@ -108,9 +116,15 @@ public class Project1 {
 
         System.exit(1);
     }
+
+    /**
+     * @param dateString
+     * @return dateString or an error message
+     * Validates the input string date against the regex expression and returns the date string back if it matches the regex pattern,
+     * else throws unrecognized date format error and exits
+     */
     public static String validateDate(String dateString){
-    //    try {
-            String dateregex = "^(0[1-9]|1[0-2])/(3[01][12][0-9]|0[1-9])/[0-9]{4}$";
+            String dateregex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
             if(dateString != null) {
                 if (Pattern.matches(dateregex, dateString)) {
                     return dateString;
@@ -120,14 +134,16 @@ public class Project1 {
             }
 
             return null;
-      //  }
-     /*   catch (Exception e) {
-            return e.toString();
-        }*/
-
     }
+
+    /**
+     *
+     * @param TimeString
+     * @return TimeString or error message
+     *Validates the input string time against the regex expression and returns the time string back if it matches the regex pattern,
+     * else throws unrecognized time format error and exits
+     */
     public static String validateTime(String TimeString){
-       // try {
             String timeregex = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$";
             if(TimeString != null) {
                 if (Pattern.matches(timeregex, TimeString)) {
@@ -137,12 +153,13 @@ public class Project1 {
                 }
             }
             return null;
-
-    //    }
-      /*  catch (Exception e) {
-            return e.toString();
-        }*/
     }
+
+    /**
+     *
+     * @param message
+     * prints the error message passed to the method and also how to input the command line arguments and exits
+     */
     private static void printErrorMessageAndExit(String message) {
 
         System.err.println(message);
