@@ -39,7 +39,7 @@ public class Project1 {
         String beginTimeString = null;
         String endDate = null;
         String endTimeString = null;
-
+        System.out.print(args.length);
         if (Arrays.asList(args).contains("-README") & Arrays.asList(args).indexOf("-README") < 2 ) {
             printReadMeAndExit(README);
         }
@@ -111,7 +111,7 @@ public class Project1 {
             }
 
         }
-        else if(args.length == 0){
+        else if(args[0] == ""){
             printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
         }
 
