@@ -9,13 +9,17 @@ import java.util.*;
 
 public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
     /**
-     * Owner of the appointments of <type>String</type>
+     * Owner of the appointments in String format
      */
     private String owner;
     /**
      * appointments collection holds a record of all the appointments
      */
     private Collection<Appointment> appointments = new ArrayList<>();
+
+    /**
+     * an AppointmentBook constructor
+     */
     public AppointmentBook(){
         super();
     }
