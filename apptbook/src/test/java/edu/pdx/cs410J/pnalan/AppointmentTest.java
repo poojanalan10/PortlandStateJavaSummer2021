@@ -72,4 +72,6 @@ public class AppointmentTest {
     Appointment Pooja = getAppointmentOfPooja();
     assertThat(String.valueOf(Pooja.appointmentDuration()), equalTo("45.0"));
   }
+
+
 }
