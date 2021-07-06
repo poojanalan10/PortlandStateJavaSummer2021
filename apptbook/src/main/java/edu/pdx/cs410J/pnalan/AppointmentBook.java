@@ -80,6 +80,7 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
     /**
      * This method is used for adding all the appointments to the appointments collection
      * @param appBook
+     *        appBook object of type AppointmentBook
      */
     public void allAppointments(AppointmentBook... appBook){
      for(var app: appBook)   {

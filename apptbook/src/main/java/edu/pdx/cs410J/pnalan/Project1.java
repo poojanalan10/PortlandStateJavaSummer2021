@@ -3,17 +3,20 @@ import java.util.Arrays;
 import java.util.regex.Pattern;
 
 /**
- * The main class for the CS410J appointment book Project
+ * The main class for the CS410J appointment book Project <code>Project1</code>
  */
 public class Project1 {
 
+    /**
+     * various error comments initialized to be called at appropriate places
+     * README gives information about the input
+     */
     static final String README = "\n README \n Name: Pooja Nalan \n Project : apptbook \n This project adds an appointment to an appointment book belonging to a particular owner"
             +"\n taking the necessary details about the appointment which includes owner name, purpose of the appointment,"+"\n start date and time and end date and time ";
     private static final String argumentList = "[options] <owner> <description> <begin date> <begin time> <end date> <end time> ";
     public static final String USAGE_MESSAGE = "java edu.pdx.cs410J.pnalan.Project1 [options] <args> args are in this order: \n"+ argumentList +"\n" + "[options] may appear in any order and the options are:\n"+ " -print\n"+"-README";
     public static final String MISSING_COMMAND_LINE_ARGUMENTS = "Missing command line arguments";
     public static final String TOO_MANY_ARGUMENTS = "The required number of arguments is 6 and you've exceeded that.";
-    //public static final String TOO_FEW_ARGUMENTS = "The required number of arguments is 6 and you've entered less than that.";
     public static final String MISSING_DESCRIPTION = "Missing description";
     public static final String MISSING_BEGIN_DATE = "Missing begin date";
     public static final String MISSING_BEGIN_TIME = "Missing begin time";
@@ -22,7 +25,8 @@ public class Project1 {
     public static final String UNRECOGNIZED_DATE_FORMAT = "Date not in requested format (hh:mm) \" unrecognized date";
     public static final String UNRECOGNIZED_TIME_FORMAT = "Time not in requested format (hh:mm) \" unrecognized time";
     /**
-     * [options] <arguments>
+     * @param args
+     *        [options] arguments
      * [-README -print] 'owner' 'description' 'begin date' 'begin time' 'end date' 'end time'
      *     case 1 : args.length is 0, which means no command line arguments
      *     case 2: args.length is > 6, which means too many arguments
