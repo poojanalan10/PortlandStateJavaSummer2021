@@ -40,6 +40,20 @@ class Project1IT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
   }
   @Test
+  public void invokingMainWithREADME(){
+    InvokeMainTestCase.MainMethodResult result = invokeMain(Project1.class,"-README");
+    assertThat(result.getTextWrittenToStandardOut(),containsString("\n README \n Name: Pooja Nalan \n Project : apptbook \n This project adds an appointment to an appointment book belonging to a particular owner"));
+    assertThat(result.getExitCode(),equalTo(1));
+  }
+
+  @Test
+  public void invokingMainWithPrintAndREADMEButWithNoArguments(){
+    InvokeMainTestCase.MainMethodResult result = invokeMain(Project1.class,"-README", "-print");
+    assertThat(result.getTextWrittenToStandardOut(),containsString("\n README \n Name: Pooja Nalan \n Project : apptbook \n This project adds an appointment to an appointment book belonging to a particular owner"));
+    assertThat(result.getExitCode(),equalTo(1));
+  }
+
+  @Test
   public void missingDescription(){
     MainMethodResult result = invokeMain(Project1.class,"-print","Pooja");
     assertThat(result.getTextWrittenToStandardError(), containsString("Missing description"));
@@ -74,6 +88,14 @@ class Project1IT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
     assertThat(result.getExitCode(), equalTo(1));
   }
+  @Test
+  public void tooManyArguments(){
+    MainMethodResult result = invokeMain(Project1.class,"-print","Judy Whiskers","Dentist appointment","02/03/2021","02:30","02/03/2021","5:30","Teeth whitening Time");
+    assertThat(result.getTextWrittenToStandardError(), containsString("The required number of arguments is 6 and you've exceeded that."));
+    assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+
   @Test
   public void unrecognizedDateFormat(){
     MainMethodResult result = invokeMain(Project1.class,"-print","Pooja","zoom meeting","02-03-2021","02:30","02-03-2021","03:30");
