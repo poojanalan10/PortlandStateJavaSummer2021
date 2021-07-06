@@ -10,6 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 import java.util.Date;
 
+/**
+ * This class represents a <code>Appointment</code>
+ */
 public class Appointment extends AbstractAppointment {
   private final String description;
   private String beginDate;
@@ -18,6 +21,9 @@ public class Appointment extends AbstractAppointment {
   private final String endTimeString;
   private Date begin;
   private Date end;
+
+
+
   public Appointment(){
     super();
     description = null;
@@ -29,8 +35,21 @@ public class Appointment extends AbstractAppointment {
     end = null;
 
   }
+  /**
+   * Create a new <code>Appointment</code>
+   *
+   * @param description
+   *        The description of the appointment
+   * @param beginDate
+   *        The date on which the appointment starts
+   * @param beginTimeString
+   *        The time the appointment begins
+   * @param endDate
+   *        The date on which the appointment ends
+   * @param endTimeString
+   *        The time the appointment ends
+   */
 
-  //public Appointment(final String[] args){
   public Appointment(String description,String beginDate,String beginTimeString,String endDate, String endTimeString)  {
     this.description = description;
     this.beginDate = beginDate;
@@ -40,7 +59,7 @@ public class Appointment extends AbstractAppointment {
     this.begin = convertDateFormat(this.getBeginDate() + " " + this.getBeginTimeString());
     this.end = convertDateFormat(this.getEndDate() + " " + this.getEndTimeString());
     if(begin.after(end)){
-      System.err.println("Begin time cannot be greater than or equal to the end time for an appointment!");
+      System.err.println("Begin date/time cannot be greater than or equal to the end date/time for an appointment!");
       System.exit(1);
     }
   }
@@ -63,7 +82,7 @@ public class Appointment extends AbstractAppointment {
   }
 
   /**
-   * returns the date and begin time of the appointment
+   * returns a String describing the begin date and time of the appointment
    * @return begin
    */
   @Override
@@ -72,7 +91,7 @@ public class Appointment extends AbstractAppointment {
   }
 
   /**
-   * returns the date and end time of the appointment
+   * returns a String describing the ending date and time of this appointment
    * @return end
    */
   @Override
@@ -81,7 +100,7 @@ public class Appointment extends AbstractAppointment {
   }
 
   /**
-   * @return returns the begin time
+   * @return returns a Date that represents the begin date time of this appointment
    */
   @Override
   public Date getBeginTime(){
@@ -89,7 +108,7 @@ public class Appointment extends AbstractAppointment {
   }
 
   /**
-   * @return returns the end time
+   * @return returns a Date that represents the end date and time of this appointment
    */
   @Override
   public Date getEndTime(){
@@ -97,7 +116,7 @@ public class Appointment extends AbstractAppointment {
   }
 
   /**
-   * returns the description of the appointment
+   * returns a description of this appointment (for instance, "Have coffee with Marsha" )
    * @return description
    */
   @Override
@@ -128,6 +147,11 @@ public class Appointment extends AbstractAppointment {
     }
     return null;
   }
+
+  /**
+   * Returns the duration/time for which the appointment lasts
+   * @return duration
+   */
   public double appointmentDuration(){
     double timedifference = getEndTime().getTime() - getBeginTime().getTime();
     double duration = TimeUnit.MILLISECONDS.toMinutes((long) timedifference) % 60;
