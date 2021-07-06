@@ -24,7 +24,9 @@ public class Appointment extends AbstractAppointment {
   private Date begin;
   private Date end;
 
-
+  /**
+   * Default constructor
+   */
   public Appointment(){
     super();
     description = null;

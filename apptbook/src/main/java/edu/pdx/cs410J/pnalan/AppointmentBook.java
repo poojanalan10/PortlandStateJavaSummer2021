@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.*;
 
-
+/**
+ * A class AppointmentBook that maintains all the appointments of a particular owner
+ */
 public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
     /**
      * Owner of the appointments in String format
@@ -27,6 +29,7 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
     /**
      * Constructor with a single parameter that initializes the owner name
      * @param owner
+     *        The name of the owner of this appointment
      */
     public AppointmentBook(String owner){
         super();
@@ -36,7 +39,9 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
     /**
      * Constructor with two parameters that initializes the owner name and adds a new appointment to an existing list
      * @param owner
+     *        The name of the owner of this appointment
      * @param newAppointment
+     *        A new appointment yet, to add to a collections of Appointments
      */
     public AppointmentBook(String owner,Appointment newAppointment){
         super();
@@ -47,7 +52,9 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
     /**
      * This constructor takes two parameters and adds all the appointments of a owner
      * @param owner
+     *        The name of the owner of this appointment
      * @param appBook
+     *        The appBook object of type AppointmentBook
      */
     public AppointmentBook(String owner, AppointmentBook... appBook){
         super();
@@ -61,7 +68,9 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
 
     /**
      * Adds an appointment to the collection of Appointments
-     * @param app - An appointment object
+     * @param app
+     *        An appointment object
+     *
      */
     @Override
     public void addAppointment(Appointment app){
