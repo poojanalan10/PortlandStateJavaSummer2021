@@ -17,12 +17,24 @@ import java.util.Date;
 
 public class Appointment extends AbstractAppointment {
   private final String description;
-  private String beginDate;
+  private String beginDate ;
   private String endDate;
-  private final String beginTimeString;
+  private final String beginTimeString ;
   private final String endTimeString;
   private Date begin;
   private Date end;
+
+
+  public Appointment(){
+    super();
+    description = null;
+    beginDate = null;
+    endDate = null;
+    beginTimeString = null;
+    endTimeString = null;
+    begin = null;
+    end = null;
+  }
   /**
    * Creates a new <code>Appointment</code>
    *
@@ -37,7 +49,6 @@ public class Appointment extends AbstractAppointment {
    * @param endTimeString
    *        The time the appointment ends
    */
-
   public Appointment(String description,String beginDate,String beginTimeString,String endDate, String endTimeString)  {
     this.description = description;
     this.beginDate = beginDate;
