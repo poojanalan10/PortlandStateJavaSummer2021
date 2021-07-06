@@ -111,6 +111,11 @@ public class Project1 {
             }
 
         }
+
+        else if(args.length == 0){
+
+            System.exit(1);
+        }
         else if(args[0] == ""){
             printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
         }

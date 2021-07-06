@@ -24,9 +24,11 @@ class Project1IT extends InvokeMainTestCase {
    */
   @Test
   void testNoCommandLineArguments() {
-    MainMethodResult result = invokeMain();
-    assertThat(result.getExitCode(), equalTo(1));
+    MainMethodResult result = invokeMain(Project1.class,"");
+
     assertThat(result.getTextWrittenToStandardError(), containsString("Missing command line arguments"));
+    assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
+    assertThat(result.getExitCode(), equalTo(1));
   }
   @Test
   public void invokingMainWithoutArgumentsHasExitCodeOf1(){
@@ -39,12 +41,7 @@ class Project1IT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(),containsString("Missing command line arguments"));
     assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
   }
-  @Test
-  public void invokingMainWithNoOptionsAndCommandLineArgumentsPrintsMissingArgumentsToStandardError(){
-    InvokeMainTestCase.MainMethodResult result = invokeMain(Project1.class,"");
-    assertThat(result.getTextWrittenToStandardError(),containsString("Missing command line arguments"));
-    assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
-  }
+
   @Test
   public void invokingMainWithREADME(){
     InvokeMainTestCase.MainMethodResult result = invokeMain(Project1.class,"-README");
