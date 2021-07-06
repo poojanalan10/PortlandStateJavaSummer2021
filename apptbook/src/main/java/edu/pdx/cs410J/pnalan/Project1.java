@@ -39,7 +39,7 @@ public class Project1 {
         String beginTimeString = null;
         String endDate = null;
         String endTimeString = null;
-        System.out.print(args.length);
+       // System.out.print(args.length);
         if (Arrays.asList(args).contains("-README") & Arrays.asList(args).indexOf("-README") < 2 ) {
             printReadMeAndExit(README);
         }
@@ -102,10 +102,10 @@ public class Project1 {
                 }
                 Appointment app = new Appointment(description,beginDate,beginTimeString,endDate,endTimeString);
                 AppointmentBook appBook = new AppointmentBook(owner, app);
-                System.out.println("\n Appointment information:\n");
-                System.out.println(" " +app.toString());
-                System.out.println("\n Appointment Book information :\n");
-                System.out.println(" "+ appBook.toString());
+                System.out.println(app.toString());
+              //  System.out.println("Appointment information:\n" + app.toString());
+              //  System.out.println("\n Appointment Book information :\n");
+              //  System.out.println(" "+ appBook.toString());
                 System.exit(0);
 
             }

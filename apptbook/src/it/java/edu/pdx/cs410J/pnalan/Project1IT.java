@@ -97,6 +97,7 @@ class Project1IT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
     assertThat(result.getExitCode(), equalTo(1));
   }
+
   @Test
   public void tooManyArguments(){
     MainMethodResult result = invokeMain(Project1.class,"-print","Judy Whiskers","Dentist appointment","02/03/2021","02:30","02/03/2021","5:30","Teeth whitening Time");
@@ -104,6 +105,22 @@ class Project1IT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
     assertThat(result.getExitCode(), equalTo(1));
   }
+
+  @Test
+  public void rightArgumentsGiven(){
+    MainMethodResult result = invokeMain(Project1.class,"-print","May Thatcher","Football match","11/27/2021","13:15","11/27/2021","17:30");
+    assertThat(result.getTextWrittenToStandardOut(), containsString("Football match from 13:15 until 17:30"));
+  }
+
+
+  @Test
+  public void rightArgumentsGivenReturnsExitCode0(){
+    MainMethodResult result = invokeMain(Project1.class,"-print","May Thatcher","Football match","09/08/2021","15:15","09/08/2021","17:30");
+    assertThat(result.getExitCode(), equalTo(0));
+  }
+
+
+
 
   @Test
   public void unrecognizedDateFormat(){
