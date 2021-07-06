@@ -89,4 +89,11 @@ class Project1IT extends InvokeMainTestCase {
     assertThat(result.getExitCode(), equalTo(1));
   }
 
+  @Test
+  void checkIfBeginDateIsGreerThanEndDate(){
+    MainMethodResult result = invokeMain(Project1.class,"-print","Pooja","virtual party","10/10/2021","13:00","10/08/2021","16:00");
+    assertThat(result.getTextWrittenToStandardError(),containsString("Begin date/time cannot be greater than or equal to the end date/time for an appointment!"));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+
 }
