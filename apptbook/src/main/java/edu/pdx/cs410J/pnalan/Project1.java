@@ -101,46 +101,47 @@ public class Project1 {
             }
 
         }
+        else if(args.length == 0){
+            printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
+        }
 
 
         System.exit(1);
     }
     public static String validateDate(String dateString){
-        try {
+    //    try {
             String dateregex = "^(0[1-9]|1[0-2])/(3[01][12][0-9]|0[1-9])/[0-9]{4}$";
             if(dateString != null) {
                 if (Pattern.matches(dateregex, dateString)) {
                     return dateString;
                 } else {
                     printErrorMessageAndExit(UNRECOGNIZED_DATE_FORMAT+" : " +dateString);
-                    //return "Date not in requested format(mm/dd/yyyy) / unrecognized date " + dateString;
                 }
             }
 
             return null;
-        }
-        catch (Exception e) {
+      //  }
+     /*   catch (Exception e) {
             return e.toString();
-        }
+        }*/
 
     }
     public static String validateTime(String TimeString){
-        try {
+       // try {
             String timeregex = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$";
             if(TimeString != null) {
                 if (Pattern.matches(timeregex, TimeString)) {
                     return TimeString;
                 } else {
                     printErrorMessageAndExit(UNRECOGNIZED_TIME_FORMAT+" : " +TimeString);
-                    //return "Time not in requested format (hh:mm) / unrecognized time " + TimeString;
                 }
             }
             return null;
 
-        }
-        catch (Exception e) {
+    //    }
+      /*  catch (Exception e) {
             return e.toString();
-        }
+        }*/
     }
     private static void printErrorMessageAndExit(String message) {
 
