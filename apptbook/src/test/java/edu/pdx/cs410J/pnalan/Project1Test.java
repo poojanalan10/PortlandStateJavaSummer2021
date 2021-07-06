@@ -39,9 +39,17 @@ class Project1Test extends InvokeMainTestCase {
   }
 
   @Test
-  void checkIfWeHaveDontHaveZeroFields(){
+  void checkIfWeDontHaveZeroFields(){
     Project1 p1 = new Project1();
     assertThat(p1.getClass().getDeclaredFields(),is(notNullValue()));
   }
+
+  @Test
+  void checkIfWeDontHaveZeroMethods(){
+    Project1 p1 = new Project1();
+    assertThat(p1.getClass().getDeclaredMethods(),is(notNullValue()));
+  }
+
+
 
 }

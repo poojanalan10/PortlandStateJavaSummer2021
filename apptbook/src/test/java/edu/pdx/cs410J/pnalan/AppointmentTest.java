@@ -28,17 +28,17 @@ public class AppointmentTest {
   }
 
   @Test
-  void getBeginTimeStringreturnsTheAppointmentBeginTime() throws ParseException {
+  void getBeginTimeStringReturnsTheAppointmentBeginTime() throws ParseException {
     String beginTime = "09:15";
     var obj = new Appointment("zoom meeting","02/02/2021","09:15","02/02/2021","11:00");
     assertThat(obj.getBeginTimeString(),equalTo(beginTime));
   }
 
   @Test
-  void getEndTimeStringreturnsTheAppointmentEndTime() throws ParseException {
-    String beginTime = "11:00";
+  void getEndTimeStringReturnsTheAppointmentEndTime() throws ParseException {
+    String endTime = "11:00";
     var obj = new Appointment("zoom meeting","02/02/2021","09:15","02/02/2021","11:00");
-    assertThat(obj.getEndTimeString(),equalTo(beginTime));
+    assertThat(obj.getEndTimeString(),equalTo(endTime));
   }
 
   @Test
@@ -71,6 +71,11 @@ public class AppointmentTest {
   void checkAppointmentDuration(){
     Appointment Pooja = getAppointmentOfPooja();
     assertThat(String.valueOf(Pooja.appointmentDuration()), equalTo("45.0"));
+  }
+  @Test
+  void checkEmptyAppointment(){
+    Appointment app = new Appointment();
+    assertThat(app.toString(),containsString(""));
   }
 
 

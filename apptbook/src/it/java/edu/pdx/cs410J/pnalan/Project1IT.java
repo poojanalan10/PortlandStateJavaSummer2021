@@ -81,8 +81,41 @@ class Project1IT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
     assertThat(result.getExitCode(), equalTo(1));
   }
+
   @Test
-  public void unrecognizedTimeFormat(){
+  public void unrecognizedDateFormatInBeginDate(){
+    MainMethodResult result = invokeMain(Project1.class,"-print","Pooja","zoom meeting","07-25-2021","02:30","07/25/2021","03:30");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Date not in requested format (hh:mm) \" unrecognized date"));
+    assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+
+  @Test
+  public void unrecognizedDateFormatInEndDate(){
+    MainMethodResult result = invokeMain(Project1.class,"-print","Pooja","zoom meeting","08/15/2021","02:30","08-15-2021","03:30");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Date not in requested format (hh:mm) \" unrecognized date"));
+    assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+
+  @Test
+  public void unrecognizedDateInBeginDate(){
+    MainMethodResult result = invokeMain(Project1.class,"-print","Pooja","zoom meeting","07/35/2021","02:30","07/25/2021","03:30");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Date not in requested format (hh:mm) \" unrecognized date"));
+    assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+
+  @Test
+  public void unrecognizedDateInEndDate(){
+    MainMethodResult result = invokeMain(Project1.class,"-print","Pooja","zoom meeting","07/15/2021","02:30","25/25/40215","03:30");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Date not in requested format (hh:mm) \" unrecognized date"));
+    assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+
+  @Test
+  public void unrecognizedTimeFormatInBeginDate(){
     MainMethodResult result = invokeMain(Project1.class,"-print","Pooja","zoom meeting","02/03/2021","230","02/03/2021","3:30");
     assertThat(result.getTextWrittenToStandardError(), containsString("Time not in requested format (hh:mm) \" unrecognized time"));
     assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
@@ -90,8 +123,24 @@ class Project1IT extends InvokeMainTestCase {
   }
 
   @Test
-  void checkIfBeginDateIsGreerThanEndDate(){
+  public void unrecognizedTimeFormatInEndDate(){
+    MainMethodResult result = invokeMain(Project1.class,"-print","Pooja","zoom meeting","02/03/2021","2:30","02/03/2021","44");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Time not in requested format (hh:mm) \" unrecognized time"));
+    assertThat(result.getTextWrittenToStandardError(),containsString(Project1.USAGE_MESSAGE));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+
+  @Test
+  void checkIfBeginDateIsGreaterThanEndDate(){
     MainMethodResult result = invokeMain(Project1.class,"-print","Pooja","virtual party","10/10/2021","13:00","10/08/2021","16:00");
+    assertThat(result.getTextWrittenToStandardError(),containsString("Begin date/time cannot be greater than or equal to the end date/time for an appointment!"));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+
+
+  @Test
+  void checkIfBeginTimeIsGreaterThanEndDate(){
+    MainMethodResult result = invokeMain(Project1.class,"-print","Pooja","virtual party","11/30/2021","20:00","11/30/2021","16:00");
     assertThat(result.getTextWrittenToStandardError(),containsString("Begin date/time cannot be greater than or equal to the end date/time for an appointment!"));
     assertThat(result.getExitCode(), equalTo(1));
   }
