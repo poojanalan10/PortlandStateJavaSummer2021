@@ -92,12 +92,7 @@ public class AppointmentTest {
     assertThat(app.toString(),containsString(""));
   }
 
-  @Test
-  void checkAppointment(){
-    Appointment app = new Appointment("abc","03/05/2020","3:24","02/02/2020","4:20");
-    assertThat(app.getBeginTimeString(),containsString(""));
 
-  }
 
 
 }
