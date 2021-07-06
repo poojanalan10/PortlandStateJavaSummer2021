@@ -13,6 +13,8 @@ import java.util.Date;
 /**
  * This class represents a <code>Appointment</code>
  */
+
+
 public class Appointment extends AbstractAppointment {
   private final String description;
   private String beginDate;
@@ -21,22 +23,8 @@ public class Appointment extends AbstractAppointment {
   private final String endTimeString;
   private Date begin;
   private Date end;
-
-
-
-  public Appointment(){
-    super();
-    description = null;
-    beginDate = null;
-    beginTimeString = null;
-    endDate = null;
-    endTimeString = null;
-    begin = null;
-    end = null;
-
-  }
   /**
-   * Create a new <code>Appointment</code>
+   * Creates a new <code>Appointment</code>
    *
    * @param description
    *        The description of the appointment
