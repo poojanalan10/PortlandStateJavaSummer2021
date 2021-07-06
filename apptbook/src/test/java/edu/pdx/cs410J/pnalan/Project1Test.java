@@ -16,7 +16,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * from <code>Project1IT</code> which is an integration test (and can handle the calls
  * to {@link System#exit(int)} and the like.
  */
-class Project1Test extends InvokeMainTestCase{
+class Project1Test extends InvokeMainTestCase {
+
 
   @Test
   void readmeCanBeReadAsResource() throws IOException {
@@ -28,6 +29,19 @@ class Project1Test extends InvokeMainTestCase{
       String line = reader.readLine();
       assertThat(line, containsString("This is a README file!"));
     }
+  }
+
+  @Test
+  void getClassName() throws IOException {
+    Project1 p1 = new Project1();
+    assertThat(p1.getClass().getName(), containsString("Project1"));
+    ;
+  }
+
+  @Test
+  void checkIfWeHaveDontHaveZeroFields(){
+    Project1 p1 = new Project1();
+    assertThat(p1.getClass().getDeclaredFields(),is(notNullValue()));
   }
 
 }
