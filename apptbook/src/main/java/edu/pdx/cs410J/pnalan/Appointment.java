@@ -132,17 +132,15 @@ public class Appointment extends AbstractAppointment {
    */
   public Date convertDateFormat(String dateString){
     try{
-    String pattern = "MM/dd/yyyy hh:mm";
+   /* String pattern = "MM/dd/yyyy hh:mm";
     SimpleDateFormat formatter = new SimpleDateFormat(pattern);
     Date d = formatter.parse(dateString);
-    return d;
-      /*DateFormat srcDf = new SimpleDateFormat("MM/dd/yyyy hh:mm");
-      Date date = srcDf.parse(dateString);
+    return d;*/
+      DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm");
+      Date date1 =new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(dateString);
+     // System.out.println("Converted date: " + dateFormat.format(date1).toString());
+      return dateFormat.parse(dateFormat.format(date1));
 
-      DateFormat destDf = new SimpleDateFormat("MM/dd/yyy hh:mm");
-      dateString = destDf.format(date);
-      System.out.print(dateString);
-*/
    } catch (ParseException e) {
       e.printStackTrace();
     }
