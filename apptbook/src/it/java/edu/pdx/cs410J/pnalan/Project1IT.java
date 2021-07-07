@@ -45,20 +45,23 @@ class Project1IT extends InvokeMainTestCase {
   @Test
   public void invokingMainWithREADME(){
     InvokeMainTestCase.MainMethodResult result = invokeMain(Project1.class,"-README");
-    assertThat(result.getTextWrittenToStandardOut(),containsString("\n README \n Name: Pooja Nalan \n Project : apptbook \n This project adds an appointment to an appointment book belonging to a particular owner"));
+    assertThat(result.getTextWrittenToStandardOut(),containsString("README Name: Pooja Nalan Project : apptbook This project adds an appointment to an appointment book belonging to a particular owner taking " +
+            "the necessary details about the appointment which includes owner name, purpose of the appointment, start date and time and end date and time"));
     assertThat(result.getExitCode(),equalTo(1));
   }
 
   @Test
   public void invokingMainWithREADMEAnywhereAtPos1Or2ShouldPrintREADMEAndExit(){
     InvokeMainTestCase.MainMethodResult result = invokeMain(Project1.class,"-print","-README","Judy Whiskers","Dentist appointment","02/03/2021","02:30","02/03/2021","5:30");
-    assertThat(result.getTextWrittenToStandardOut(),containsString("\n README \n Name: Pooja Nalan \n Project : apptbook \n This project adds an appointment to an appointment book belonging to a particular owner"));
+    assertThat(result.getTextWrittenToStandardOut(),containsString("README Name: Pooja Nalan Project : apptbook This project adds an appointment to an appointment book belonging to a particular owner taking " +
+            "the necessary details about the appointment which includes owner name, purpose of the appointment, start date and time and end date and time"));
     assertThat(result.getExitCode(),equalTo(1));
   }
   @Test
   public void invokingMainWithPrintAndREADMEButWithNoArguments(){
     InvokeMainTestCase.MainMethodResult result = invokeMain(Project1.class,"-README", "-print");
-    assertThat(result.getTextWrittenToStandardOut(),containsString("\n README \n Name: Pooja Nalan \n Project : apptbook \n This project adds an appointment to an appointment book belonging to a particular owner"));
+    assertThat(result.getTextWrittenToStandardOut(),containsString("README Name: Pooja Nalan Project : apptbook This project adds an appointment to an appointment book belonging to a particular owner taking " +
+            "the necessary details about the appointment which includes owner name, purpose of the appointment, start date and time and end date and time"));
     assertThat(result.getExitCode(),equalTo(1));
   }
 
