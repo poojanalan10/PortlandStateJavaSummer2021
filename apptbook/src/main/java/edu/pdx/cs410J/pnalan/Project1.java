@@ -1,4 +1,8 @@
 package edu.pdx.cs410J.pnalan;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
@@ -9,10 +13,7 @@ public class Project1 {
 
     /**
      * various error comments initialized to be called at appropriate places
-     * README gives information about the input
      */
-    static final String README = "\n README \n Name: Pooja Nalan \n Project : apptbook \n This project adds an appointment to an appointment book belonging to a particular owner"
-            +"\n taking the necessary details about the appointment which includes owner name, purpose of the appointment,"+"\n start date and time and end date and time ";
     private static final String argumentList = "[options] <owner> <description> <begin date> <begin time> <end date> <end time> ";
     public static final String USAGE_MESSAGE = "java edu.pdx.cs410J.pnalan.Project1 [options] <args> args are in this order: \n"+ argumentList +"\n" + "[options] may appear in any order and the options are:\n"+ " -print\n"+"-README";
     public static final String MISSING_COMMAND_LINE_ARGUMENTS = "Missing command line arguments";
@@ -32,7 +33,7 @@ public class Project1 {
      *     case 2: args.length is > 6, which means too many arguments
      *     case 3: expected number of arguments. arguments are assigned and checked. They are validated and errors are thrown for any unexpected format
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         String owner = null;
         String description = null;
         String beginDate = null;
@@ -41,7 +42,7 @@ public class Project1 {
         String endTimeString = null;
        // System.out.print(args.length);
         if (Arrays.asList(args).contains("-README") & Arrays.asList(args).indexOf("-README") < 2 ) {
-            printReadMeAndExit(README);
+            printReadMeAndExit();
         }
         else if(Arrays.asList(args).contains("-print") & Arrays.asList(args).indexOf("-print") == 0) {
 
@@ -177,12 +178,14 @@ public class Project1 {
     }
 
     /**
-     * @param readmetext
-     *        it contains the readme message
+     *
      *prints the README message to the user when the option is entered
      */
-    public static void printReadMeAndExit(String readmetext){
-        System.out.println(readmetext);
+    public static void printReadMeAndExit() throws IOException {
+        InputStream readme = Project1.class.getResourceAsStream("README.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
+        String line = reader.readLine();
+        System.out.println(line);
         System.exit(1);
     }
 
