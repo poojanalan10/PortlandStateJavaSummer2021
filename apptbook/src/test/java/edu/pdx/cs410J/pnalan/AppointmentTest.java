@@ -95,7 +95,7 @@ public class AppointmentTest {
   @Test
   void checkConvertDateFormat(){
     Appointment app = new Appointment("zoom meeting","02/02/2021","09:15","02/02/2021","11:00");
-    assertThat(app.convertDateFormat(app.getBeginDate() + " " + app.getBeginTimeString()+" "+app.getBeginTimeString()).toString(),equalTo("Tue Feb 02 09:15:00 PST 2021"));
+    assertThat(app.convertDateFormat(app.getBeginDate() + " " + app.getBeginTimeString()+" "+app.getBeginTimeString()).toString(),equalTo("02/02/2021 09:15"));
 
   }
 
