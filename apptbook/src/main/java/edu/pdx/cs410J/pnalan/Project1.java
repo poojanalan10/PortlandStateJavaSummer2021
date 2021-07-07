@@ -184,9 +184,18 @@ public class Project1 {
     public static void printReadMeAndExit() throws IOException {
         InputStream readme = Project1.class.getResourceAsStream("README.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
-        String line = reader.readLine();
-        System.out.println(line);
+        String line = reader.readLine();;
+        for(;line != null;){
+          System.out.println(line);
+          line = reader.readLine();
+
+        }
+        reader.close();
+       // String line = reader.readLine();
+       // System.out.println(line);
         System.exit(1);
     }
+
+
 
 }
