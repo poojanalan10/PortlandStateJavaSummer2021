@@ -15,13 +15,53 @@ import java.util.Date;
  */
 
 
+
+
+
+
+
+
 public class Appointment extends AbstractAppointment {
+  /**
+   * description
+   *        The description of the appointment
+   */
   private final String description;
+
+  /**
+   *  beginDate
+   *        The date on which the appointment starts
+   */
   private String beginDate ;
+
+  /**
+    endDate
+  *        The date on which the appointment ends
+  */
   private String endDate;
+
+  /**
+   * beginTimeString
+   *        The time the appointment begins
+   */
   private final String beginTimeString ;
+
+
+  /** endTimeString
+   *   The time the appointment ends
+   */
   private final String endTimeString;
+
+  /**
+   *  begin
+   *      The begin date and time of an appointment as a date object
+   */
   private Date begin;
+
+  /**
+   * end
+   *  The end date and time of an appointment as a date object
+   */
   private Date end;
 
   /**
@@ -50,6 +90,7 @@ public class Appointment extends AbstractAppointment {
    *        The date on which the appointment ends
    * @param endTimeString
    *        The time the appointment ends
+   *
    */
   public Appointment(String description,String beginDate,String beginTimeString,String endDate, String endTimeString)  {
     this.description = description;
