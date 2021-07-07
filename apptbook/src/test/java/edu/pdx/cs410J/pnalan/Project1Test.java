@@ -27,7 +27,8 @@ class Project1Test extends InvokeMainTestCase {
       assertThat(readme, not(nullValue()));
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line = reader.readLine();
-      assertThat(line, containsString("README Name: Pooja Nalan Project : apptbook This project adds an appointment to an appointment book belonging to a particular owner taking the necessary details about the appointment which includes owner name, purpose of the appointment, start date and time and end date and time."));
+      assertThat(line, containsString("README Name: Pooja Nalan Project : apptbook This project adds an appointment to an appointment book belonging to a particular owner " +
+              "taking the necessary details about the appointment which includes owner name, purpose of the appointment, start date and time and end date and time."));
     }
   }
 
