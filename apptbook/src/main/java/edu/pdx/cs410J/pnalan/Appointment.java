@@ -116,7 +116,7 @@ public class Appointment extends AbstractAppointment {
 
   /**
    * returns a String describing the begin date and time of the appointment
-   * @return begin
+   * @return beginTimeString
    */
   @Override
   public String getBeginTimeString() {
@@ -125,7 +125,7 @@ public class Appointment extends AbstractAppointment {
 
   /**
    * returns a String describing the ending date and time of this appointment
-   * @return end
+   * @return endTimeString
    */
   @Override
   public String getEndTimeString() {
@@ -160,20 +160,15 @@ public class Appointment extends AbstractAppointment {
   }
 
   /**
+   * returns a date formatted according to a particular pattern mentioned in the pattern string variable
    * @param dateString
    *        the date in string format that needs to be converted to a date object
-   * returns a date formatted according to a particular pattern mentioned in the pattern string variable
    * @return convertedDate
    */
   public Date convertDateFormat(String dateString){
     try{
-   /* String pattern = "MM/dd/yyyy hh:mm";
-    SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-    Date d = formatter.parse(dateString);
-    return d;*/
       DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm");
       Date date1 =new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(dateString);
-     // System.out.println("Converted date: " + dateFormat.format(date1).toString());
       return dateFormat.parse(dateFormat.format(date1));
 
    } catch (ParseException e) {
