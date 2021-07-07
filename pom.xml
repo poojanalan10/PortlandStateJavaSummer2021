@@ -28,7 +28,7 @@ accordingly
   </parent>
       
   
-  <groupId>edu.pdx.cs410J.pnalan</groupId>
+  <groupId>edu.pdx.cs410J.whitlock</groupId>
       
   
   <artifactId>PortlandStateJavaSummer2021</artifactId>
