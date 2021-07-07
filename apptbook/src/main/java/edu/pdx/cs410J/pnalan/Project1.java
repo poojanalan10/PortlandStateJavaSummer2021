@@ -25,50 +25,51 @@ public class Project1 {
     public static final String USAGE_MESSAGE = "java edu.pdx.cs410J.pnalan.Project1 [options] <args> args are in this order: \n"+ argumentList +"\n" + "[options] may appear in any order and the options are:\n"+ " -print\n"+"-README";
 
     /**
-     * MISSING_COMMAND_LINE_ARGUMENTS prints the corresponding message when no options or arguments are passed in the commnad line
+     * MISSING_COMMAND_LINE_ARGUMENTS has an error message displayed when the corresponding message when no options or arguments are passed in the commnad line
      */
     public static final String MISSING_COMMAND_LINE_ARGUMENTS = "Missing command line arguments";
 
     /**
-     * TOO_MANY_ARGUMENTS When the arguments entered exceeds the expected count
+     * TOO_MANY_ARGUMENTS has an error message displayed when the arguments entered exceeds the expected count
      */
     public static final String TOO_MANY_ARGUMENTS = "The required number of arguments is 6 and you've exceeded that.";
 
     /**
-     * MISSING_DESCRIPTION An error message when the arguments entered at the input has a missing description
+     * MISSING_DESCRIPTION has an error message displayed when the arguments entered at the input has a missing description
      */
     public static final String MISSING_DESCRIPTION = "Missing description";
     /**
-     * MISSING_BEGIN_DATE An error message when the begin date is missing
+     * MISSING_BEGIN_DATE has an error message displayed when the begin date is missing
      */
     public static final String MISSING_BEGIN_DATE = "Missing begin date";
 
     /**
-     * MISSING_BEGIN_TIME An error message when begin time of an appointment is missing
+     * MISSING_BEGIN_TIME has an error message displayed when begin time of an appointment is missing
      */
     public static final String MISSING_BEGIN_TIME = "Missing begin time";
 
     /**
-     * MISSING_END_DATE An error message when end date is missing for an appointment
+     * MISSING_END_DATE has an error message displayed when end date is missing for an appointment
      */
     public static final String MISSING_END_DATE = "Missing end date";
 
     /**
-     * MISSING_END_TIME An error message when end time is missing for an appointment
+     * MISSING_END_TIME has an error message displayed when end time is missing for an appointment
      */
     public static final String MISSING_END_TIME = "Missing end time";
 
     /**
-     * UNRECOGNIZED_DATE_FORMAT An error message when dates entered for an appointment is not in the right format
+     * UNRECOGNIZED_DATE_FORMAT has an error message displayed when dates entered for an appointment is not in the right format
      */
     public static final String UNRECOGNIZED_DATE_FORMAT = "Date not in requested format (hh:mm) \" unrecognized date";
 
     /**
-     * UNRECOGNIZED_TIME_FORMAT An error message when times entered for an appointment is not in the right format
+     * UNRECOGNIZED_TIME_FORMAT has an error message displayed when times entered for an appointment is not in the right format
      */
     public static final String UNRECOGNIZED_TIME_FORMAT = "Time not in requested format (hh:mm) \" unrecognized time";
 
     /**
+     * The main method for our Project1
      * @param args
      *        [options] arguments
      * [-README -print] 'owner' 'description' 'begin date' 'begin time' 'end date' 'end time'
@@ -169,11 +170,11 @@ public class Project1 {
     }
 
     /**
+     * Validates the input string date against the regex expression and returns the date string back if it matches the regex pattern,
+     * else throws unrecognized date format error and exits
      * @param dateString
      *        A date in the format of String input from the user
      * @return dateString or an error message
-     * Validates the input string date against the regex expression and returns the date string back if it matches the regex pattern,
-     * else throws unrecognized date format error and exits
      */
     public static String validateDate(String dateString){
             String dateregex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
@@ -189,12 +190,11 @@ public class Project1 {
     }
 
     /**
-     *
+     * Validates the input string time against the regex expression and returns the time string back if it matches the regex pattern,
+     * else throws unrecognized time format error and exits
      * @param TimeString
      *         A time in the form of string input from the user
      * @return TimeString or error message
-     *Validates the input string time against the regex expression and returns the time string back if it matches the regex pattern,
-     * else throws unrecognized time format error and exits
      */
     public static String validateTime(String TimeString){
             String timeregex = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$";
@@ -221,8 +221,7 @@ public class Project1 {
     }
 
     /**
-     *
-     *prints the README message to the user when the option is entered
+     *prints the README message to the user when the option is entered and exits
      */
     public static void printReadMeAndExit() {
         try {

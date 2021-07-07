@@ -14,13 +14,6 @@ import java.util.Date;
  * This class represents a <code>Appointment</code>
  */
 
-
-
-
-
-
-
-
 public class Appointment extends AbstractAppointment {
   /**
    * description
@@ -34,8 +27,7 @@ public class Appointment extends AbstractAppointment {
    */
   private String beginDate ;
 
-  /**
-    endDate
+  /** endDate
   *        The date on which the appointment ends
   */
   private String endDate;
@@ -52,8 +44,7 @@ public class Appointment extends AbstractAppointment {
    */
   private final String endTimeString;
 
-  /**
-   *  begin
+  /** begin
    *      The begin date and time of an appointment as a date object
    */
   private Date begin;
@@ -142,7 +133,8 @@ public class Appointment extends AbstractAppointment {
   }
 
   /**
-   * @return returns a Date that represents the begin date time of this appointment
+   * returns a Date that represents the begin date time of this appointment
+   * @return begin
    */
   @Override
   public Date getBeginTime(){
@@ -150,7 +142,8 @@ public class Appointment extends AbstractAppointment {
   }
 
   /**
-   * @return returns a Date that represents the end date and time of this appointment
+   * returns a Date that represents the end date and time of this appointment
+   * @return end
    */
   @Override
   public Date getEndTime(){
@@ -168,6 +161,7 @@ public class Appointment extends AbstractAppointment {
 
   /**
    * @param dateString
+   *        the date in string format that needs to be converted to a date object
    * returns a date formatted according to a particular pattern mentioned in the pattern string variable
    * @return convertedDate
    */

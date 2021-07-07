@@ -61,6 +61,11 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
         this.owner = owner;
         allAppointments(appBook);
     }
+
+    /**
+     * Returns the name of the owner of the appointment book
+     * @return owner
+     */
     @Override
     public String getOwnerName() {
         return this.owner;
