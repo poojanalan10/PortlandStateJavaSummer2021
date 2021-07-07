@@ -14,17 +14,60 @@ public class Project1 {
     /**
      * various error comments initialized to be called at appropriate places
      */
+    /**
+     * argumentList An argument list that specifies the order of input values
+     */
     private static final String argumentList = "[options] <owner> <description> <begin date> <begin time> <end date> <end time> ";
+
+    /**
+     * USAGE_MESSAGE prints the way an input has to be given for creating an appointment
+     */
     public static final String USAGE_MESSAGE = "java edu.pdx.cs410J.pnalan.Project1 [options] <args> args are in this order: \n"+ argumentList +"\n" + "[options] may appear in any order and the options are:\n"+ " -print\n"+"-README";
+
+    /**
+     * MISSING_COMMAND_LINE_ARGUMENTS prints the corresponding message when no options or arguments are passed in the commnad line
+     */
     public static final String MISSING_COMMAND_LINE_ARGUMENTS = "Missing command line arguments";
+
+    /**
+     * TOO_MANY_ARGUMENTS When the arguments entered exceeds the expected count
+     */
     public static final String TOO_MANY_ARGUMENTS = "The required number of arguments is 6 and you've exceeded that.";
+
+    /**
+     * MISSING_DESCRIPTION An error message when the arguments entered at the input has a missing description
+     */
     public static final String MISSING_DESCRIPTION = "Missing description";
+    /**
+     * MISSING_BEGIN_DATE An error message when the begin date is missing
+     */
     public static final String MISSING_BEGIN_DATE = "Missing begin date";
+
+    /**
+     * MISSING_BEGIN_TIME An error message when begin time of an appointment is missing
+     */
     public static final String MISSING_BEGIN_TIME = "Missing begin time";
+
+    /**
+     * MISSING_END_DATE An error message when end date is missing for an appointment
+     */
     public static final String MISSING_END_DATE = "Missing end date";
+
+    /**
+     * MISSING_END_TIME An error message when end time is missing for an appointment
+     */
     public static final String MISSING_END_TIME = "Missing end time";
+
+    /**
+     * UNRECOGNIZED_DATE_FORMAT An error message when dates entered for an appointment is not in the right format
+     */
     public static final String UNRECOGNIZED_DATE_FORMAT = "Date not in requested format (hh:mm) \" unrecognized date";
+
+    /**
+     * UNRECOGNIZED_TIME_FORMAT An error message when times entered for an appointment is not in the right format
+     */
     public static final String UNRECOGNIZED_TIME_FORMAT = "Time not in requested format (hh:mm) \" unrecognized time";
+
     /**
      * @param args
      *        [options] arguments
@@ -33,7 +76,7 @@ public class Project1 {
      *     case 2: args.length is > 6, which means too many arguments
      *     case 3: expected number of arguments. arguments are assigned and checked. They are validated and errors are thrown for any unexpected format
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
         String owner = null;
         String description = null;
         String beginDate = null;
@@ -181,20 +224,27 @@ public class Project1 {
      *
      *prints the README message to the user when the option is entered
      */
-    public static void printReadMeAndExit() throws IOException {
-        InputStream readme = Project1.class.getResourceAsStream("README.txt");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
-        String line = reader.readLine();;
-        for(;line != null;){
-          System.out.println(line);
-          line = reader.readLine();
+    public static void printReadMeAndExit() {
+        try {
+            InputStream readme = Project1.class.getResourceAsStream("README.txt");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
+            String line = reader.readLine();
+            ;
+            for (; line != null; ) {
+                System.out.println(line);
+                line = reader.readLine();
 
+            }
+            reader.close();
+            // String line = reader.readLine();
+            // System.out.println(line);
+            System.exit(1);
         }
-        reader.close();
-       // String line = reader.readLine();
-       // System.out.println(line);
-        System.exit(1);
+        catch (IOException e){
+            System.out.println(e);;
+        }
     }
+
 
 
 
