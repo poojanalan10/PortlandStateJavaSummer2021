@@ -2,10 +2,7 @@ package edu.pdx.cs410J.pnalan;
 
 import edu.pdx.cs410J.AbstractAppointment;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 import java.util.Date;
@@ -68,6 +65,8 @@ public class Appointment extends AbstractAppointment {
     begin = null;
     end = null;
   }
+
+
   /**
    * Creates a new <code>Appointment</code>
    *
@@ -83,19 +82,28 @@ public class Appointment extends AbstractAppointment {
    *        The time the appointment ends
    *
    */
-  public Appointment(String description,String beginDate,String beginTimeString,String endDate, String endTimeString)  {
+  public Appointment(String description,String beginDate,String beginTimeString,String endDate, String endTimeString) {
     this.description = description;
     this.beginDate = beginDate;
     this.beginTimeString = beginTimeString;
     this.endDate = endDate;
     this.endTimeString = endTimeString;
-    this.begin = convertDateFormat(this.getBeginDate() + " " + this.getBeginTimeString());
-    this.end = convertDateFormat(this.getEndDate() + " " + this.getEndTimeString());
+    try {
+      this.begin = new SimpleDateFormat("MM/dd/yyyy HH:mm").parse(this.getBeginDate() + " " + this.getBeginTimeString());
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+    try {
+      this.end = new SimpleDateFormat("MM/dd/yyyy HH:mm").parse(this.getEndDate() + " " + this.getEndTimeString());
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
     if(begin.after(end)){
       System.err.println("Begin date/time cannot be greater than or equal to the end date/time for an appointment!");
       System.exit(1);
     }
   }
+
 
 
   /**
@@ -165,13 +173,12 @@ public class Appointment extends AbstractAppointment {
    *        the date in string format that needs to be converted to a date object
    * @return convertedDate
    */
-  public Date convertDateFormat(String dateString){
+  public String convertDateFormat(String dateString){
     try{
-      DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm");
-      Date date1 =new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(dateString);
-      return dateFormat.parse(dateFormat.format(date1));
+      SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+      return dateformat.format(dateString);
 
-   } catch (ParseException e) {
+   } catch (Exception e) {
       e.printStackTrace();
     }
     return null;

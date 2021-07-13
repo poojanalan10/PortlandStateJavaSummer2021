@@ -42,5 +42,12 @@ public class AppointmentBookTest {
         AppointmentBook appBook = new AppointmentBook("Gwen");
         assertThat(appBook.toString(),equalTo("Gwen's appointment book with 0 appointments"));
     }
+    @Test
+    void addingAnAppointmentAddsAppointment(){
+        Appointment appointment = new Appointment();
+        AppointmentBook appointmentBook = new AppointmentBook("Pooja");
+        appointmentBook.addAppointment(appointment);
+        assertThat(appointmentBook.getAppointments(),hasItem(appointment));
+    }
 
 }
