@@ -15,6 +15,13 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
     private static  FileWriter filewriter;
     private static  Writer writer;
 
+    /**
+     * This constructor assigns the string writer and filename to the datamenbers.
+     * @param filewriter
+     * @param sw
+     * @param filename
+     * @throws IOException
+     */
 
     TextDumper(FileWriter filewriter, Writer sw, String filename) throws IOException {
         this.filepath = new String(createFilePath(filename));
@@ -26,6 +33,11 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
 
     }
 
+    /**
+     * This method throws an exception when the owner name is null or when the owner name given by the user doesn't match the name in the corresponding textfile
+     * @param owner
+     * @throws IOException
+     */
     public void appointmentOwnerComparison(String owner) throws IOException{
         BufferedReader bf = new BufferedReader(new FileReader(this.filepath));
         String ownerName = bf.readLine();
@@ -36,6 +48,12 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
             throw new InvalidParameterException("The owner names in the file and command line do not match");
         }
     }
+
+    /**
+     * This method creates a file path with the file name. If a relative path is given , it creates the directory and adds the file under it and if a file doesn't exist it creates a new one or else just continue
+     * @param fname
+     * @throws IOException
+     */
     public void createNewFileAtEnteredPathIfFileDoesntExist(String fname) throws IOException {
         File file = new File(fname);
         File mkdir = null;
@@ -63,12 +81,24 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
         }
     }
 
+    /**
+     * This method creates a file path based on whether a file name is entered with .txt extension or not
+     * @param fname
+     * @return
+     * @throws IOException
+     */
     public String createFilePath(String fname) throws IOException{
         if(fname.matches("^.+?\\..*?") && !fname.matches("^.+?\\.txt")){
             throw new IllegalArgumentException("File should only have a .txt extension or can be simply given using a name");
         }
         return (fname.matches("^.+?\\.txt$") ? fname:fname+".txt");
     }
+
+    /**
+     * This method dumps the appointment details in the appointment book to the text file
+     * @param appBook
+     * @throws IOException
+     */
     @Override
     public void dump(AppointmentBook appBook) throws IOException {
 

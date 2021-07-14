@@ -4,10 +4,7 @@ import edu.pdx.cs410J.AppointmentBookParser;
 import edu.pdx.cs410J.ParserException;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TextParser implements AppointmentBookParser<AppointmentBook> {
@@ -18,7 +15,13 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
   //  private static Reader reader;
 
 
-
+    /**
+     * This constructor assigns values to the data members
+     * @param bufferedreader
+     * @param filename
+     * @param reader
+     * @throws IOException
+     */
     TextParser(BufferedReader bufferedreader, String filename, Reader reader) throws IOException {
         super();
         this.filepath = new String(createFilePath(filename));
@@ -29,7 +32,7 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
 
 
     }
-     TextParser(BufferedReader filereader){
+   /*  TextParser(BufferedReader filereader){
         super();
         this.bufferedreader = filereader;
      }
@@ -40,8 +43,14 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
         this.file = new File(this.filepath);
 
     }
+*/
 
-
+    /**
+     * This method creates a text file name based on ow its inputted with or without extension
+     * @param fname
+     * @return
+     * @throws IOException
+     */
     public String createFilePath(String fname) throws IOException{
         if(fname.matches("^.+?\\..*?") && !fname.matches("^.+?\\.txt")){
             throw new IllegalArgumentException("File should only have a .txt extension or can be simply given using a name");
@@ -49,11 +58,16 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
         return (fname.matches("^.+?\\.txt$") ? fname:fname+".txt");
     }
 
-@Override
+    /**
+     * This method parses the appointments, reads from the text file, adds to the appointment book and returns the appointment book object
+     * @return
+     * @throws ParserException
+     */
+    @Override
 public AppointmentBook parse () throws ParserException{
     try {
     AppointmentBook result = null;
-    boolean finished = false;
+   // boolean finished = false;
     AppointmentBook book = null;
     final List<String> listofAppointments = new ArrayList<>();
     String current = null;
@@ -69,7 +83,7 @@ public AppointmentBook parse () throws ParserException{
         line = this.bufferedreader.readLine();
         }
     if (listofAppointments.isEmpty()) {
-        finished = true;
+      //  finished = true;
         result = book;
     } else {
         for (String appointment : listofAppointments) {
@@ -77,9 +91,9 @@ public AppointmentBook parse () throws ParserException{
             book.addAppointment(new Appointment(args[0],args[1],args[2],args[3],args[4]));
         }
     }
-    if (!finished) {
+  //  if (!finished) {
         result = book;
-    }
+   // }
 
     return result;
     } catch (IOException e) {

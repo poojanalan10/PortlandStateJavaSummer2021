@@ -50,4 +50,5 @@ public class AppointmentBookTest {
         assertThat(appointmentBook.getAppointments(),hasItem(appointment));
     }
 
+
 }

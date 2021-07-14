@@ -98,10 +98,7 @@ public class Appointment extends AbstractAppointment {
     } catch (ParseException e) {
       e.printStackTrace();
     }
-    if(begin.after(end)){
-      System.err.println("Begin date/time cannot be greater than or equal to the end date/time for an appointment!");
-      System.exit(1);
-    }
+
   }
 
 
@@ -195,5 +192,14 @@ public class Appointment extends AbstractAppointment {
     double duration = TimeUnit.MILLISECONDS.toMinutes((long) timedifference) % 60;
     return duration;
 
+  }
+
+  public String validateBeginLessThanEndDate(Date begin,Date end){
+    if(begin.after(end)){
+     return "Begin date/time cannot be greater than or equal to the end date/time for an appointment!";
+    }
+    else{
+      return "begin date is before end date as expected";
+    }
   }
 }

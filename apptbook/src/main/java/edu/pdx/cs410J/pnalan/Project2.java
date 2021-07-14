@@ -62,13 +62,24 @@ public class Project2 {
      */
     public static final String UNRECOGNIZED_TIME_FORMAT = "Time not in requested format (hh:mm) \" unrecognized time";
 
-
+    /**
+     * UNRECOGNIZED_FILE_NAME has an error message displayed when the filename is not in the specified format
+     */
     public static final String UNRECOGNIZED_FILE_NAME = "File name is not in the specified format. It should be filename or filename.txt or myDir/filename or myDir/filename.txt";
 
-
+    /**
+     * MISSING_FILE_NAME has an error message displayed when the file name is missing
+     */
     public static final String MISSING_FILE_NAME = "File name is not entered";
+
+    /**
+     * MISSING_OWNER_NAME has an error message displayed when the owner name is missing
+     */
     public static final String MISSING_OWNER_NAME = "Name of the Owner of the appointment is missing";
 
+    /**
+     * WRONG_ORDERING_OPTIONS has an error message displayed when the ordering of options in the command line is mixed
+     */
     public static final String WRONG_ORDERING_OPTIONS = "Options must be entered first. Wrong ordering of arguments";
     /**
      * The main method for our Project1

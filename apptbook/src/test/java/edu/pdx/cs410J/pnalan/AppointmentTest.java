@@ -93,4 +93,23 @@ public class AppointmentTest {
   }
 
 
+  @Test
+  void convertDateFormatCheckForBeginDateTime(){
+    Appointment appointment = new Appointment();
+    Appointment app = new Appointment("zoom meeting","02/02/2021","09:15","02/02/2021","11:00");
+    assertThat(app.getBeginTime().toString(),containsString("Tue Feb 02 09:15:00"));
+  }
+
+  @Test
+  void convertDateFormatCheckForEndDateTime(){
+    Appointment appointment = new Appointment();
+    Appointment app = new Appointment("zoom meeting","02/02/2021","09:15","02/03/2021","11:00");
+    assertThat(app.getEndTime().toString(),containsString("Wed Feb 03 11:00:00"));
+  }
+  @Test
+  void convertDateBeginGreaterThanEnd(){
+    Appointment appointment = new Appointment();
+    Appointment app = new Appointment("zoom meeting","02/04/2021","09:15","02/03/2021","11:00");
+    assertThat(app.validateBeginLessThanEndDate(app.getBeginTime(),app.getEndTime()),containsString("Begin date/time cannot be greater than or equal to the end date/time for an appointment!"));
+  }
 }

@@ -42,6 +42,7 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
      *        The name of the owner of this appointment
      * @param newAppointment
      *        A new appointment yet, to add to a collections of Appointments
+     *
      */
     public AppointmentBook(String owner,Appointment newAppointment){
         super();
@@ -49,18 +50,7 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
         addAppointment(newAppointment);
     }
 
-    /**
-     * This constructor takes two parameters and adds all the appointments of a owner
-     * @param owner
-     *        The name of the owner of this appointment
-     * @param appBook
-     *        The appBook object of type AppointmentBook
-     */
-    public AppointmentBook(String owner, AppointmentBook... appBook){
-        super();
-        this.owner = owner;
-        allAppointments(appBook);
-    }
+
 
     /**
      * Returns the name of the owner of the appointment book
@@ -82,21 +72,6 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
         this.appointments.add(app);
     }
 
-    /**
-     * This method is used for adding all the appointments to the appointments collection
-     * @param appBook
-     *        appBook object of type AppointmentBook
-     */
-    public void allAppointments(AppointmentBook... appBook){
-     for(var app: appBook)   {
-         if(app != null ) {
-             appointments.addAll(app.getAppointments());
-         }
-         else{
-             System.out.println("No appointments to add!");
-         }
-         }
-     }
 
     /**
      * Returns all the appointments of a owner
