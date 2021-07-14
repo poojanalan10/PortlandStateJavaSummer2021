@@ -3,6 +3,8 @@ package edu.pdx.cs410J.pnalan;
 import edu.pdx.cs410J.AppointmentBookDumper;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.InvalidParameterException;
 import java.util.Arrays;
 
@@ -14,34 +16,16 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
     private static  Writer writer;
 
 
-   /* TextDumper(String filename, Writer writer){
-        super();
-        if(filename.contains(".txt")){
-            filepath = new String(filename);
-        }
-        else {
-            filepath = new String(filename) + ".txt";
-        }
-        this.writer = writer;
-    }*/
     TextDumper(FileWriter filewriter, Writer sw, String filename) throws IOException {
         this.filepath = new String(createFilePath(filename));
         createNewFileAtEnteredPathIfFileDoesntExist(filename);
         this.file = new File(this.filepath);
         this.writer = sw;
-        this.filewriter = filewriter;
+        this.filewriter = new FileWriter(this.file,true);
 
 
     }
-   /* TextDumper(String filename){
-        super();
-        try {
-            this.filepath = new String(createFilePath(filename));
-            createNewFileAtEnteredPathIfFileDoesntExist(filename);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
+
     public void appointmentOwnerComparison(String owner) throws IOException{
         BufferedReader bf = new BufferedReader(new FileReader(this.filepath));
         String ownerName = bf.readLine();
@@ -68,7 +52,9 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
                 }
             }
         } else {
-            if (!file.isFile()) {
+            if(!Files.exists(Paths.get(String.valueOf(file)))){
+
+                System.out.println("Going to create a new file since it doen't exist");
                 if (fname.matches("([^\\s]+|(\\.(?i)(txt))$)")) {
                     file.createNewFile();
                 }
@@ -86,23 +72,23 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
     @Override
     public void dump(AppointmentBook appBook) throws IOException {
 
-           // File file = new File(filepath);
-           // FileWriter filewriter = new FileWriter(file,true);
-            BufferedReader bufferedReader = null;
+            BufferedReader bufferedreader = new BufferedReader(new FileReader(this.filepath));
             var appointments = appBook.getAppointments();
-            if (this.file.length() == 0) {
+            String line = bufferedreader.readLine();
+            if ( line == null || line.isEmpty()) {
                 filewriter.write(appBook.getOwnerName() + "\n");
-               // bufferedReader = new BufferedReader(new FileReader(this.filepath));
-              //  String owner = bufferedReader.readLine();
-                writer.write(appBook.getOwnerName() + "\n");
-                for (var appointment : appointments)
-                   filewriter.write(appointment.getDescription() + "," + appointment.getBeginDate() + "," + appointment.getBeginTimeString() + "," + appointment.getEndDate() + "," + appointment.getEndTimeString());
-                   filewriter.write("\n");
+                BufferedReader bf = new BufferedReader(new FileReader(this.filepath));
+                String owner = bf.readLine();
+                this.writer.write(appBook.getOwnerName() + "\n");
+
+                for (var appointment : appointments) {
+                    filewriter.write(appointment.getDescription() + "," + appointment.getBeginDate() + "," + appointment.getBeginTimeString() + "," + appointment.getEndDate() + "," + appointment.getEndTimeString());
+                    filewriter.write("\n");
+                }
             } else {
-                    bufferedReader = new BufferedReader(new FileReader(this.filepath));
-                    String owner = bufferedReader.readLine();
+                    String owner = line;
                     appointmentOwnerComparison(appBook.getOwnerName());
-                    writer.write(owner);
+                    this.writer.write(owner);
                     for (Appointment appointment : appointments) {
                        filewriter.append(appointment.getDescription() + "," + appointment.getBeginDate() + "," + appointment.getBeginTimeString() + "," + appointment.getEndDate() + "," + appointment.getEndTimeString());
                        filewriter.append("\n");

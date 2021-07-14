@@ -4,7 +4,10 @@ import edu.pdx.cs410J.AppointmentBookParser;
 import edu.pdx.cs410J.ParserException;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TextParser implements AppointmentBookParser<AppointmentBook> {
@@ -12,24 +15,19 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
     private static String filepath ;
     private  static BufferedReader bufferedreader;
     private static File file;
- //   private static Reader reader;
+  //  private static Reader reader;
 
 
 
-    TextParser(String filename, Reader reader) {
+    TextParser(BufferedReader bufferedreader, String filename, Reader reader) throws IOException {
         super();
-        if(filename.contains(".txt")){
-            filepath = new String(filename);
-        }
-        else {
-            filepath = new String(filename) + ".txt";
-        }
-        try {
-            this.file = new File(this.filepath);
-            this.bufferedreader = new BufferedReader(new FileReader(file));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        this.filepath = new String(createFilePath(filename));
+       // createNewFileAtEnteredPathIfFileDoesntExist(filename);
+        this.file = new File(this.filepath);
+        this.bufferedreader = bufferedreader;
+       // this.bufferedreader = new BufferedReader(reader);
+
+
     }
      TextParser(BufferedReader filereader){
         super();
@@ -37,23 +35,19 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
      }
 
 
-    TextParser(String filename){
-        if(filename.contains(".txt")){
-            filepath = new String(filename);
-        }
-        else {
-            filepath = new String(filename) + ".txt";
-        }
+    TextParser(String filename) throws IOException{
+        this.filepath = new String(createFilePath(filename));
         this.file = new File(this.filepath);
-
-       /* try {
-            this.bufferedreader = new BufferedReader(new FileReader(this.file));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }*/
 
     }
 
+
+    public String createFilePath(String fname) throws IOException{
+        if(fname.matches("^.+?\\..*?") && !fname.matches("^.+?\\.txt")){
+            throw new IllegalArgumentException("File should only have a .txt extension or can be simply given using a name");
+        }
+        return (fname.matches("^.+?\\.txt$") ? fname:fname+".txt");
+    }
 
 @Override
 public AppointmentBook parse () throws ParserException{
@@ -62,17 +56,10 @@ public AppointmentBook parse () throws ParserException{
     boolean finished = false;
     AppointmentBook book = null;
     final List<String> listofAppointments = new ArrayList<>();
+    String current = null;
     if(!this.bufferedreader.ready()){
         throw new ParserException("Missing owner");
     }
-   // File file = new File(filepath);
-    this.bufferedreader = new BufferedReader(new FileReader(file));
-    String current = null;
-    if(!file.exists()){
-        return null;
-    }
-
-   // br = new BufferedReader(new FileReader(file));
     String owner = this.bufferedreader.readLine();
     String line = this.bufferedreader.readLine();
     book = new AppointmentBook(owner);

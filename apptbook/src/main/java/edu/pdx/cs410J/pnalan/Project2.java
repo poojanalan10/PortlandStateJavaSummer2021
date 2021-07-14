@@ -94,13 +94,6 @@ public class Project2 {
         if (Arrays.asList(args).contains("-README") & Arrays.asList(args).indexOf("-README") < 3 ) {
             printReadMeAndExit();
         }
-     /*   else if((Arrays.asList(args).contains("-textfile") && Arrays.asList(args).indexOf("-textfile") < 2 && args.length < 9))
-        {
-            printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
-        }
-     /*   else if(Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") == 0 && !Arrays.asList(args).contains("-textfile") && args.length < 7 && args.length != 1){
-            printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
-        }*/
         /**
          * If the user enters a only print option but not the other arguments
          * prints that the command line arguments are missing
@@ -133,6 +126,10 @@ public class Project2 {
         else if(args.length > 7 && Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") < 2 && !Arrays.asList(args).contains("-textfile")) {
             printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
         }
+        else if(args.length > 8 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textfile")){
+            printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
+        }
+
 
         else {
 
@@ -149,6 +146,12 @@ public class Project2 {
                 }
                 else if(Arrays.asList(args).indexOf("-print") == 0 && !Arrays.asList(args).contains("-textfile")){
                     argsValues = Arrays.copyOfRange(args, 1 , args.length);
+                }
+                else if(args.length == 8 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textfile")){
+                    hastextfileoption = true;
+                    filename = Arrays.asList(args).get(1);
+                    argsValues = Arrays.copyOfRange(args, 2 , args.length);
+
                 }
                 for (String arg : argsValues) {
 
@@ -214,9 +217,8 @@ public class Project2 {
     }
     private static AppointmentBook readFromFile(String filename, StringWriter sw){
         try {
-
-            TextParser txtParser = new TextParser(filename,new StringReader(sw.toString()));
-        //    TextParser txtParser = new TextParser(filename+".txt",new BufferedReader(new InputStreamReader())));
+            BufferedReader bufferedreader = new BufferedReader(new FileReader(filename));
+            TextParser txtParser = new TextParser(bufferedreader,filename,new StringReader(sw.toString()));
             AppointmentBook appointmentBook = txtParser.parse();
             return appointmentBook;
         }
@@ -232,8 +234,6 @@ public class Project2 {
         try{
             FileWriter filewriter = new FileWriter(new File(filename),true);
             TextDumper textDumper = new TextDumper(filewriter,sw,filename);
-          //  TextDumper textDumper = new TextDumper(filename);
-          //  TextDumper textDumper = new TextDumper(sw,filename);
             textDumper.dump(appointmentBook);
 
         } catch (IOException e) {

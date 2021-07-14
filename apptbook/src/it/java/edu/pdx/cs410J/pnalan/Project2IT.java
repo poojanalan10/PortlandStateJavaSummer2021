@@ -193,7 +193,12 @@ public class Project2IT extends InvokeMainTestCase{
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.MISSING_COMMAND_LINE_ARGUMENTS));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
     }
-
+    @Test
+    public void onlyTextFileOptionGivenWithoutPrint(){
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-textfile","file","Football match","09/08/2021","15:15","09/08/2021","17:30");
+        assertThat(result.getTextWrittenToStandardError(),containsString(Project2.MISSING_COMMAND_LINE_ARGUMENTS));
+        assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
+    }
     @Test
     public void unrecognizedDateFormat(){
         InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","Pooja","zoom meeting","02-03-2021","02:30","02-03-2021","03:30");

@@ -11,26 +11,50 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TextParserTest {
     @Test
-    void emptyFilecannotBeParsed(){
-        InputStream resource = getClass().getResourceAsStream("filewithnocontent.txt");
+    void emptyFilecannotBeParsed() throws IOException, ParserException{
+        String filename = "emptyfile.txt";
+        InputStream resource = getClass().getResourceAsStream(filename);
         assertNotNull(resource);
-        TextParser parser = new TextParser(new BufferedReader(new InputStreamReader(resource)));
+        BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(resource));
+        TextParser parser = new TextParser(bufferedreader,filename, new BufferedReader(new InputStreamReader(resource)));
         assertThrows(ParserException.class,parser::parse);
         }
-   @Test
-   void appointmentBookOwnerCanBeDumpedAndParsed() throws IOException, ParserException{
+
+    @Test
+    void appointmentBookOwnerCanBeDumpedAndParsed() throws IOException, ParserException{
+        String filename = "file1.txt";
+        InputStream resource = getClass().getResourceAsStream(filename);
+        assertNotNull(resource);
         String owner = "Pooja";
-        String filename = "appointmentdumpedandparsed";
-        AppointmentBook appointmentBook = new AppointmentBook(owner);
-        FileWriter filewriter = new FileWriter(new File(filename),true);
+        AppointmentBook appBook = new AppointmentBook(owner);
         StringWriter sw = new StringWriter();
-        TextDumper dumper = new TextDumper(filewriter, sw,filename);
-       //TextDumper dumper = new TextDumper(filename);
-        dumper.dump(appointmentBook);
-        TextParser parser = new TextParser(filename, new StringReader(sw.toString()));
-        appointmentBook = parser.parse();
+        FileWriter filewriter = new FileWriter(new File(filename),true);
+        TextDumper textDumper = new TextDumper(filewriter,sw,filename);
+        textDumper.dump(appBook);
+        BufferedReader bufferedreader = new BufferedReader(new FileReader(filename));
+        TextParser txtParser = new TextParser(bufferedreader,filename,new StringReader(sw.toString()));
+        AppointmentBook appointmentBook = txtParser.parse();
         assertThat(appointmentBook.getOwnerName(), equalTo(owner));
 
     }
+    @Test
+    void appointmentBookOwnerCanBeDumpedAndParsedWithRelativePath() throws IOException, ParserException{
+        String filename = "Folder/file1";
+        StringWriter sw = new StringWriter();
+        FileWriter filewriter = null;
+        TextDumper textDumper = new TextDumper(filewriter,sw,filename);
+
+
+    }
+    @Test
+    void appointmentBookOwnerCanBeDumpedAndParsedWithRelativePathAndExtension() throws IOException, ParserException{
+        String filename = "Folder/file1.txt";
+        StringWriter sw = new StringWriter();
+        FileWriter filewriter = null;
+        TextDumper textDumper = new TextDumper(filewriter,sw,filename);
+
+
+    }
+
 
 }
