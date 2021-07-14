@@ -67,7 +67,10 @@ public class Project1 {
      * UNRECOGNIZED_TIME_FORMAT has an error message displayed when times entered for an appointment is not in the right format
      */
     public static final String UNRECOGNIZED_TIME_FORMAT = "Time not in requested format (hh:mm) \" unrecognized time";
-
+    /**
+     * BEGIN_GREATER_THAN_END has an error message when begin date and time is after end date/time
+     */
+    public static  final String BEGIN_GREATER_THAN_END = "Begin date/time cannot be greater than or equal to the end date/time for an appointment!";
     /**
      * The main method for our Project1
      * @param args
@@ -146,6 +149,10 @@ public class Project1 {
                     printErrorMessageAndExit(MISSING_END_TIME);
                 }
                 Appointment app = new Appointment(description,beginDate,beginTimeString,endDate,endTimeString);
+                if(app.validateBeginLessThanEndDate(app.getBeginTime(),app.getEndTime()) != "begin date is before end date as expected")
+                {
+                    printErrorMessageAndExit(BEGIN_GREATER_THAN_END);
+                }
                 AppointmentBook appBook = new AppointmentBook(owner, app);
                 System.out.println(app.toString());
               //  System.out.println("Appointment information:\n" + app.toString());

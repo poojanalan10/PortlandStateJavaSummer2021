@@ -196,6 +196,7 @@ public class Appointment extends AbstractAppointment {
 
   public String validateBeginLessThanEndDate(Date begin,Date end){
     if(begin.after(end)){
+      System.err.println("Begin date/time cannot be greater than or equal to the end date/time for an appointment!");
      return "Begin date/time cannot be greater than or equal to the end date/time for an appointment!";
     }
     else{

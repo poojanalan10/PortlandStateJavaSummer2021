@@ -81,6 +81,11 @@ public class Project2 {
      * WRONG_ORDERING_OPTIONS has an error message displayed when the ordering of options in the command line is mixed
      */
     public static final String WRONG_ORDERING_OPTIONS = "Options must be entered first. Wrong ordering of arguments";
+
+    /**
+     * BEGIN_GREATER_THAN_END has an error message when begin date and time is after end date/time
+     */
+    public static  final String BEGIN_GREATER_THAN_END = "Begin date/time cannot be greater than or equal to the end date/time for an appointment!";
     /**
      * The main method for our Project1
      * @param args
@@ -204,7 +209,12 @@ public class Project2 {
                 else if(endTimeString == null) {
                     printErrorMessageAndExit(MISSING_END_TIME);
                 }
+
                 Appointment app = new Appointment(description,beginDate,beginTimeString,endDate,endTimeString);
+                if(app.validateBeginLessThanEndDate(app.getBeginTime(),app.getEndTime()) != "begin date is before end date as expected")
+                {
+                    printErrorMessageAndExit(BEGIN_GREATER_THAN_END);
+                }
                 AppointmentBook appBook = new AppointmentBook(owner, app);
                 StringWriter sw = new StringWriter();
                 if(Arrays.asList(args).contains("-textfile") && Arrays.asList(args).indexOf("-textfile") == 1) {

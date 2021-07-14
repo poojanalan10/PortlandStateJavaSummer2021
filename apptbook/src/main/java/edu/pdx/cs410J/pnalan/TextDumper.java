@@ -41,7 +41,7 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
     public void appointmentOwnerComparison(String owner) throws IOException{
         BufferedReader bf = new BufferedReader(new FileReader(this.filepath));
         String ownerName = bf.readLine();
-        if(ownerName == null && owner == null){
+        if((ownerName == null && owner == null) || (owner == "" && ownerName == "")){
             throw new InvalidParameterException("Owner name not found in appointmentbook");
         }
         else if(ownerName != null && !owner.equals(ownerName)){
@@ -104,6 +104,7 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
 
             BufferedReader bufferedreader = new BufferedReader(new FileReader(this.filepath));
             var appointments = appBook.getAppointments();
+            appointmentOwnerComparison(appBook.getOwnerName());
             String line = bufferedreader.readLine();
             if ( line == null || line.isEmpty()) {
                 filewriter.write(appBook.getOwnerName() + "\n");
@@ -117,7 +118,7 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
                 }
             } else {
                     String owner = line;
-                    appointmentOwnerComparison(appBook.getOwnerName());
+                 //   appointmentOwnerComparison(appBook.getOwnerName());
                     this.writer.write(owner);
                     for (Appointment appointment : appointments) {
                        filewriter.append(appointment.getDescription() + "," + appointment.getBeginDate() + "," + appointment.getBeginTimeString() + "," + appointment.getEndDate() + "," + appointment.getEndTimeString());

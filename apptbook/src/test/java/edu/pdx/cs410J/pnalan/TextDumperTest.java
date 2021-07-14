@@ -1,11 +1,13 @@
 package edu.pdx.cs410J.pnalan;
 
+import edu.pdx.cs410J.ParserException;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TextDumperTest {
     @Test
@@ -32,4 +34,5 @@ public class TextDumperTest {
        String text = sw.toString();
        assertThat(text,containsString(owner));
    }
+
 }

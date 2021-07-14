@@ -217,8 +217,20 @@ public class Project2IT extends InvokeMainTestCase{
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
         assertThat(result.getExitCode(), equalTo(1));
     }
-
-
+    @Test
+    public void malformedDateFormatInBeginDate(){
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","Pooja","zoom meeting","08/15/2021/3333//","02:30","08-15-2021-1","03:30");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Date not in requested format mm/dd/yyyy \" unrecognized date"));
+        assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
+        assertThat(result.getExitCode(), equalTo(1));
+    }
+    @Test
+    public void malformedDateFormatInEndDate(){
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","Pooja","zoom meeting","08/15/2021","02:30","08-15-2021-1","03:30");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Date not in requested format mm/dd/yyyy \" unrecognized date"));
+        assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
+        assertThat(result.getExitCode(), equalTo(1));
+    }
     @Test
     public void unrecognizedTimeFormatInBeginDate(){
         InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","Pooja","zoom meeting","02/03/2021","230","02/03/2021","3:30");
