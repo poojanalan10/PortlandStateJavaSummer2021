@@ -18,7 +18,12 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
 
     TextParser(String filename, Reader reader) {
         super();
-        this.filepath = filename + ".txt";
+        if(filename.contains(".txt")){
+            filepath = new String(filename);
+        }
+        else {
+            filepath = new String(filename) + ".txt";
+        }
         try {
             this.file = new File(this.filepath);
             this.bufferedreader = new BufferedReader(new FileReader(file));
@@ -33,7 +38,12 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
 
 
     TextParser(String filename){
-        this.filepath =  new String(filename) + ".txt";
+        if(filename.contains(".txt")){
+            filepath = new String(filename);
+        }
+        else {
+            filepath = new String(filename) + ".txt";
+        }
         this.file = new File(this.filepath);
 
        /* try {

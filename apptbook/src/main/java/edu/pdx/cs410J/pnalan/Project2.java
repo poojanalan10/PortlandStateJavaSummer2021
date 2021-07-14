@@ -16,7 +16,7 @@ public class Project2 {
     /**
      * USAGE_MESSAGE prints the way an input has to be given for creating an appointment
      */
-    public static final String USAGE_MESSAGE = "java edu.pdx.cs410J.pnalan.Project1 [options] <args> args are in this order: \n"+ argumentList +"\n" + "[options] may appear in any order and the options are:\n"+ " -print\n"+"-README";
+    public static final String USAGE_MESSAGE = "java edu.pdx.cs410J.pnalan.Project1 [options] <args> args are in this order: \n"+ argumentList +"\n" + "[options] may appear in any order and the options are:\n"+ " -print\n"+"-README\n"+"-textfile";
 
     /**
      * MISSING_COMMAND_LINE_ARGUMENTS has an error message displayed when the corresponding message when no options or arguments are passed in the commnad line
@@ -26,7 +26,7 @@ public class Project2 {
     /**
      * TOO_MANY_ARGUMENTS has an error message displayed when the arguments entered exceeds the expected count
      */
-    public static final String TOO_MANY_ARGUMENTS = "The required number of arguments is 6 and you've exceeded that.";
+    public static final String TOO_MANY_ARGUMENTS = "The required number of arguments has exceeded.";
 
     /**
      * MISSING_DESCRIPTION has an error message displayed when the arguments entered at the input has a missing description
@@ -62,6 +62,14 @@ public class Project2 {
      */
     public static final String UNRECOGNIZED_TIME_FORMAT = "Time not in requested format (hh:mm) \" unrecognized time";
 
+
+    public static final String UNRECOGNIZED_FILE_NAME = "File name is not in the specified format. It should be filename or filename.txt or myDir/filename or myDir/filename.txt";
+
+
+    public static final String MISSING_FILE_NAME = "File name is not entered";
+    public static final String MISSING_OWNER_NAME = "Name of the Owner of the appointment is missing";
+
+    public static final String WRONG_ORDERING_OPTIONS = "Options must be entered first. Wrong ordering of arguments";
     /**
      * The main method for our Project1
      * @param args
@@ -72,6 +80,7 @@ public class Project2 {
      *     case 3: expected number of arguments. arguments are assigned and checked. They are validated and errors are thrown for any unexpected format
      */
     public static  void main(String[] args){
+        String filename = null;
         String owner = null;
         String description = null;
         String beginDate = null;
@@ -79,37 +88,70 @@ public class Project2 {
         String endDate = null;
         String endTimeString = null;
         String[] argsValues = null ;
-        System.out.print(Arrays.asList(args).indexOf("-textfile"));
+        boolean hastextfileoption = false;
+        int textfilenameindex = 0;
+
         if (Arrays.asList(args).contains("-README") & Arrays.asList(args).indexOf("-README") < 3 ) {
             printReadMeAndExit();
         }
-        else {//(Arrays.asList(args).contains("-print") & Arrays.asList(args).indexOf("-print") == 0) {
-
-            args = Arrays.copyOfRange(args, 1 , args.length);
-            /**
-             * If the user enters a only print option but not the other arguments
-             * prints that the command line arguments are missing
-             */
-            if(args.length == 0){
-                printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
-                return;
-            }
-            /**
-             * if the user enters more than the required argument count of 6
-             */
-
-            else if(args.length > 9) {
+     /*   else if((Arrays.asList(args).contains("-textfile") && Arrays.asList(args).indexOf("-textfile") < 2 && args.length < 9))
+        {
+            printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
+        }
+     /*   else if(Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") == 0 && !Arrays.asList(args).contains("-textfile") && args.length < 7 && args.length != 1){
+            printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
+        }*/
+        /**
+         * If the user enters a only print option but not the other arguments
+         * prints that the command line arguments are missing
+         */
+        else if(args.length == 0 && Arrays.asList(args).isEmpty()){
+            printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
+            return;
+        }
+        else if((Arrays.asList(args).contains("-textfile") && Arrays.asList(args).indexOf("-textfile") >= 2) )
+        {
+            printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
+            return;
+        }
+        else if( (Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") >= 2 ))
+        {
+            printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
+            return;
+        }
+        else if((Arrays.asList(args).contains("-textfile") && Arrays.asList(args).indexOf("-textfile") == 0) && args.length == 2)
+        {
+            printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
+            return;
+        }
+        /**
+         * if the user enters more than the required argument count of 9
+         */
+        else if(args.length > 9 && Arrays.asList(args).contains("-textfile") && Arrays.asList(args).indexOf("-textfile") < 2) {
                 printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
-            }
+        }
+        else if(args.length > 7 && Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") < 2 && !Arrays.asList(args).contains("-textfile")) {
+            printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
+        }
+
+        else {
 
             /**
              * If the user enters all the arguments we need to validate the entry of date and time.
              * validateDate function validates the user input of begin and end date of the appointment
              * validateTime function validates the user input of begin and end time of the appointment
              */
-            else{ //if(Arrays.asList(args).indexOf("-print") == 0 ){
-                argsValues = Arrays.copyOfRange(args, 2 , args.length);
+
+                if((Arrays.asList(args).indexOf("-print") == 0 && Arrays.asList(args).indexOf("-textfile") == 1)){
+                    hastextfileoption = true;
+                    filename = Arrays.asList(args).get(2);
+                    argsValues = Arrays.copyOfRange(args, 3 , args.length);
+                }
+                else if(Arrays.asList(args).indexOf("-print") == 0 && !Arrays.asList(args).contains("-textfile")){
+                    argsValues = Arrays.copyOfRange(args, 1 , args.length);
+                }
                 for (String arg : argsValues) {
+
                     if (owner == null) {
                         owner = arg;
                     } else if (description == null) {
@@ -125,7 +167,14 @@ public class Project2 {
                     }
 
                 }
-
+                if(hastextfileoption) {
+                    if (filename == null) {
+                        printErrorMessageAndExit(MISSING_FILE_NAME);
+                    }
+                }
+                if(owner == null){
+                    printErrorMessageAndExit(MISSING_OWNER_NAME);
+                }
                 if (description == null) {
                     printErrorMessageAndExit(MISSING_DESCRIPTION);
                 }
@@ -144,23 +193,23 @@ public class Project2 {
                 Appointment app = new Appointment(description,beginDate,beginTimeString,endDate,endTimeString);
                 AppointmentBook appBook = new AppointmentBook(owner, app);
                 StringWriter sw = new StringWriter();
-                if(Arrays.asList(args).contains("-textfile") && Arrays.asList(args).indexOf("-textfile") == 0){
-                    writeToFile(args,appBook,sw);
-                    int textfilenameindex = (Arrays.asList(args).indexOf("-textFile")) + 2;
-                    AppointmentBook readappointment = readFromFile(args[textfilenameindex],sw);
-                    System.out.println(readappointment.getAppointments());
-                    System.exit(1);
+                if(Arrays.asList(args).contains("-textfile") && Arrays.asList(args).indexOf("-textfile") == 1) {
+                    writeToFile(args, appBook, sw,filename);
+                    if (Arrays.asList(args).contains("-print")) {
+                        AppointmentBook readappointment = readFromFile(filename, sw);
+                        System.out.println(readappointment.getAppointments());
+                    }
 
+                    System.exit(1);
                 }
+                else{
+                    System.out.println(app.toString());
+                }
+
 
                 System.exit(0);
 
             }
-
-        }
-
-
-
 
     }
     private static AppointmentBook readFromFile(String filename, StringWriter sw){
@@ -179,16 +228,12 @@ public class Project2 {
         }
         return null;
     }
-    private static void writeToFile(String[] args, AppointmentBook appointmentBook, StringWriter sw){
+    private static void writeToFile(String[] args, AppointmentBook appointmentBook, StringWriter sw, String filename){
         try{
-          //  TextDumper textDumper = new TextDumper(args[(Arrays.asList(args).indexOf("-textFile")+1)]);
-            int textfilenameindex = (Arrays.asList(args).indexOf("-textFile")) + 2;
-
-
-            FileWriter writer = new FileWriter(new File(args[textfilenameindex]),true);
-           // StringWriter sw = new StringWriter();
-            TextDumper textDumper = new TextDumper(writer,sw,args[textfilenameindex]);
-           // TextDumper textDumper = new TextDumper(writer,args[textfilenameindex]);
+            FileWriter filewriter = new FileWriter(new File(filename),true);
+            TextDumper textDumper = new TextDumper(filewriter,sw,filename);
+          //  TextDumper textDumper = new TextDumper(filename);
+          //  TextDumper textDumper = new TextDumper(sw,filename);
             textDumper.dump(appointmentBook);
 
         } catch (IOException e) {
@@ -234,6 +279,29 @@ public class Project2 {
         return null;
     }
 
+    /*public static String validateFile(String filename) {
+        String fileregex;
+        fileregex = "^([A-Za-z0-9 .+?\\.txt$])";
+        if (filename != null) {
+            if (Pattern.matches(fileregex, filename)) {
+                return filename;
+            } else {
+                printErrorMessageAndExit(UNRECOGNIZED_FILE_NAME+ " : "+filename);
+            }
+        }
+        return null;
+    }*/
+
+    /*public static boolean validateFileNameEntryPosition(String filename,String[] args){
+        int textfilenameindex = (Arrays.asList(args).indexOf("-textFile")) + 2;
+        if( args[textfilenameindex].equals(filename) ){
+           return true;
+        }
+        else{
+            return false;
+        }
+    }*/
+
     /**
      *
      * @param message
@@ -267,5 +335,7 @@ public class Project2 {
             System.out.println(e);;
         }
     }
+
+
 
 }

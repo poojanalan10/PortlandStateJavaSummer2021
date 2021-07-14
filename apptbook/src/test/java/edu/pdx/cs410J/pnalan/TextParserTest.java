@@ -1,6 +1,5 @@
 package edu.pdx.cs410J.pnalan;
 import edu.pdx.cs410J.ParserException;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -25,7 +24,8 @@ public class TextParserTest {
         AppointmentBook appointmentBook = new AppointmentBook(owner);
         FileWriter filewriter = new FileWriter(new File(filename),true);
         StringWriter sw = new StringWriter();
-        TextDumper dumper = new TextDumper(filewriter,sw,filename);
+        TextDumper dumper = new TextDumper(filewriter, sw,filename);
+       //TextDumper dumper = new TextDumper(filename);
         dumper.dump(appointmentBook);
         TextParser parser = new TextParser(filename, new StringReader(sw.toString()));
         appointmentBook = parser.parse();
