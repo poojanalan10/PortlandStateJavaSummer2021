@@ -83,13 +83,14 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
 
     /**
      * This method creates a file path based on whether a file name is entered with .txt extension or not
-     * @param fname
      * @return
      * @throws IOException
      */
     public String createFilePath(String fname) throws IOException{
         if(fname.matches("^.+?\\..*?") && !fname.matches("^.+?\\.txt")){
-            throw new IllegalArgumentException("File should only have a .txt extension or can be simply given using a name");
+           // throw new IllegalArgumentException("File should only have a .txt extension or can be simply given using a name");
+            throw new IllegalArgumentException();
+
         }
         return (fname.matches("^.+?\\.txt$") ? fname:fname+".txt");
     }
@@ -133,21 +134,4 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
     }
 
 
-    /*public void createFile(String filepath){
-        try {
-            this.file = new File(filepath);
-            File theDir = new File(filepath);
-            if(!theDir.exists()) {
-                if (filepath.contains("/")) {
-                    // var directory = Arrays.asList(filepath.split("/"));
-                    theDir.mkdir();
-                }
-            }
-            this.file.createNewFile();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }*/
 }
