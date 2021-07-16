@@ -44,13 +44,13 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
         String ownerName = bf.readLine();
         if((ownerName == null && owner == null) || (owner == "" && ownerName == "")){
             System.err.println("Owner name not found in appointmentbook");
-            System.exit(1);
-           // throw new InvalidParameterException("Owner name not found in appointmentbook");
+         //   System.exit(1);
+            throw new InvalidParameterException("Owner name not found in appointmentbook");
         }
         else if(ownerName != null && !owner.equals(ownerName)){
             System.err.println("The owner name in the file and command line do not match");
-            System.exit(1);
-           // throw new InvalidParameterException("The owner names in the file and command line do not match");
+           // System.exit(1);
+            throw new InvalidParameterException("The owner names in the file and command line do not match");
         }
     }
 
