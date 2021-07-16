@@ -16,7 +16,7 @@ public class Project2 {
     /**
      * USAGE_MESSAGE prints the way an input has to be given for creating an appointment
      */
-    public static final String USAGE_MESSAGE = "java edu.pdx.cs410J.pnalan.Project1 [options] <args> args are in this order: \n"+ argumentList +"\n" + "[options] may appear in any order and the options are:\n"+ " -print\n"+"-README\n"+"-textfile";
+    public static final String USAGE_MESSAGE = "java edu.pdx.cs410J.pnalan.Project1 [options] <args> args are in this order: \n"+ argumentList +"\n" + "[options] may appear in any order and the options are:\n"+ " -print\n"+"-README\n"+"-textFile";
 
     /**
      * MISSING_COMMAND_LINE_ARGUMENTS has an error message displayed when the corresponding message when no options or arguments are passed in the commnad line
@@ -86,11 +86,16 @@ public class Project2 {
      * BEGIN_GREATER_THAN_END has an error message when begin date and time is after end date/time
      */
     public static  final String BEGIN_GREATER_THAN_END = "Begin date/time cannot be greater than or equal to the end date/time for an appointment!";
+
+    /**
+     * SOMETHING_WRONG this message is an unexpected error not yet handled
+     */
+    public static final String SOMETHING_WRONG = "An unexpected error in the input. Please check the usage for the right format!";
     /**
      * The main method for our Project1
      * @param args
      *        [options] arguments
-     * [-README -print -textfile filename] 'owner' 'description' 'begin date' 'begin time' 'end date' 'end time'
+     * [-README -print -textFile filename] 'owner' 'description' 'begin date' 'begin time' 'end date' 'end time'
      *     case 1 : args.length is 0, which means no command line arguments
      *     case 2: args.length is > 6, which means too many arguments
      *     case 3: expected number of arguments. arguments are assigned and checked. They are validated and errors are thrown for any unexpected format
@@ -104,8 +109,8 @@ public class Project2 {
         String endDate = null;
         String endTimeString = null;
         String[] argsValues = null ;
-        boolean hastextfileoption = false;
-        int textfilenameindex = 0;
+        boolean hastextFileoption = false;
+        int textFilenameindex = 0;
 
         if (Arrays.asList(args).contains("-README") & Arrays.asList(args).indexOf("-README") < 3 ) {
             printReadMeAndExit();
@@ -118,17 +123,26 @@ public class Project2 {
             printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
             return;
         }
-        else if((Arrays.asList(args).contains("-textfile") && Arrays.asList(args).indexOf("-textfile") >= 2) )
+        else if((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") >= 2) && !Arrays.asList(args).contains("-README") )
         {
             printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
             return;
         }
-        else if( (Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") >= 2 ))
+        else if( (Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") >= 3 ) && !Arrays.asList(args).contains("-README"))
         {
             printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
             return;
         }
-        else if((Arrays.asList(args).contains("-textfile") && Arrays.asList(args).indexOf("-textfile") == 0) && args.length == 2)
+        else if((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") >= 2) && !checkFileNameGivenAftertextfileOption(args)){
+            printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
+            return;
+        }
+        else if( (Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") >= 3 ) && !checkFileNameGivenAftertextfileOption(args))
+        {
+            printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
+            return;
+        }
+        else if((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") == 0) && args.length == 2)
         {
             printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
             return;
@@ -136,13 +150,13 @@ public class Project2 {
         /**
          * if the user enters more than the required argument count of 9
          */
-        else if(args.length > 9 && Arrays.asList(args).contains("-textfile") && Arrays.asList(args).indexOf("-textfile") < 2) {
+        else if(args.length > 9 && Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") < 2) {
                 printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
         }
-        else if(args.length > 7 && Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") < 2 && !Arrays.asList(args).contains("-textfile")) {
+        else if(args.length > 7 && Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") < 2 && !Arrays.asList(args).contains("-textFile")) {
             printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
         }
-        else if(args.length > 8 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textfile")){
+        else if(args.length > 8 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")){
             printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
         }
 
@@ -155,20 +169,56 @@ public class Project2 {
              * validateTime function validates the user input of begin and end time of the appointment
              */
 
-                if((Arrays.asList(args).indexOf("-print") == 0 && Arrays.asList(args).indexOf("-textfile") == 1)){
-                    hastextfileoption = true;
-                    filename = Arrays.asList(args).get(2);
-                    argsValues = Arrays.copyOfRange(args, 3 , args.length);
-                }
-                else if(Arrays.asList(args).indexOf("-print") == 0 && !Arrays.asList(args).contains("-textfile")){
-                    argsValues = Arrays.copyOfRange(args, 1 , args.length);
-                }
-                else if(args.length == 8 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textfile")){
-                    hastextfileoption = true;
+                 if(args.length == 8 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")){
+                    hastextFileoption = true;
                     filename = Arrays.asList(args).get(1);
                     argsValues = Arrays.copyOfRange(args, 2 , args.length);
 
                 }
+                else if(args.length == 7 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")){
+                    hastextFileoption = true;
+                    printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
+                }
+                else if(args.length == 6 && Arrays.asList(args).contains("-print") && !Arrays.asList(args).contains("-textFile")){
+                    printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
+                }
+                else if(Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")){
+                    if(Arrays.asList(args).indexOf("-print") == 2 && Arrays.asList(args).indexOf("-textFile") == 0)
+                    {
+                        if(checkFileNameGivenAftertextfileOption(args)){
+                            hastextFileoption = true;
+                            filename = Arrays.asList(args).get(1);
+                            argsValues = Arrays.copyOfRange(args, 3 , args.length);
+                        }
+                    }
+                    else if(Arrays.asList(args).indexOf("-print") == 0 && Arrays.asList(args).indexOf("-textFile") == 1)
+                    {
+                        if(checkFileNameGivenAftertextfileOption(args)){
+                            hastextFileoption = true;
+                            filename = Arrays.asList(args).get(2);
+                            argsValues = Arrays.copyOfRange(args, 3 , args.length);
+                        }
+                    }
+                }
+                else if((Arrays.asList(args).indexOf("-print") == 0 && Arrays.asList(args).indexOf("-textFile") == 1)){
+                    hastextFileoption = true;
+                    filename = Arrays.asList(args).get(2);
+                    argsValues = Arrays.copyOfRange(args, 3 , args.length);
+                }
+                else if(Arrays.asList(args).indexOf("-print") == 0 && !Arrays.asList(args).contains("-textFile")){
+                    argsValues = Arrays.copyOfRange(args, 1 , args.length);
+                }
+                else if(!Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")){
+                    hastextFileoption = true;
+                    filename = Arrays.asList(args).get(1);
+                    argsValues = Arrays.copyOfRange(args, 2 , args.length);
+                }
+
+                if(argsValues == null){
+                    printErrorMessageAndExit(SOMETHING_WRONG);
+                }
+
+
                 for (String arg : argsValues) {
 
                     if (owner == null) {
@@ -186,7 +236,7 @@ public class Project2 {
                     }
 
                 }
-                if(hastextfileoption) {
+                if(hastextFileoption) {
                     if (filename == null) {
                         printErrorMessageAndExit(MISSING_FILE_NAME);
                     }
@@ -217,11 +267,15 @@ public class Project2 {
                 }
                 AppointmentBook appBook = new AppointmentBook(owner, app);
                 StringWriter sw = new StringWriter();
-                if(Arrays.asList(args).contains("-textfile") && Arrays.asList(args).indexOf("-textfile") == 1) {
+                if(Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") < 2) {
                     writeToFile(args, appBook, sw,filename);
+                    AppointmentBook readappointment = readFromFile(filename, sw);
+                    System.out.println(readappointment.getAppointments());
                     if (Arrays.asList(args).contains("-print")) {
-                        AppointmentBook readappointment = readFromFile(filename, sw);
-                        System.out.println(readappointment.getAppointments());
+                        System.out.println("Latest appointment information:");
+                        System.out.println(app.toString());
+                     //   AppointmentBook readappointment = readFromFile(filename, sw);
+                     //   System.out.println(readappointment.getAppointments());
                     }
 
                     System.exit(1);
@@ -235,6 +289,11 @@ public class Project2 {
 
             }
 
+    }
+    private static boolean checkFileNameGivenAftertextfileOption(String[] args){
+        int textfile_index = Arrays.asList(args).indexOf("-textFile");
+        int print_index = Arrays.asList(args).indexOf("-print");
+        return print_index != textfile_index + 1;
     }
     private static AppointmentBook readFromFile(String filename, StringWriter sw){
         try {
@@ -253,7 +312,7 @@ public class Project2 {
     }
     private static void writeToFile(String[] args, AppointmentBook appointmentBook, StringWriter sw, String filename){
         try{
-            FileWriter filewriter = new FileWriter(new File(filename),true);
+            FileWriter filewriter = null;
             TextDumper textDumper = new TextDumper(filewriter,sw,filename);
             textDumper.dump(appointmentBook);
 
@@ -314,8 +373,8 @@ public class Project2 {
     }*/
 
     /*public static boolean validateFileNameEntryPosition(String filename,String[] args){
-        int textfilenameindex = (Arrays.asList(args).indexOf("-textFile")) + 2;
-        if( args[textfilenameindex].equals(filename) ){
+        int textFilenameindex = (Arrays.asList(args).indexOf("-textFile")) + 2;
+        if( args[textFilenameindex].equals(filename) ){
            return true;
         }
         else{

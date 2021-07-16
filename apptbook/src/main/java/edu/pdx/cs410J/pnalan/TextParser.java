@@ -6,6 +6,7 @@ import edu.pdx.cs410J.ParserException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class TextParser implements AppointmentBookParser<AppointmentBook> {
 
@@ -72,7 +73,8 @@ public AppointmentBook parse () throws ParserException{
     final List<String> listofAppointments = new ArrayList<>();
     String current = null;
     if(!this.bufferedreader.ready()){
-        throw new ParserException("Missing owner");
+       // throw new ParserException("Missing owner");
+        System.err.println("Missing owner");
     }
     String owner = this.bufferedreader.readLine();
     String line = this.bufferedreader.readLine();
@@ -88,7 +90,13 @@ public AppointmentBook parse () throws ParserException{
     } else {
         for (String appointment : listofAppointments) {
             String[] args = appointment.split(",");
-            book.addAppointment(new Appointment(args[0],args[1],args[2],args[3],args[4]));
+            String description = args[0];
+            String startDateString = validateDate(args[1]);
+            String startTimeString = validateTime(args[2]);
+            String endDateString = validateDate(args[3]);
+            String endTimeString = validateTime(args[4]);
+            //book.addAppointment(new Appointment(args[0],args[1],args[2],args[3],args[4]));
+            book.addAppointment(new Appointment(description,startDateString,startTimeString,endDateString,endTimeString));
         }
     }
   //  if (!finished) {
@@ -100,5 +108,45 @@ public AppointmentBook parse () throws ParserException{
         throw new ParserException("while parsing",e);
     }
 
+    }
+    /**
+     * Validates the input string date against the regex expression and returns the date string back if it matches the regex pattern,
+     * else throws unrecognized date format error and exits
+     * @param dateString
+     *        A date in the format of String input from the user
+     * @return dateString or an error message
+     */
+    public static String validateDate(String dateString){
+        String dateregex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
+        if(dateString != null) {
+            if (Pattern.matches(dateregex, dateString)) {
+                return dateString;
+            } else {
+                System.err.println("UNRECOGNIZED DATE FORMAT: "+dateString+" found in the file!");
+                System.exit(1);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Validates the input string time against the regex expression and returns the time string back if it matches the regex pattern,
+     * else throws unrecognized time format error and exits
+     * @param TimeString
+     *         A time in the form of string input from the user
+     * @return TimeString or error message
+     */
+    public static String validateTime(String TimeString){
+        String timeregex = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$";
+        if(TimeString != null) {
+            if (Pattern.matches(timeregex, TimeString)) {
+                return TimeString;
+            } else {
+                System.err.println("UNRECOGNIZED TIME FORMAT "+TimeString+ " found in the file!");
+                System.exit(1);
+            }
+        }
+        return null;
     }
 }
