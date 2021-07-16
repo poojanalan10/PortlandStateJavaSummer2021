@@ -73,38 +73,43 @@ public AppointmentBook parse () throws ParserException{
     final List<String> listofAppointments = new ArrayList<>();
     String current = null;
     if(!this.bufferedreader.ready()){
-       // throw new ParserException("Missing owner");
         System.err.println("Missing owner");
-    }
-    String owner = this.bufferedreader.readLine();
-    String line = this.bufferedreader.readLine();
-    book = new AppointmentBook(owner);
-    while (line != null && !line.isEmpty()) {
-        current = line;
-        listofAppointments.add(current);
-        line = this.bufferedreader.readLine();
-        }
-    if (listofAppointments.isEmpty()) {
-      //  finished = true;
-        result = book;
-    } else {
-        for (String appointment : listofAppointments) {
-            String[] args = appointment.split(",");
-            String description = args[0];
-            String startDateString = validateDate(args[1]);
-            String startTimeString = validateTime(args[2]);
-            String endDateString = validateDate(args[3]);
-            String endTimeString = validateTime(args[4]);
-            //book.addAppointment(new Appointment(args[0],args[1],args[2],args[3],args[4]));
-            book.addAppointment(new Appointment(description,startDateString,startTimeString,endDateString,endTimeString));
-        }
-    }
-  //  if (!finished) {
-        result = book;
-   // }
+        throw new ParserException("Missing owner");
 
+
+    }
+    else {
+        String owner = this.bufferedreader.readLine();
+        String line = this.bufferedreader.readLine();
+        book = new AppointmentBook(owner);
+        while (line != null && !line.isEmpty()) {
+            current = line;
+            listofAppointments.add(current);
+            line = this.bufferedreader.readLine();
+        }
+        if (listofAppointments.isEmpty()) {
+            //  finished = true;
+            result = book;
+        } else {
+            for (String appointment : listofAppointments) {
+                String[] args = appointment.split(",");
+                String description = args[0];
+                String startDateString = validateDate(args[1]);
+                String startTimeString = validateTime(args[2]);
+                String endDateString = validateDate(args[3]);
+                String endTimeString = validateTime(args[4]);
+                //book.addAppointment(new Appointment(args[0],args[1],args[2],args[3],args[4]));
+                book.addAppointment(new Appointment(description, startDateString, startTimeString, endDateString, endTimeString));
+            }
+        }
+
+        //  if (!finished) {
+        result = book;
+        // }
+    }
     return result;
     } catch (IOException e) {
+
         throw new ParserException("while parsing",e);
     }
 

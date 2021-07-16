@@ -1,11 +1,19 @@
 package edu.pdx.cs410J.pnalan;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
+import edu.pdx.cs410J.ParserException;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class Project2IT extends InvokeMainTestCase{
     /**
@@ -260,5 +268,24 @@ public class Project2IT extends InvokeMainTestCase{
         assertThat(result.getTextWrittenToStandardError(),containsString("Options must be entered first. Wrong ordering of arguments"));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
     }
+
+    @Test
+    void validateDateinanExistingTextFileBeforeReadingThemAndthrowAnError() throws IOException, ParserException {
+        String filename = "bad-year.txt";
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-textFile",filename,"Pooja","just a meeting","09/09/2021","09:14","09/09/2021","16:30");
+        assertThat(result.getTextWrittenToStandardError(),containsString("UNRECOGNIZED DATE FORMAT"));
+
+    }
+
+
+    @Test
+    void validateTimeinanExistingTextFileBeforeReadingThemAndthrowAnError() throws IOException, ParserException {
+        String filename = "bad-time.txt";
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-textFile",filename,"Pooja","just a meeting","09/09/2021","09:14","09/09/2021","16:30");
+        assertThat(result.getTextWrittenToStandardError(),containsString("UNRECOGNIZED TIME FORMAT"));
+
+    }
+
+
 
 }
