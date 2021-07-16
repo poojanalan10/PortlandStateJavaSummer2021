@@ -13,6 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.containsStringIgnoringCase;
 import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TextDumperTest {
@@ -90,5 +91,30 @@ public class TextDumperTest {
                 dumper.dump(appointmentBook);
             }
         });
+    }
+    @Test
+    void appointmentBookOwnerCanBeDumpedWithRelativePath() throws IOException, ParserException{
+        String filename = "Folder/file2";
+        String owner = "Pooja";
+        AppointmentBook appBook = new AppointmentBook(owner);
+        StringWriter sw = new StringWriter();
+        FileWriter filewriter = new FileWriter(new File(filename),true);
+        TextDumper textDumper = new TextDumper(filewriter,sw,filename);
+        textDumper.dump(appBook);
+        String text = sw.toString();
+        assertThat(text,containsString(owner));
+    }
+    @Test
+    void appointmentBookOwnerCanBeDumpedWithRelativePathAndExtension() throws IOException, ParserException{
+        String filename = "Folder/file1.txt";
+        String owner = "Pooja";
+        AppointmentBook appBook = new AppointmentBook(owner);
+        StringWriter sw = new StringWriter();
+        FileWriter filewriter = null;
+        TextDumper textDumper = new TextDumper(filewriter,sw,filename);
+        textDumper.dump(appBook);
+        String text = sw.toString();
+        assertThat(text,containsString(owner));
+
     }
 }
