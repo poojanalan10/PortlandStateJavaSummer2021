@@ -123,22 +123,22 @@ public class Project2 {
              */
             else if (args.length == 0 && Arrays.asList(args).isEmpty()) {
                 printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
-                return;
+
             } else if ((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") >= 2) && !Arrays.asList(args).contains("-README")) {
                 printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
-                return;
+
             } else if ((Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") >= 3) && !Arrays.asList(args).contains("-README")) {
                 printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
-                return;
+
             } else if ((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") >= 2) && !checkFileNameGivenAftertextfileOption(args)) {
                 printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
-                return;
+
             } else if ((Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") >= 3) && !checkFileNameGivenAftertextfileOption(args)) {
                 printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
-                return;
+
             } else if ((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") == 0) && args.length == 2) {
                 printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
-                return;
+
             }
             /**
              * if the user enters more than the required argument count of 9
@@ -264,6 +264,10 @@ public class Project2 {
         }
         catch (Exception e){
             System.err.println(e);
+
+        }
+        finally {
+            System.exit(1);
         }
 
     }
@@ -368,7 +372,7 @@ public class Project2 {
 
         System.err.println(message);
         System.err.println(USAGE_MESSAGE);
-        System.exit(1);
+       // System.exit(1);
     }
 
     /**
