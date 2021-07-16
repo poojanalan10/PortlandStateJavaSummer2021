@@ -74,5 +74,21 @@ public class TextDumperTest {
             }
         });
     }
+    @Test
+    public void appointmentOwnerComparisonBetweenEnterValueandTextFileWhenOwnerisNull() throws IOException {
+        String owner =  "";
+        String filename = "nullfile.txt";
+        InputStream resource = getClass().getResourceAsStream(filename);
+        AppointmentBook appointmentBook = new AppointmentBook(owner);
+        StringWriter sw = new StringWriter();
+        FileWriter filewriter = new FileWriter(new File(filename));
 
+        assertThrows(InvalidParameterException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                TextDumper dumper = new TextDumper(filewriter, sw,filename);
+                dumper.dump(appointmentBook);
+            }
+        });
+    }
 }

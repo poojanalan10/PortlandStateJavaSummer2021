@@ -42,13 +42,17 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
     public void appointmentOwnerComparison(String owner) throws IOException{
         BufferedReader bf = new BufferedReader(new FileReader(this.filepath));
         String ownerName = bf.readLine();
-        if((ownerName == null && owner == null) || (owner == "" && ownerName == "")){
-            System.err.println("Owner name not found in appointmentbook");
+        if((ownerName == null && owner == null) || (owner == "" && ownerName == "") || (owner == ""  && ownerName == null)){
+          //  System.err.println("Owner name not found in appointmentbook and the file");
          //   System.exit(1);
             throw new InvalidParameterException("Owner name not found in appointmentbook");
         }
+        else if(owner == null || owner.isEmpty()){
+          //  System.err.println("Owner name not entered in the input");
+            throw new InvalidParameterException("Owner name not entered in the input");
+        }
         else if(ownerName != null && !owner.equals(ownerName)){
-            System.err.println("The owner name in the file and command line do not match");
+          //  System.err.println("The owner name in the file and command line do not match");
            // System.exit(1);
             throw new InvalidParameterException("The owner names in the file and command line do not match");
         }

@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.pnalan;
 
 import java.io.*;
+import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
@@ -100,121 +101,99 @@ public class Project2 {
      *     case 2: args.length is > 6, which means too many arguments
      *     case 3: expected number of arguments. arguments are assigned and checked. They are validated and errors are thrown for any unexpected format
      */
-    public static  void main(String[] args){
-        String filename = null;
-        String owner = null;
-        String description = null;
-        String beginDate = null;
-        String beginTimeString = null;
-        String endDate = null;
-        String endTimeString = null;
-        String[] argsValues = null ;
-        boolean hastextFileoption = false;
-        int textFilenameindex = 0;
+    public static  void main(String[] args) {
+        try {
+            String filename = null;
+            String owner = null;
+            String description = null;
+            String beginDate = null;
+            String beginTimeString = null;
+            String endDate = null;
+            String endTimeString = null;
+            String[] argsValues = null;
+            boolean hastextFileoption = false;
+            int textFilenameindex = 0;
 
-        if (Arrays.asList(args).contains("-README") & Arrays.asList(args).indexOf("-README") < 3 ) {
-            printReadMeAndExit();
-        }
-        /**
-         * If the user enters a only print option but not the other arguments
-         * prints that the command line arguments are missing
-         */
-        else if(args.length == 0 && Arrays.asList(args).isEmpty()){
-            printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
-            return;
-        }
-        else if((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") >= 2) && !Arrays.asList(args).contains("-README") )
-        {
-            printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
-            return;
-        }
-        else if( (Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") >= 3 ) && !Arrays.asList(args).contains("-README"))
-        {
-            printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
-            return;
-        }
-        else if((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") >= 2) && !checkFileNameGivenAftertextfileOption(args)){
-            printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
-            return;
-        }
-        else if( (Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") >= 3 ) && !checkFileNameGivenAftertextfileOption(args))
-        {
-            printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
-            return;
-        }
-        else if((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") == 0) && args.length == 2)
-        {
-            printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
-            return;
-        }
-        /**
-         * if the user enters more than the required argument count of 9
-         */
-        else if(args.length > 9 && Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") < 2) {
-                printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
-        }
-        else if(args.length > 7 && Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") < 2 && !Arrays.asList(args).contains("-textFile")) {
-            printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
-        }
-        else if(args.length > 8 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")){
-            printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
-        }
-
-
-        else {
-
+            if (Arrays.asList(args).contains("-README") & Arrays.asList(args).indexOf("-README") < 3) {
+                printReadMeAndExit();
+            }
             /**
-             * If the user enters all the arguments we need to validate the entry of date and time.
-             * validateDate function validates the user input of begin and end date of the appointment
-             * validateTime function validates the user input of begin and end time of the appointment
+             * If the user enters a only print option but not the other arguments
+             * prints that the command line arguments are missing
              */
+            else if (args.length == 0 && Arrays.asList(args).isEmpty()) {
+                printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
+                return;
+            } else if ((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") >= 2) && !Arrays.asList(args).contains("-README")) {
+                printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
+                return;
+            } else if ((Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") >= 3) && !Arrays.asList(args).contains("-README")) {
+                printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
+                return;
+            } else if ((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") >= 2) && !checkFileNameGivenAftertextfileOption(args)) {
+                printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
+                return;
+            } else if ((Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") >= 3) && !checkFileNameGivenAftertextfileOption(args)) {
+                printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
+                return;
+            } else if ((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") == 0) && args.length == 2) {
+                printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
+                return;
+            }
+            /**
+             * if the user enters more than the required argument count of 9
+             */
+            else if (args.length > 9 && Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") < 2) {
+                printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
+            } else if (args.length > 7 && Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") < 2 && !Arrays.asList(args).contains("-textFile")) {
+                printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
+            } else if (args.length > 8 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")) {
+                printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
+            } else {
 
-                 if(args.length == 8 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")){
+                /**
+                 * If the user enters all the arguments we need to validate the entry of date and time.
+                 * validateDate function validates the user input of begin and end date of the appointment
+                 * validateTime function validates the user input of begin and end time of the appointment
+                 */
+
+                if (args.length == 8 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")) {
                     hastextFileoption = true;
                     filename = Arrays.asList(args).get(1);
-                    argsValues = Arrays.copyOfRange(args, 2 , args.length);
+                    argsValues = Arrays.copyOfRange(args, 2, args.length);
 
-                }
-                else if(args.length == 7 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")){
+                } else if (args.length == 7 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")) {
                     hastextFileoption = true;
                     printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
-                }
-                else if(args.length == 6 && Arrays.asList(args).contains("-print") && !Arrays.asList(args).contains("-textFile")){
+                } else if (args.length == 6 && Arrays.asList(args).contains("-print") && !Arrays.asList(args).contains("-textFile")) {
                     printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
-                }
-                else if(Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")){
-                    if(Arrays.asList(args).indexOf("-print") == 2 && Arrays.asList(args).indexOf("-textFile") == 0)
-                    {
-                        if(checkFileNameGivenAftertextfileOption(args)){
+                } else if (Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")) {
+                    if (Arrays.asList(args).indexOf("-print") == 2 && Arrays.asList(args).indexOf("-textFile") == 0) {
+                        if (checkFileNameGivenAftertextfileOption(args)) {
                             hastextFileoption = true;
                             filename = Arrays.asList(args).get(1);
-                            argsValues = Arrays.copyOfRange(args, 3 , args.length);
+                            argsValues = Arrays.copyOfRange(args, 3, args.length);
                         }
-                    }
-                    else if(Arrays.asList(args).indexOf("-print") == 0 && Arrays.asList(args).indexOf("-textFile") == 1)
-                    {
-                        if(checkFileNameGivenAftertextfileOption(args)){
+                    } else if (Arrays.asList(args).indexOf("-print") == 0 && Arrays.asList(args).indexOf("-textFile") == 1) {
+                        if (checkFileNameGivenAftertextfileOption(args)) {
                             hastextFileoption = true;
                             filename = Arrays.asList(args).get(2);
-                            argsValues = Arrays.copyOfRange(args, 3 , args.length);
+                            argsValues = Arrays.copyOfRange(args, 3, args.length);
                         }
                     }
-                }
-                else if((Arrays.asList(args).indexOf("-print") == 0 && Arrays.asList(args).indexOf("-textFile") == 1)){
+                } else if ((Arrays.asList(args).indexOf("-print") == 0 && Arrays.asList(args).indexOf("-textFile") == 1)) {
                     hastextFileoption = true;
                     filename = Arrays.asList(args).get(2);
-                    argsValues = Arrays.copyOfRange(args, 3 , args.length);
-                }
-                else if(Arrays.asList(args).indexOf("-print") == 0 && !Arrays.asList(args).contains("-textFile")){
-                    argsValues = Arrays.copyOfRange(args, 1 , args.length);
-                }
-                else if(!Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")){
+                    argsValues = Arrays.copyOfRange(args, 3, args.length);
+                } else if (Arrays.asList(args).indexOf("-print") == 0 && !Arrays.asList(args).contains("-textFile")) {
+                    argsValues = Arrays.copyOfRange(args, 1, args.length);
+                } else if (!Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")) {
                     hastextFileoption = true;
                     filename = Arrays.asList(args).get(1);
-                    argsValues = Arrays.copyOfRange(args, 2 , args.length);
+                    argsValues = Arrays.copyOfRange(args, 2, args.length);
                 }
 
-                if(argsValues == null){
+                if (argsValues == null) {
                     printErrorMessageAndExit(SOMETHING_WRONG);
                 }
 
@@ -236,51 +215,45 @@ public class Project2 {
                     }
 
                 }
-                if(hastextFileoption) {
+                if (hastextFileoption) {
                     if (filename == null) {
                         printErrorMessageAndExit(MISSING_FILE_NAME);
                     }
                 }
-                if(owner == null){
+                if (owner == null) {
                     printErrorMessageAndExit(MISSING_OWNER_NAME);
                 }
                 if (description == null) {
                     printErrorMessageAndExit(MISSING_DESCRIPTION);
-                }
-                else if(beginDate == null) {
+                } else if (beginDate == null) {
                     printErrorMessageAndExit(MISSING_BEGIN_DATE);
-                }
-                else if(beginTimeString == null) {
+                } else if (beginTimeString == null) {
                     printErrorMessageAndExit(MISSING_BEGIN_TIME);
-                }
-                else if(endDate == null) {
+                } else if (endDate == null) {
                     printErrorMessageAndExit(MISSING_END_DATE);
-                }
-                else if(endTimeString == null) {
+                } else if (endTimeString == null) {
                     printErrorMessageAndExit(MISSING_END_TIME);
                 }
 
-                Appointment app = new Appointment(description,beginDate,beginTimeString,endDate,endTimeString);
-                if(app.validateBeginLessThanEndDate(app.getBeginTime(),app.getEndTime()) != "begin date is before end date as expected")
-                {
+                Appointment app = new Appointment(description, beginDate, beginTimeString, endDate, endTimeString);
+                if (app.validateBeginLessThanEndDate(app.getBeginTime(), app.getEndTime()) != "begin date is before end date as expected") {
                     printErrorMessageAndExit(BEGIN_GREATER_THAN_END);
                 }
                 AppointmentBook appBook = new AppointmentBook(owner, app);
                 StringWriter sw = new StringWriter();
-                if(Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") < 2) {
-                    writeToFile(args, appBook, sw,filename);
+                if (Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") < 2) {
+                    writeToFile(args, appBook, sw, filename);
                     AppointmentBook readappointment = readFromFile(filename, sw);
                     System.out.println(readappointment.getAppointments());
                     if (Arrays.asList(args).contains("-print")) {
                         System.out.println("Latest appointment information:");
                         System.out.println(app.toString());
-                     //   AppointmentBook readappointment = readFromFile(filename, sw);
-                     //   System.out.println(readappointment.getAppointments());
+                        //   AppointmentBook readappointment = readFromFile(filename, sw);
+                        //   System.out.println(readappointment.getAppointments());
                     }
 
                     System.exit(1);
-                }
-                else{
+                } else {
                     System.out.println(app.toString());
                 }
 
@@ -288,6 +261,10 @@ public class Project2 {
                 System.exit(0);
 
             }
+        }
+        catch (Exception e){
+            System.err.println(e);
+        }
 
     }
     private static boolean checkFileNameGivenAftertextfileOption(String[] args){

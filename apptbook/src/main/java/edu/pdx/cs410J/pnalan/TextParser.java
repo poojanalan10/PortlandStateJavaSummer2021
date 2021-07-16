@@ -73,8 +73,8 @@ public AppointmentBook parse () throws ParserException{
     final List<String> listofAppointments = new ArrayList<>();
     String current = null;
     if(!this.bufferedreader.ready()){
-        System.out.println(this.bufferedreader.readLine());
-        System.err.println("Missing owner");
+       // System.out.println(this.bufferedreader.readLine());
+       // System.err.println("Missing owner");
         throw new ParserException("Missing owner");
 
 
