@@ -28,7 +28,8 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
         this.filepath = new String(createFilePath(filename));
        // createNewFileAtEnteredPathIfFileDoesntExist(filename);
         this.file = new File(this.filepath);
-        this.bufferedreader = bufferedreader;
+      //  this.bufferedreader = bufferedreader;
+        this.bufferedreader = new BufferedReader(new FileReader(this.file));
        // this.bufferedreader = new BufferedReader(reader);
 
 

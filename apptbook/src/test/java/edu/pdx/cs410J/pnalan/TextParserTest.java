@@ -43,23 +43,34 @@ public class TextParserTest  {
     }
     @Test
     void appointmentBookOwnerCanBeDumpedAndParsedWithRelativePath() throws IOException, ParserException{
-        String filename = "Folder/file1";
-        InputStream resource = getClass().getResourceAsStream(filename);
-        assertNotNull(resource);
+        String filename = "Folder/file2";
         String owner = "Pooja";
         AppointmentBook appBook = new AppointmentBook(owner);
         StringWriter sw = new StringWriter();
         FileWriter filewriter = new FileWriter(new File(filename),true);
         TextDumper textDumper = new TextDumper(filewriter,sw,filename);
 
+        textDumper.dump(appBook);
+        BufferedReader bufferedreader = new BufferedReader(new FileReader(filename));
+        TextParser txtParser = new TextParser(bufferedreader,filename,new StringReader(sw.toString()));
+        AppointmentBook appointmentBook = txtParser.parse();
+        assertThat(appointmentBook.getOwnerName(), equalTo(owner));
+
     }
     @Test
     void appointmentBookOwnerCanBeDumpedAndParsedWithRelativePathAndExtension() throws IOException, ParserException{
         String filename = "Folder/file1.txt";
+        String owner = "Pooja";
+        AppointmentBook appBook = new AppointmentBook(owner);
         StringWriter sw = new StringWriter();
         FileWriter filewriter = null;
         TextDumper textDumper = new TextDumper(filewriter,sw,filename);
 
+        textDumper.dump(appBook);
+        BufferedReader bufferedreader = new BufferedReader(new FileReader(filename));
+        TextParser txtParser = new TextParser(bufferedreader,filename,new StringReader(sw.toString()));
+        AppointmentBook appointmentBook = txtParser.parse();
+        assertThat(appointmentBook.getOwnerName(), equalTo(owner));
 
     }
     @Test
