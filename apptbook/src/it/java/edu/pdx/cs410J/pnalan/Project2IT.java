@@ -277,7 +277,6 @@ public class Project2IT extends InvokeMainTestCase{
 
     }
 
-
     @Test
     void validateTimeinanExistingTextFileBeforeReadingThemAndthrowAnError() throws IOException, ParserException {
         String filename = "bad-time.txt";
@@ -285,7 +284,5 @@ public class Project2IT extends InvokeMainTestCase{
         assertThat(result.getTextWrittenToStandardError(),containsString("UNRECOGNIZED TIME FORMAT"));
 
     }
-
-
 
 }
