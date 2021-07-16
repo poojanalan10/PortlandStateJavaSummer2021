@@ -71,8 +71,8 @@ public class Project2IT extends InvokeMainTestCase{
     }
 
     @Test
-    public void missingownernameWithTextFileOption(){
-        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textfile","samplefile");
+    public void missingownernameWithtextFileOption(){
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textFile","samplefile");
         assertThat(result.getTextWrittenToStandardError(), containsString("Name of the Owner of the appointment is missing"));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
         assertThat(result.getExitCode(), equalTo(1));
@@ -85,8 +85,8 @@ public class Project2IT extends InvokeMainTestCase{
         assertThat(result.getExitCode(), equalTo(1));
     }
     @Test
-    public void missingDescriptionWithTextFileOption(){
-        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textfile","samplefile","Pooja");
+    public void missingDescriptionWithtextFileOption(){
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textFile","samplefile","Pooja");
         assertThat(result.getTextWrittenToStandardError(), containsString("Missing description"));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
         assertThat(result.getExitCode(), equalTo(1));
@@ -102,8 +102,8 @@ public class Project2IT extends InvokeMainTestCase{
     }
 
     @Test
-    public void missingBeginDateWithTextFileOption(){
-        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textfile","samplefile","Pooja","zoom meeting");
+    public void missingBeginDateWithtextFileOption(){
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textFile","samplefile","Pooja","zoom meeting");
         assertThat(result.getTextWrittenToStandardError(), containsString("Missing begin date"));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
         assertThat(result.getExitCode(), equalTo(1));
@@ -118,8 +118,8 @@ public class Project2IT extends InvokeMainTestCase{
     }
 
     @Test
-    public void missingBeginTimeWithTextFileOption(){
-        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textfile","samplefile","Pooja","zoom meeting","02/03/2021");
+    public void missingBeginTimeWithtextFileOption(){
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textFile","samplefile","Pooja","zoom meeting","02/03/2021");
         assertThat(result.getTextWrittenToStandardError(), containsString("Missing begin time"));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
         assertThat(result.getExitCode(), equalTo(1));
@@ -132,8 +132,8 @@ public class Project2IT extends InvokeMainTestCase{
         assertThat(result.getExitCode(), equalTo(1));
     }
     @Test
-    public void missingEndDateWithTextFileOption(){
-        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textfile","samplefile","Pooja","zoom meeting","02/03/2021","02:20");
+    public void missingEndDateWithtextFileOption(){
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textFile","samplefile","Pooja","zoom meeting","02/03/2021","02:20");
         assertThat(result.getTextWrittenToStandardError(), containsString("Missing end date"));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
         assertThat(result.getExitCode(), equalTo(1));
@@ -141,13 +141,13 @@ public class Project2IT extends InvokeMainTestCase{
     @Test
     public void missingEndTime(){
         InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","Pooja","zoom meeting","02/03/2021","02:20","02/03/2021");
-        assertThat(result.getTextWrittenToStandardError(), containsString("Missing end time"));
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing command line arguments"));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
         assertThat(result.getExitCode(), equalTo(1));
     }
     @Test
-    public void missingEndTimeWithTextFileOption(){
-        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textfile","samplefile","Pooja","zoom meeting","02/03/2021","02:20","02/03/2021");
+    public void missingEndTimeWithtextFileOption(){
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textFile","samplefile","Pooja","zoom meeting","02/03/2021","02:20","02/03/2021");
         assertThat(result.getTextWrittenToStandardError(), containsString("Missing end time"));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
         assertThat(result.getExitCode(), equalTo(1));
@@ -161,8 +161,8 @@ public class Project2IT extends InvokeMainTestCase{
     }
 
     @Test
-    public void tooManyArgumentsWithPrintAndTextfileOption(){
-        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textfile","samplefile","Judy Whiskers","Dentist appointment","02/03/2021","02:30","02/03/2021","5:30","Teeth whitening Time");
+    public void tooManyArgumentsWithPrintAndtextFileOption(){
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textFile","samplefile","Judy Whiskers","Dentist appointment","02/03/2021","02:30","02/03/2021","5:30","Teeth whitening Time");
         assertThat(result.getTextWrittenToStandardError(), containsString("The required number of arguments has exceeded."));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
         assertThat(result.getExitCode(), equalTo(1));
@@ -177,19 +177,19 @@ public class Project2IT extends InvokeMainTestCase{
 
     @Test
     public void rightArgumentsGivenReturnsExitCode0(){
-        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textfile","file","May Thatcher","Football match","09/08/2021","15:15","09/08/2021","17:30");
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textFile","file","May Thatcher","Football match","09/08/2021","15:15","09/08/2021","17:30");
         assertThat(result.getExitCode(), equalTo(1));
     }
   /*  @Test
-    public void textfileOptionWithoutFileName(){
-        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textfile","May Thatcher","Football match","09/08/2021","15:15","09/08/2021","17:30");
+    public void textFileOptionWithoutFileName(){
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textFile","May Thatcher","Football match","09/08/2021","15:15","09/08/2021","17:30");
         assertThat(result.getTextWrittenToStandardError(), containsString(Project2.MISSING_COMMAND_LINE_ARGUMENTS));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
     }*/
 
     @Test
-    public void onlyTextFileOptionGiven(){
-        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-textfile","samplefile");
+    public void onlytextFileOptionGiven(){
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-textFile","samplefile");
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.MISSING_COMMAND_LINE_ARGUMENTS));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
     }
@@ -256,7 +256,7 @@ public class Project2IT extends InvokeMainTestCase{
 
     @Test
     void OptionsHaveTobespcifiedAttheBegining(){
-        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","samplefile","Pooja","just a meeting","09/09/2021","-textfile","09:14","09/09/2021","16:30");
+        InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","samplefile","Pooja","just a meeting","09/09/2021","-textFile","09:14","09/09/2021","16:30");
         assertThat(result.getTextWrittenToStandardError(),containsString("Options must be entered first. Wrong ordering of arguments"));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
     }
