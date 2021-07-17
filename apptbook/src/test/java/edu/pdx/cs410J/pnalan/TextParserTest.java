@@ -32,7 +32,7 @@ public class TextParserTest  {
         String owner = "Pooja";
         AppointmentBook appBook = new AppointmentBook(owner);
         StringWriter sw = new StringWriter();
-        FileWriter filewriter = new FileWriter(new File(filename),true);
+        FileWriter filewriter = null;
         TextDumper textDumper = new TextDumper(filewriter,sw,filename);
         textDumper.dump(appBook);
         BufferedReader bufferedreader = new BufferedReader(new FileReader(filename));
@@ -47,7 +47,8 @@ public class TextParserTest  {
         String owner = "Pooja";
         AppointmentBook appBook = new AppointmentBook(owner);
         StringWriter sw = new StringWriter();
-        FileWriter filewriter = new FileWriter(new File(filename),true);
+       // FileWriter filewriter = new FileWriter(new File(filename),true);
+        FileWriter filewriter = null;
         TextDumper textDumper = new TextDumper(filewriter,sw,filename);
 
         textDumper.dump(appBook);
