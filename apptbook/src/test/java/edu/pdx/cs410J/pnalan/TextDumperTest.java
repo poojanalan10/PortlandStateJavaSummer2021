@@ -59,6 +59,7 @@ public class TextDumperTest {
    }
 
     @Test
+    @Disabled
     public void appointmentOwnerComparisonBetweenEnterValueandTextFile() throws IOException {
         String owner = "Pooja";
         String filename = "PeterFile";

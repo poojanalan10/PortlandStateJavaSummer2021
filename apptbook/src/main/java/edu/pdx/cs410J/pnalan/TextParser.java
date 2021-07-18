@@ -34,18 +34,6 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
 
 
     }
-   /*  TextParser(BufferedReader filereader){
-        super();
-        this.bufferedreader = filereader;
-     }
-
-
-    TextParser(String filename) throws IOException{
-        this.filepath = new String(createFilePath(filename));
-        this.file = new File(this.filepath);
-
-    }
-*/
 
     /**
      * This method creates a text file name based on ow its inputted with or without extension
@@ -98,8 +86,10 @@ public AppointmentBook parse () throws ParserException{
                 String description = args[0];
                 String startDateString = validateDate(args[1]);
                 String startTimeString = validateTime(args[2]);
+
                 String endDateString = validateDate(args[3]);
                 String endTimeString = validateTime(args[4]);
+
                 //book.addAppointment(new Appointment(args[0],args[1],args[2],args[3],args[4]));
                 book.addAppointment(new Appointment(description, startDateString, startTimeString, endDateString, endTimeString));
             }
@@ -145,7 +135,7 @@ public AppointmentBook parse () throws ParserException{
      * @return TimeString or error message
      */
     public static String validateTime(String TimeString){
-        String timeregex = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$";
+        String timeregex = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]\\s[PpAa][Mm]$";
         if(TimeString != null) {
             if (Pattern.matches(timeregex, TimeString)) {
                 return TimeString;
@@ -155,5 +145,18 @@ public AppointmentBook parse () throws ParserException{
             }
         }
         return null;
+    }
+
+
+    private static String validateMeridiem(String m){
+        if(m.equalsIgnoreCase("AM")){
+            return m;
+        }
+        else if(m.equalsIgnoreCase("PM")){
+            return m;
+        }
+        else{
+            throw new IllegalArgumentException("Merediem other than AM/PM entered : "+m);
+        }
     }
 }

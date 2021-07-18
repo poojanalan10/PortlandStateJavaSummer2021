@@ -2,6 +2,8 @@ package edu.pdx.cs410J.pnalan;
 import edu.pdx.cs410J.AbstractAppointmentBook;
 import edu.pdx.cs410J.AbstractAppointment;
 import edu.pdx.cs410J.*;
+
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.*;
@@ -17,7 +19,7 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
     /**
      * appointments collection holds a record of all the appointments
      */
-    private Collection<Appointment> appointments = new ArrayList<>();
+    private ArrayList<Appointment> appointments = new ArrayList<>();
 
     /**
      * an AppointmentBook constructor
@@ -50,7 +52,23 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
         addAppointment(newAppointment);
     }
 
+    public AppointmentBook(final String ownerName,AppointmentBook... appointmentBooks){
+        super();
+        owner = ownerName;
+        copyAppointments(appointmentBooks);
+    }
 
+    private void copyAppointments(AppointmentBook... appointmentBooks){
+        for(var app : appointmentBooks){
+            if(app != null && owner.equals(app.getOwnerName())){
+                appointments.addAll(app.getAppointments());
+            }
+            else{
+                throw new InvalidParameterException();
+            }
+        }
+
+    }
 
     /**
      * Returns the name of the owner of the appointment book
@@ -79,7 +97,35 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
      */
     @Override
     public Collection<Appointment> getAppointments(){
+        Collections.sort(appointments,AppointmentBook.startTime);
         return this.appointments;
     }
+
+
+
+    /**
+     * Returns appointments based on a comparison, first is start time and if they are equl next is end time and if they are also equal then it is by descriptiom
+     */
+    public static Comparator<Appointment> startTime = new Comparator<Appointment>() {
+        @Override
+        public int compare(Appointment o1, Appointment o2) {
+           Date st1 = o1.getBeginTime();
+           Date st2 = o2.getBeginTime();
+           Date et1 = o1.getEndTime();
+           Date et2 = o2.getEndTime();
+           String des1 = o1.getDescription();
+           String des2 = o2.getDescription();
+           if(st1.compareTo(st2) == 0){
+               if(et1.compareTo(et2) == 0){
+                   return des1.compareTo(des2);
+               }
+               else {
+                   return et1.compareTo(et2);
+               }
+           }
+           return st1.compareTo(st2);
+
+        }
+    };
 
 }

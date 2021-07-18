@@ -15,13 +15,13 @@ public class AppointmentBookTest {
     }
     @Test
     public void checkIfAppointmentBookAddsAppointments(){
-        AppointmentBook appBook = new AppointmentBook("Pooja", new Appointment("zoom meeting","02/02/2021","09:15","02/02/2021","11:00"));
-        assertThat(appBook.getAppointments().iterator().next().toString(),containsString("zoom meeting from 09:15 until 11:00"));
+        AppointmentBook appBook = new AppointmentBook("Pooja", new Appointment("zoom meeting","02/02/2021","09:15 AM","02/02/2021","11:00 AM"));
+        assertThat(appBook.getAppointments().iterator().next().toString(),containsString("zoom meeting from 09:15 AM until 11:00 AM"));
     }
 
     @Test
     void toStringContainsAppointmentInTheAppointmentBook(){
-        AppointmentBook appBook = new AppointmentBook("Pooja", new Appointment("zoom meeting","02/02/2021","09:15","02/02/2021","11:00"));
+        AppointmentBook appBook = new AppointmentBook("Pooja", new Appointment("zoom meeting","02/02/2021","09:15 AM","02/02/2021","11:00 AM"));
         assertThat(appBook.toString(),containsString("Pooja's appointment book with 1 appointment"));
     }
 

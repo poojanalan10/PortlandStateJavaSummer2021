@@ -73,9 +73,14 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
             if (!mkdir.exists() || mkdir == null) {
                 mkdir.mkdirs();
             }
-            if (!file.exists()) {
+            if (!Files.exists(Paths.get(String.valueOf(file)))) {
                 if (fname.matches("([^\\s]+|(\\.(?i)(txt))$)")) {
-                    file.createNewFile();
+                    var name = Arrays.asList(regex.split("/"));
+                    var dir = directorytocreate.get(0).concat("\\\\").trim();
+                    var filename = name.get(1);
+                    File f1 = new File(dir+filename);
+                    f1.createNewFile();
+                   // file.getParentFile().createNewFile();
                 }
             }
         } else {
@@ -128,10 +133,10 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
                 }
             } else {
                     String owner = line;
-                 //   appointmentOwnerComparison(appBook.getOwnerName());
                     this.writer.write(owner);
                     for (Appointment appointment : appointments) {
-                       filewriter.append(appointment.getDescription() + "," + appointment.getBeginDate() + "," + appointment.getBeginTimeString() + "," + appointment.getEndDate() + "," + appointment.getEndTimeString());
+                       filewriter.append(appointment.getDescription() + "," + appointment.getBeginDate() + "," + appointment.getBeginTimeString() + ","
+                               +appointment.getEndDate() + "," + appointment.getEndTimeString());
                        filewriter.append("\n");
                        System.out.println("The given appointment is added to the text file"+this.file.getAbsolutePath());
 
