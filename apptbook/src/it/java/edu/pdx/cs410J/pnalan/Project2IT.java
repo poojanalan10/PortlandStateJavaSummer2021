@@ -5,7 +5,7 @@ import edu.pdx.cs410J.ParserException;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
+/*import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,14 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class Project2IT extends InvokeMainTestCase{
     /**
      * Invokes the main method of {@link Project2} with the given arguments.
-     */
+  /*   *//*
     private InvokeMainTestCase.MainMethodResult invokeMain(String... args) {
         return invokeMain( Project2.class, args );
     }
 
-    /**
+    *//**
      * Tests that invoking the main method with no arguments issues an error
-     */
+     *//*
     @Test
     void testNoCommandLineArguments() {
         InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class);
@@ -188,12 +188,12 @@ public class Project2IT extends InvokeMainTestCase{
         InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textFile","file","May Thatcher","Football match","09/08/2021","15:15","09/08/2021","17:30");
         assertThat(result.getExitCode(), equalTo(1));
     }
-  /*  @Test
+  *//*  @Test
     public void textFileOptionWithoutFileName(){
         InvokeMainTestCase.MainMethodResult result = invokeMain(Project2.class,"-print","-textFile","May Thatcher","Football match","09/08/2021","15:15","09/08/2021","17:30");
         assertThat(result.getTextWrittenToStandardError(), containsString(Project2.MISSING_COMMAND_LINE_ARGUMENTS));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project2.USAGE_MESSAGE));
-    }*/
+    }*//*
 
     @Test
     public void onlytextFileOptionGiven(){
@@ -284,5 +284,5 @@ public class Project2IT extends InvokeMainTestCase{
         assertThat(result.getTextWrittenToStandardError(),containsString("UNRECOGNIZED TIME FORMAT"));
 
     }
-
-}
+*/
+//}

@@ -1,4 +1,4 @@
-package edu.pdx.cs410J.pnalan;
+/*package edu.pdx.cs410J.pnalan;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * from <code>Project1IT</code> which is an integration test (and can handle the calls
  * to {@link System#exit(int)} and the like.
  */
-class Project1Test extends InvokeMainTestCase {
+/*class Project1Test extends InvokeMainTestCase {
 
 
   @Test
@@ -54,3 +54,4 @@ class Project1Test extends InvokeMainTestCase {
 
 
 }
+*/

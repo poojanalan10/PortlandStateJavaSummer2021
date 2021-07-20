@@ -1,4 +1,4 @@
-package edu.pdx.cs410J.pnalan;
+/*package edu.pdx.cs410J.pnalan;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
 import org.junit.jupiter.api.Test;
@@ -10,18 +10,23 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Integration tests for the {@link Project1} main class.
  */
-class Project1IT extends InvokeMainTestCase {
+/*class Project1IT extends InvokeMainTestCase {
 
-  /**
+
+  */
+/**
    * Invokes the main method of {@link Project1} with the given arguments.
-   */
+   *//*
+
   private MainMethodResult invokeMain(String... args) {
     return invokeMain( Project1.class, args );
   }
 
-  /**
+  */
+/**
    * Tests that invoking the main method with no arguments issues an error
-   */
+   *//*
+
   @Test
   void testNoCommandLineArguments() {
     MainMethodResult result = invokeMain(Project1.class,"");
@@ -187,6 +192,7 @@ class Project1IT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(),containsString("Begin date/time cannot be greater than or equal to the end date/time for an appointment!"));
     assertThat(result.getExitCode(), equalTo(1));
   }
+*/
 
 
   /*@Test
@@ -196,4 +202,4 @@ class Project1IT extends InvokeMainTestCase {
     assertThat(result.getExitCode(), equalTo(1));
   }*/
 
-}
+//}

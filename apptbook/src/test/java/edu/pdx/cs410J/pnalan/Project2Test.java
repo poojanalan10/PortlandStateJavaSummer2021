@@ -1,4 +1,4 @@
-package edu.pdx.cs410J.pnalan;
+/*package edu.pdx.cs410J.pnalan;
 
 import org.junit.jupiter.api.Test;
 
@@ -44,5 +44,4 @@ public class Project2Test {
         assertThat(p1.getClass().getDeclaredMethods(),is(notNullValue()));
     }
 
-
-}
+}*/
