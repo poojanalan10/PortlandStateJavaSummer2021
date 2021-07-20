@@ -2,6 +2,7 @@ package edu.pdx.cs410J.pnalan;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class Project3 {
@@ -21,7 +22,7 @@ public class Project3 {
             "-pretty (prettyFile/-)"+
             " -print\n"
             +"-README\n"
-            +"-textFile filename";
+            +"-textFile textfilename";
 
     /**
      * MISSING_COMMAND_LINE_ARGUMENTS has an error message displayed when the corresponding message when no options or arguments are passed in the commnad line
@@ -68,9 +69,9 @@ public class Project3 {
     public static final String UNRECOGNIZED_TIME_FORMAT = "Time not in requested format (hh:mm) \" unrecognized time";
 
     /**
-     * UNRECOGNIZED_FILE_NAME has an error message displayed when the filename is not in the specified format
+     * UNRECOGNIZED_FILE_NAME has an error message displayed when the textfilename is not in the specified format
      */
-    public static final String UNRECOGNIZED_FILE_NAME = "File name is not in the specified format. It should be filename or filename.txt or myDir/filename or myDir/filename.txt";
+    public static final String UNRECOGNIZED_FILE_NAME = "File name is not in the specified format. It should be textfilename or textfilename.txt or myDir/textfilename or myDir/textfilename.txt";
 
     /**
      * MISSING_FILE_NAME has an error message displayed when the file name is missing
@@ -97,17 +98,25 @@ public class Project3 {
      */
     public static final String SOMETHING_WRONG = "An unexpected error in the input. Please check the usage for the right format!";
     /**
+     * SAME_NAME this message is thrown when the textfile and the pretty file have the same name
+     */
+    public static final String SAME_NAME = "The filename for pretty and textFile option are the same Please provide different filenames";
+
+    public static final String MISSING_PRETTY_FILE_NAME = "Pretty file name is missing";
+
+    /**
      * The main method for our Project3
      * @param args
      *        [options] arguments
-     * [-README -print -pretty filename -textFile filename] 'owner' 'description' 'begin date' 'begin time' 'end date' 'end time'
+     * [-README -print -pretty textfilename -textFile textfilename] 'owner' 'description' 'begin date' 'begin time' 'end date' 'end time'
      *     case 1 : args.length is 0, which means no command line arguments
      *     case 2: args.length is > 6, which means too many arguments
      *     case 3: expected number of arguments. arguments are assigned and checked. They are validated and errors are thrown for any unexpected format
      */
     public static  void main(String[] args) {
         try {
-            String filename = null;
+            String textfilename = null;
+            String prettyfilename = null;
             String owner = null;
             String description = null;
             String beginDate = null;
@@ -118,7 +127,8 @@ public class Project3 {
             String endmeridiem = null;
             String[] argsValues = null;
             boolean hastextFileoption = false;
-            int textFilenameindex = 0;
+            boolean hasprettyfileoption = false;
+            int texttextfilenameindex = 0;
 
             if (Arrays.asList(args).contains("-README") & Arrays.asList(args).indexOf("-README") < 3) {
                 printReadMeAndExit();
@@ -131,23 +141,44 @@ public class Project3 {
                 printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
                 System.exit(1);
 
-            } else if ((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") >= 3) && !Arrays.asList(args).contains("-README")) {
+            }
+            else if ((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") >= 5) && !Arrays.asList(args).contains("-README")) {
                 printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
                 System.exit(1);
 
-            } else if ((Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") >= 4) && !Arrays.asList(args).contains("-README")) {
+            } else if ((Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") >= 5) && !Arrays.asList(args).contains("-README")) {
                 printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
                 System.exit(1);
 
-            } else if ((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") >= 3) && !checkFileNameGivenAftertextfileOption(args)) {
+            }
+
+            else if ((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") > 4) && !checktextfilenameGivenAftertextfileOption(args)) {
                 printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
                 System.exit(1);
 
-            } else if ((Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") >= 4) && !checkFileNameGivenAftertextfileOption(args)) {
+            } else if ((Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") >= 5) && !checktextfilenameGivenAftertextfileOption(args)) {
                 printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
                 System.exit(1);
 
-            } else if ((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") == 0) && args.length < 5) {
+            } else if ((Arrays.asList(args).contains("-pretty") && Arrays.asList(args).indexOf("-pretty") >= 4) && !checkprettyfilenameGivenAfterPrintfileOption(args)) {
+                printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
+                System.exit(1);
+
+            }
+            else if (Arrays.asList(args).contains("-pretty") && !checkprettyfilenameGivenAfterPrintfileOption(args)) {
+                printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
+                System.exit(1);
+
+            }
+
+            else if (Arrays.asList(args).contains("-pretty") && !checkprettyfilenameNotGivenAndFoundTextfileOption(args)) {
+                printErrorMessageAndExit(WRONG_ORDERING_OPTIONS);
+                System.exit(1);
+
+            }
+
+
+            else if ((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") == 0) && args.length < 5) {
                 printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
                 System.exit(1);
 
@@ -160,14 +191,27 @@ public class Project3 {
                 printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
                 System.exit(1);
             }
+            else if(Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-print") && !Arrays.asList(args).contains("-pretty") && args.length < 11){
+                printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
+                System.exit(1);
+            }
+            else if(Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-pretty") && args.length < 11){
+                printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
+                System.exit(1);
+            }
+            else if(Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-pretty") && args.length > 11){
+                printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
+                System.exit(1);
+            }
+
 
             /**
              * if the user enters more than the required argument count of 9
              */
-            else if (args.length > 10 && Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") < 2 && !Arrays.asList(args).contains("-pretty")) {
+            else if (args.length > 11 && Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-textFile") < 2 && !Arrays.asList(args).contains("-pretty")) {
                 printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
                 System.exit(1);
-            } else if (args.length > 7 && Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") < 2 && !Arrays.asList(args).contains("-textFile") && !Arrays.asList(args).contains("-pretty")) {
+            } else if (args.length > 9 && Arrays.asList(args).contains("-print") && Arrays.asList(args).indexOf("-print") < 2 && !Arrays.asList(args).contains("-textFile") && !Arrays.asList(args).contains("-pretty")) {
                 printErrorMessageAndExit(TOO_MANY_ARGUMENTS);
                 System.exit(1);
             } else if (args.length > 10 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile") && !Arrays.asList(args).contains("-pretty")) {
@@ -183,161 +227,189 @@ public class Project3 {
 
                 if (args.length == 8 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")) {
                     hastextFileoption = true;
-                    filename = Arrays.asList(args).get(1);
+                    textfilename = Arrays.asList(args).get(1);
                     argsValues = Arrays.copyOfRange(args, 2, args.length);
 
                 } else if (args.length == 7 && !Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile")) {
                     hastextFileoption = true;
                     printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
                     return;
-                } else if (args.length == 6 && Arrays.asList(args).contains("-print") && !Arrays.asList(args).contains("-textFile")) {
+                } /*else if (args.length == 6 && Arrays.asList(args).contains("-print") && !Arrays.asList(args).contains("-textFile")) {
                     printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
                     return;
-                } else if (Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile") && !Arrays.asList(args).contains("-pretty")) {
+                } */ else if (Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile") && !Arrays.asList(args).contains("-pretty") && args.length > 3) {
                     if (Arrays.asList(args).indexOf("-print") == 2 && Arrays.asList(args).indexOf("-textFile") == 0) {
-                        if (checkFileNameGivenAftertextfileOption(args)) {
+                        if (checktextfilenameGivenAftertextfileOption(args)) {
                             hastextFileoption = true;
-                            filename = Arrays.asList(args).get(1);
+                            textfilename = Arrays.asList(args).get(1);
                             argsValues = Arrays.copyOfRange(args, 3, args.length);
                         }
                     } else if (Arrays.asList(args).indexOf("-print") == 0 && Arrays.asList(args).indexOf("-textFile") == 1) {
-                        if (checkFileNameGivenAftertextfileOption(args)) {
+                        if (checktextfilenameGivenAftertextfileOption(args)) {
                             hastextFileoption = true;
-                            filename = Arrays.asList(args).get(2);
+                            textfilename = Arrays.asList(args).get(2);
                             argsValues = Arrays.copyOfRange(args, 3, args.length);
                         }
                     }
                 } else if ((Arrays.asList(args).indexOf("-print") == 0 && Arrays.asList(args).indexOf("-textFile") == 1)) {
                     hastextFileoption = true;
-                    filename = Arrays.asList(args).get(2);
+                    textfilename = Arrays.asList(args).get(2);
                     argsValues = Arrays.copyOfRange(args, 3, args.length);
-                } else if (Arrays.asList(args).indexOf("-print") == 0 && !Arrays.asList(args).contains("-textFile")) {
+                } else if (Arrays.asList(args).indexOf("-print") == 0 && !Arrays.asList(args).contains("-textFile") && args.length >= 2) {
                     argsValues = Arrays.copyOfRange(args, 1, args.length);
                 } else if (!Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile") && !Arrays.asList(args).contains("-pretty")) {
                     hastextFileoption = true;
-                    filename = Arrays.asList(args).get(1);
+                    textfilename = Arrays.asList(args).get(1);
                     argsValues = Arrays.copyOfRange(args, 2, args.length);
-                }
-                else if(!Arrays.asList(args).contains("-print") && !Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-pretty")){
-                    argsValues = Arrays.copyOfRange(args,1,args.length);
-                }
-                else if(Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-pretty")){
-                    argsValues = Arrays.copyOfRange(args,5,args.length);
-                }
-                else if(!Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-pretty")){
+                } else if (!Arrays.asList(args).contains("-print") && !Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-pretty")) {
+                    hasprettyfileoption = true;
+                    prettyfilename = Arrays.asList(args).get(Arrays.asList(args).indexOf("-pretty") + 1);
+                    argsValues = Arrays.copyOfRange(args, 2, args.length);
+                } else if (Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-pretty")) {
                     hastextFileoption = true;
-                    filename = Arrays.asList(args).get(Arrays.asList(args).indexOf("-textFile") + 1);
-                    argsValues = Arrays.copyOfRange(args,4,args.length);
-                }
-                if (argsValues == null) {
-                    printErrorMessageAndExit(SOMETHING_WRONG);
-                }
-
-
-                for (String arg : argsValues) {
-
-                    if (owner == null) {
-                        owner = arg;
-                    } else if (description == null) {
-                        description = arg;
-                    } else if (beginDate == null) {
-                        beginDate = validateDate(arg);
-                    } else if (beginTimeString == null) {
-                        beginTimeString = arg;
-                    }
-                    else if(beginmeridiem == null){
-                        beginmeridiem = arg;
-                    }
-                    else if (endDate == null) {
-                        endDate = validateDate(arg);
-                    } else if (endTimeString == null) {
-                        endTimeString = arg;
-                    }
-                    else if(endmeridiem == null){
-                        endmeridiem = arg;
-                    }
-
-                }
-                beginTimeString = validateTime(beginTimeString + " " +beginmeridiem);
-                endTimeString = validateTime(endTimeString + " " + endmeridiem);
-                if (hastextFileoption) {
-                    if (filename == null) {
-                        printErrorMessageAndExit(MISSING_FILE_NAME);
+                    hasprettyfileoption = true;
+                    textfilename = Arrays.asList(args).get(Arrays.asList(args).indexOf("-textFile") + 1);
+                    prettyfilename = Arrays.asList(args).get(Arrays.asList(args).indexOf("-pretty") + 1);
+                    argsValues = Arrays.copyOfRange(args, 5, args.length);
+                  /*  if (prettyfilename.equals(textfilename)) {
+                        printErrorMessageAndExit(SAME_NAME);
                         System.exit(1);
-                    }
+                    }*/
+                } else if (!Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-pretty")) {
+                    hastextFileoption = true;
+                    hasprettyfileoption = true;
+                    textfilename = Arrays.asList(args).get(Arrays.asList(args).indexOf("-textFile") + 1);
+                    prettyfilename = Arrays.asList(args).get(Arrays.asList(args).indexOf("-pretty") + 1);
+                   /* if (prettyfilename.equals(textfilename)) {
+                        printErrorMessageAndExit(SAME_NAME);
+                        // System.exit(1);
+                    }*/
+                    argsValues = Arrays.copyOfRange(args, 4, args.length);
                 }
-                if (owner == null) {
-                    printErrorMessageAndExit(MISSING_OWNER_NAME);
+                if (argsValues == null || argsValues.length == 0) {
+                    printErrorMessageAndExit(SOMETHING_WRONG);
                     System.exit(1);
-                }
-                if (description == null) {
-                    printErrorMessageAndExit(MISSING_DESCRIPTION);
-                    System.exit(1);
-                } else if (beginDate == null) {
-                    printErrorMessageAndExit(MISSING_BEGIN_DATE);
-                    System.exit(1);
-                } else if (beginTimeString == null) {
-                    printErrorMessageAndExit(MISSING_BEGIN_TIME);
-                    System.exit(1);
-                } else if (endDate == null) {
-                    printErrorMessageAndExit(MISSING_END_DATE);
-                    System.exit(1);
-                } else if (endTimeString == null) {
-                    printErrorMessageAndExit(MISSING_END_TIME);
-                    System.exit(1);
-                }
+                } else {
 
-                Appointment app = new Appointment(description, beginDate, beginTimeString , endDate, endTimeString);
-                if (app.validateBeginLessThanEndDate(app.getBeginTime(), app.getEndTime()) != "begin date is before end date as expected") {
-                    printErrorMessageAndExit(BEGIN_GREATER_THAN_END);
-                    System.exit(1);
-                }
-                AppointmentBook appBook = new AppointmentBook(owner, app);
-                StringWriter sw = new StringWriter();
-                if (Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") < 2 && !Arrays.asList(args).contains("-pretty")) {
-                    writeToFile(args, appBook, sw, filename);
 
-                    AppointmentBook readappointment = readFromFile(filename, sw);
-                    System.out.println(readappointment.getAppointments());
-                    if (Arrays.asList(args).contains("-print")) {
-                        System.out.println("Latest appointment information:");
-                        System.out.println(app.toString());
+                    for (String arg : argsValues) {
 
-                    }
-
-                }
-               else if(!Arrays.asList(args).contains("-print") && !Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-pretty")) {
-                    writeToFile(args, appBook, sw, filename);
-
-                    AppointmentBook readappointment = readFromFile(filename, sw);
-                    if (Arrays.asList(args).contains("-print")) {
-                        System.out.println("Latest appointment information:");
-                        System.out.println(app.toString());
+                        if (owner == null) {
+                            owner = arg;
+                        } else if (description == null) {
+                            description = arg;
+                        } else if (beginDate == null) {
+                            beginDate = validateDate(arg);
+                        } else if (beginTimeString == null) {
+                            beginTimeString = arg;
+                        } else if (beginmeridiem == null) {
+                            beginmeridiem = arg;
+                        } else if (endDate == null) {
+                            endDate = validateDate(arg);
+                        } else if (endTimeString == null) {
+                            endTimeString = arg;
+                        } else if (endmeridiem == null) {
+                            endmeridiem = arg;
+                        }
 
                     }
-                   Pretty(args, readappointment.getOwnerName(),readappointment);
-                }
-               else if(Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-pretty")){
-                    writeToFile(args, appBook, sw, filename);
-
-                    AppointmentBook readappointment = readFromFile(filename, sw);
-                    System.out.println(readappointment.getAppointments());
-                    if (Arrays.asList(args).contains("-print")) {
-                        System.out.println("Latest appointment information:");
-                        System.out.println(app.toString());
+                    if (beginTimeString != null) {
+                        beginTimeString = validateTime(beginTimeString + " " + beginmeridiem);
 
                     }
-                    Pretty(args, readappointment.getOwnerName(),readappointment);
+                    if (endTimeString != null) {
+                        endTimeString = validateTime(endTimeString + " " + endmeridiem);
+                    }
+                    if (hastextFileoption) {
+                        if (textfilename == null) {
+                            printErrorMessageAndExit(MISSING_FILE_NAME);
+                            System.exit(1);
+                        }
+                    }
+                    if (hasprettyfileoption) {
+                        if (prettyfilename == null) {
+                            printErrorMessageAndExit(MISSING_PRETTY_FILE_NAME);
+                            System.exit(1);
+                        }
+                    }
+                    //if this condition is true exit
+                    if (hasprettyfileoption && hastextFileoption && prettyfilename.equals(textfilename)) {
+                        printErrorMessageAndExit(SAME_NAME);
+                        //  System.exit(1);
+
+                    } else {
+                        if (owner == null) {
+                            printErrorMessageAndExit(MISSING_OWNER_NAME);
+                            System.exit(1);
+                        }
+                        if (description == null) {
+                            printErrorMessageAndExit(MISSING_DESCRIPTION);
+                            System.exit(1);
+                        } else if (beginDate == null) {
+                            printErrorMessageAndExit(MISSING_BEGIN_DATE);
+                            System.exit(1);
+                        } else if (beginTimeString == null) {
+                            printErrorMessageAndExit(MISSING_BEGIN_TIME);
+                            System.exit(1);
+                        } else if (endDate == null) {
+                            printErrorMessageAndExit(MISSING_END_DATE);
+                            System.exit(1);
+                        } else if (endTimeString == null) {
+                            printErrorMessageAndExit(MISSING_END_TIME);
+                            System.exit(1);
+                        }
+
+
+                        Appointment app = new Appointment(description, beginDate, beginTimeString, endDate, endTimeString);
+                        if (app.validateBeginLessThanEndDate(app.getBeginTime(), app.getEndTime()) != "begin date is before end date as expected") {
+                            printErrorMessageAndExit(BEGIN_GREATER_THAN_END);
+                            System.exit(1);
+                        }
+                        AppointmentBook appBook = new AppointmentBook(owner, app);
+                        StringWriter sw = new StringWriter();
+
+
+                        if (Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") < 2 && !Arrays.asList(args).contains("-pretty")) {
+                            writeToFile(args, appBook, sw, textfilename);
+
+                            AppointmentBook readappointment = readFromFile(textfilename, sw);
+                            System.out.println(readappointment.getAppointments());
+                            if (Arrays.asList(args).contains("-print")) {
+                                System.out.println("Latest appointment information:");
+                                System.out.println(app.toString());
+
+                            }
+                        } else if (!Arrays.asList(args).contains("-print") && !Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-pretty")) {
+                            writeToFile(args, appBook, sw, prettyfilename);
+
+                            AppointmentBook readappointment = readFromFile(prettyfilename, sw);
+                            if (Arrays.asList(args).contains("-print")) {
+                                System.out.println("Latest appointment information:");
+                                System.out.println(app.toString());
+
+                            }
+                            Pretty(args, readappointment.getOwnerName(), readappointment);
+                        } else if (Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-pretty")) {
+                            writeToFile(args, appBook, sw, textfilename);
+
+                            AppointmentBook readappointment = readFromFile(textfilename, sw);
+                            System.out.println(readappointment.getAppointments());
+                            if (Arrays.asList(args).contains("-print")) {
+                                System.out.println("Latest appointment information:");
+                                System.out.println(app.toString());
+
+                            }
+                            Pretty(args, readappointment.getOwnerName(), readappointment);
+                        } else {
+                            System.out.println(app.toString());
+                        }
+
+                    }
                 }
-
-                else {
-                    System.out.println(app.toString());
-                }
-
-
-                System.exit(0);
-
             }
+               // System.exit(0);
+
+
         }
         catch (Exception e){
             System.err.println(e);
@@ -349,15 +421,36 @@ public class Project3 {
 
     }
 
-    private static boolean checkFileNameGivenAftertextfileOption(String[] args){
+    private static boolean checktextfilenameGivenAftertextfileOption(String[] args){
         int textfile_index = Arrays.asList(args).indexOf("-textFile");
         int print_index = Arrays.asList(args).indexOf("-print");
         return print_index != textfile_index + 1;
     }
-    private static AppointmentBook readFromFile(String filename, StringWriter sw){
+    private static boolean checkprettyfilenameGivenAfterPrintfileOption(String[] args){
+        int print_index = 0, textfile_index = 0;
+        List<String> arguments = Arrays.asList(args);
+        int prettyfile_index = arguments.indexOf("-pretty");
+        if(arguments.contains("-print"))
+            print_index = Arrays.asList(args).indexOf("-print");
+      /*  if(arguments.contains("-textFile"))
+            textfile_index = arguments.indexOf("-textFile");*/
+        return (print_index != prettyfile_index + 1);
+       // return arguments.contains("-textFile") && arguments.contains("-print") ? (print_index != prettyfile_index + 1 && textfile_index != prettyfile_index + 1) :
+       //         arguments.contains("-textFile") ? (textfile_index != prettyfile_index + 1) :  (print_index != prettyfile_index + 1);
+    }
+    private static boolean checkprettyfilenameNotGivenAndFoundTextfileOption(String[] args){
+        int textfile_index = 0;
+        List<String> arguments = Arrays.asList(args);
+        int prettyfile_index = arguments.indexOf("-pretty");
+        if(arguments.contains("-textFile"))
+            textfile_index = arguments.indexOf("-textFile");
+        return textfile_index != prettyfile_index + 1;
+    }
+    private static AppointmentBook readFromFile(String textfilename, StringWriter sw){
         try {
-            BufferedReader bufferedreader = new BufferedReader(new FileReader(filename));
-            TextParser txtParser = new TextParser(bufferedreader,filename,new StringReader(sw.toString()));
+            //BufferedReader bufferedreader = new BufferedReader(new FileReader(textfilename));
+            BufferedReader bufferedreader = null;
+            TextParser txtParser = new TextParser(bufferedreader,textfilename,new StringReader(sw.toString()));
             AppointmentBook appointmentBook = txtParser.parse();
             return appointmentBook;
         }
@@ -369,10 +462,10 @@ public class Project3 {
         }
         return null;
     }
-    private static void writeToFile(String[] args, AppointmentBook appointmentBook, StringWriter sw, String filename){
+    private static void writeToFile(String[] args, AppointmentBook appointmentBook, StringWriter sw, String textfilename){
         try{
             FileWriter filewriter = null;
-            TextDumper textDumper = new TextDumper(filewriter,sw,filename);
+            TextDumper textDumper = new TextDumper(filewriter,sw,textfilename);
             textDumper.dump(appointmentBook);
 
         } catch (IOException e) {
@@ -383,10 +476,11 @@ public class Project3 {
     private static void Pretty(String[] args, String owner, final AppointmentBook appBook){
         try{
             AppointmentBook appbook = new AppointmentBook(owner, appBook);
-            System.out.println(appbook.getAppointments());
-            var pretty_index = args[Arrays.asList(args).indexOf("-pretty")+1];
-            PrettyPrinter prettyPrinter = new PrettyPrinter(pretty_index);
+          //  System.out.println(appbook.getAppointments());
+            var  prettyfilename =  args[Arrays.asList(args).indexOf("-pretty")+1];
+            PrettyPrinter prettyPrinter = new PrettyPrinter(prettyfilename);
             prettyPrinter.dump(appbook);
+           // System.out.println(appbook.getAppointments());
             System.out.println("Appointment have been added successfully to pretty print");
         } catch (IOException e) {
             e.printStackTrace();

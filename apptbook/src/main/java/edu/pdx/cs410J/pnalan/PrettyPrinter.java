@@ -27,7 +27,7 @@ public class PrettyPrinter implements AppointmentBookDumper<AppointmentBook> {
         var number_of_appointments = appointmentBook.getAppointments().size();
         int count = number_of_appointments;
         if(file.length() == 0){
-            fileWriter.write("Owner:"+ appointmentBook.getOwnerName()+
+            fileWriter.write( appointmentBook.getOwnerName()+"\n"+
                     "Number of appointment:"+ number_of_appointments +
                     "\n Description   Start Date and Time  End Date and Time   Appointment Duration" +
                     "\n ----------------------------------------------------------------------------\n");

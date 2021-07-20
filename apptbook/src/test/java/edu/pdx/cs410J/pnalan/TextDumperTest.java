@@ -62,12 +62,12 @@ public class TextDumperTest {
     @Disabled
     public void appointmentOwnerComparisonBetweenEnterValueandTextFile() throws IOException {
         String owner = "Pooja";
-        String filename = "PeterFile";
-        InputStream resource = getClass().getResourceAsStream(filename);
+        String filename = "Folder/PeterFile.txt";
+      //  InputStream resource = getClass().getResourceAsStream(filename);
         AppointmentBook appointmentBook = new AppointmentBook(owner);
         StringWriter sw = new StringWriter();
-        FileWriter filewriter = new FileWriter(new File(filename));
-
+     //   FileWriter filewriter = new FileWriter(new File(filename));
+        FileWriter filewriter = null;
         assertThrows(InvalidParameterException.class, new Executable() {
             @Override
             public void execute() throws Throwable {
@@ -118,4 +118,94 @@ public class TextDumperTest {
         assertThat(text,containsString(owner));
 
     }
+
+    @Test
+    void createsNewFileWhenItDoesnotExistWithRelativePath() throws IOException {
+        String filename = "Folder/file5.txt";
+        String owner = "Pooja";
+        AppointmentBook appBook = new AppointmentBook(owner);
+        StringWriter sw = new StringWriter();
+        FileWriter filewriter = null;
+        TextDumper textDumper = new TextDumper(filewriter,sw,filename);
+        textDumper.dump(appBook);
+        String text = sw.toString();
+        assertThat(text,containsString(owner));
+    }
+
+    @Test
+    void createsNewFileWhenItDoesnotExist() throws IOException {
+        String filename = "NewFileCreation.txt";
+        String owner = "Pooja";
+        AppointmentBook appBook = new AppointmentBook(owner);
+        StringWriter sw = new StringWriter();
+        FileWriter filewriter = null;
+        TextDumper textDumper = new TextDumper(filewriter,sw,filename);
+        textDumper.dump(appBook);
+        String text = sw.toString();
+        assertThat(text,containsString(owner));
+    }
+
+    @Test
+    public void whenOwnerNameIsNotEntered() throws IOException {
+        String owner = "";
+        AppointmentBook appointmentBook = new AppointmentBook(owner);
+        StringWriter sw = new StringWriter();
+        FileWriter filewriter = null;
+
+        assertThrows(InvalidParameterException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                TextDumper dumper = new TextDumper(filewriter, sw, "Folder/PeterFile.txt");
+                dumper.dump(appointmentBook);
+            }
+        });
+
+    }
+    @Test
+    public void whenOwnerNameIsAbsentInAlreadyExistingFile() throws IOException {
+        String owner = "Reese";
+        AppointmentBook appointmentBook = new AppointmentBook(owner);
+        StringWriter sw = new StringWriter();
+        FileWriter filewriter = null;
+
+        assertThrows(InvalidParameterException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                TextDumper dumper = new TextDumper(filewriter, sw, "Folder/OwnerLeese.txt");
+                dumper.dump(appointmentBook);
+            }
+        });
+
+    }
+
+    @Test
+    public void whenOwnerNameIsAbsentInInput() throws IOException {
+        String owner = "";
+        AppointmentBook appointmentBook = new AppointmentBook(owner);
+        StringWriter sw = new StringWriter();
+        FileWriter filewriter = null;
+
+        assertThrows(InvalidParameterException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                TextDumper dumper = new TextDumper(filewriter, sw, "Folder/OwnerLeese.txt");
+                dumper.dump(appointmentBook);
+                //assertThat();
+            }
+        }, "Owner name not entered in the input");
+
+    }
+
+    @Test
+    public void createNewFolderAndFileWhenNotExisting() throws IOException {
+        String owner = "Leese";
+        AppointmentBook appointmentBook = new AppointmentBook(owner);
+        StringWriter sw = new StringWriter();
+        FileWriter filewriter = null;
+        TextDumper dumper = new TextDumper(filewriter, sw, "LeeseFolder/OwnerLeese.txt");
+        dumper.dump(appointmentBook);
+
+
+    }
+
 }
