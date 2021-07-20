@@ -1,7 +1,10 @@
 package edu.pdx.cs410J.pnalan;
 
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 import java.text.ParseException;
+import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -50,5 +53,14 @@ public class AppointmentBookTest {
         assertThat(appointmentBook.getAppointments(),hasItem(appointment));
     }
 
+    @Test
+    void addingAnAppointmentToABook() throws IOException {
+        AppointmentBook appBook = new AppointmentBook("Gwen",new Appointment("Kitty Party","09/10/2021","10:00 AM","09/10/2021","11:00 AM"));
+        AppointmentBook appointmentBook = new AppointmentBook("Gwen", appBook);
+        var  prettyfilename =  "prettyfile10";
+        PrettyPrinter prettyPrinter = new PrettyPrinter(prettyfilename);
+        prettyPrinter.dump(appointmentBook);
+
+    }
 
 }

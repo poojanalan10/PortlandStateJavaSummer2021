@@ -89,8 +89,8 @@ public class Appointment extends AbstractAppointment {
     this.beginTimeString = beginTimeString ;
     this.endDate = endDate;
     this.endTimeString = endTimeString;
-    this.begin = convertDateFormat(this.getBeginDate() + this.getBeginTimeString());
-    this.end = convertDateFormat(this.getEndDate() + this.getEndTimeString());
+    this.begin = convertDateFormat(this.getBeginDate() + " " + this.getBeginTimeString());
+    this.end = convertDateFormat(this.getEndDate() + " " + this.getEndTimeString());
 
   }
 
@@ -164,19 +164,20 @@ public class Appointment extends AbstractAppointment {
    */
   public Date convertDateFormat(String dateString){
     try{
-    //  SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+   //   SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
      // return dateformat.format(dateString);
-     // Date d = new Date();
-    //  d = dateformat.parse(dateString);
+   //   Date d = new Date();
+   //   d = dateformat.parse(dateString);
      // return DateFormat.getDateInstance().format(d);
 
-      Date date = new Date();
-      DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+     Date date = new Date();
+      DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+      date = dateFormat.parse(dateString);
      // String strDate = dateFormat.format(date);
       String strDate = DateFormat.getDateInstance(DateFormat.SHORT).format(date);
       String strTime = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
       date = dateFormat.parse(strDate + " " +strTime, new ParsePosition(0));
-      System.out.println(date);
+   //   System.out.println(date);
       return date;
 
    } catch (Exception e) {
