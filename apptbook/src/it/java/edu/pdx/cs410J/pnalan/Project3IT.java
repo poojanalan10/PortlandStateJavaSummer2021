@@ -377,8 +377,8 @@ public class Project3IT extends InvokeMainTestCase{
     @Test
     public void rightArgumentsGivenForPretty(){
         InvokeMainTestCase.MainMethodResult result = invokeMain(Project3.class,"-pretty","MayPretty","May Thatcher","Football match","11/27/2021","1:15","PM","11/27/2021","5:30","PM");
-        assertThat(result.getTextWrittenToStandardOut(), containsString("The given appointment is added to the text file"));
-        //assertThat(result.getTextWrittenToStandardOut(), containsString("Appointment have been added successfully to pretty print"));
+        //assertThat(result.getTextWrittenToStandardOut(), containsString("The given appointment is added to the text file"));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Appointment have been added successfully to pretty print"));
     }
     @Test
     public void prettyFileNotInOrderWithTextFile(){

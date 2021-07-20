@@ -71,7 +71,7 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
             var directorytocreate = Arrays.asList(fname.split(regex));
             mkdir = new File(directorytocreate.get(0));
             if (!mkdir.exists() || mkdir == null) {
-                System.out.println("Going to create a Folder");
+              //  System.out.println("Going to create a Folder");
                 mkdir.mkdirs();
             }
             if (!Files.exists(Paths.get(String.valueOf(file)))) {
@@ -80,7 +80,7 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
                     var dir = directorytocreate.get(0).concat("\\\\").trim();
                     var filename = name.get(1);
                     File f1 = new File(dir+filename);
-                    System.out.println("Going to create a new file since it doen't exist");
+                   // System.out.println("Going to create a new file since it doen't exist");
                     f1.createNewFile();
                    // file.getParentFile().createNewFile();
                 }
