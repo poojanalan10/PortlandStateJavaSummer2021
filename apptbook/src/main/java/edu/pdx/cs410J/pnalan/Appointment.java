@@ -203,8 +203,8 @@ public class Appointment extends AbstractAppointment {
    * @return duration
    */
   public double appointmentDuration( ){
-    double timedifference =  this.end.getTime() - this.begin.getTime();
-    double duration = TimeUnit.MILLISECONDS.toMinutes((long) timedifference) % 60;
+    double timedifference =  this.getEndTime().getTime() - this.getBeginTime().getTime();
+    double duration = TimeUnit.MILLISECONDS.toMinutes((long) timedifference);
     return duration;
 
   }

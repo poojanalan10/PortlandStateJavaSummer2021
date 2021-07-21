@@ -1,8 +1,12 @@
 package edu.pdx.cs410J.pnalan;
 
+import edu.pdx.cs410J.ParserException;
+
 import java.io.*;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.MissingFormatArgumentException;
 import java.util.regex.Pattern;
 
 public class Project3 {
@@ -370,30 +374,32 @@ public class Project3 {
 
 
                         if (Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") < 2 && !Arrays.asList(args).contains("-pretty")) {
-                            writeToFile(args, appBook, sw, textfilename);
 
-                            AppointmentBook readappointment = readFromFile(textfilename, sw);
-                            System.out.println(readappointment.getAppointments());
-                            if (Arrays.asList(args).contains("-print")) {
-                                System.out.println("Latest appointment information:");
-                                System.out.println(app.toString());
+                                writeToFile(args, appBook, sw, textfilename);
+
+                                AppointmentBook readappointment = readFromFile(textfilename, sw);
+                             //   System.out.println(readappointment.getAppointments());
+                                if (Arrays.asList(args).contains("-print")) {
+                                    System.out.println("Latest appointment information:");
+                                    System.out.println(app.toString());
 
                             }
                         } else if (!Arrays.asList(args).contains("-print") && !Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-pretty")) {
-                            writeToFile(args, appBook, sw, prettyfilename);
+                            if(prettyfilename.equals("-")) {
 
-                            AppointmentBook readappointment = readFromFile(prettyfilename, sw);
-                            if (Arrays.asList(args).contains("-print")) {
-                                System.out.println("Latest appointment information:");
-                                System.out.println(app.toString());
-
+                                Pretty(args, appBook.getOwnerName(), appBook);
                             }
-                            Pretty(args, readappointment.getOwnerName(), readappointment);
+                            else {
+                                /*writeToFile(args, appBook, sw, prettyfilename);
+                                AppointmentBook readappointment = readFromFile(prettyfilename, sw);
+                                Pretty(args, readappointment.getOwnerName(), readappointment);*/
+                                Pretty(args,appBook.getOwnerName(),appBook);
+                            }
                         } else if (Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-pretty")) {
                             writeToFile(args, appBook, sw, textfilename);
 
                             AppointmentBook readappointment = readFromFile(textfilename, sw);
-                            System.out.println(readappointment.getAppointments());
+                           // System.out.println(readappointment.getAppointments());
                             if (Arrays.asList(args).contains("-print")) {
                                 System.out.println("Latest appointment information:");
                                 System.out.println(app.toString());
@@ -419,6 +425,39 @@ public class Project3 {
             System.exit(1);
         }
 
+    }
+    private static void PrintToTheConsole(AppointmentBook appointmentBook){
+        var number_of_appointments = appointmentBook.getAppointments().size();
+        System.out.println( "Owner : " +appointmentBook.getOwnerName()+"\n");
+        int count = number_of_appointments;
+        System.out.println("No of appointments : "+ number_of_appointments);
+       /* final Object[][] table_row_1 = new String[1][];
+        final Object[][] table = new String[number_of_appointments][];
+        table_row_1[0] = new String[]{"Description","Start Date and Time","End Date and Time","Appointment Duration"};
+        System.out.format("%25s%25s%25s%25s%n",table_row_1[0]);*/
+        System.out.println(
+                    "\n Description   Start Date and Time  End Date and Time   Appointment Duration" +
+                    "\n ----------------------------------------------------------------------------\n");
+
+        for(Appointment appointment:appointmentBook.getAppointments()){
+            try {
+              //  table[--count] = new String[]{appointment.getDescription(),appointment.getPrettyDateTime(appointment.getBeginDate()+" " +appointment.getBeginTimeString()),
+              //          appointment.getPrettyDateTime(appointment.getEndDate()+" " +appointment.getEndTimeString()),String.valueOf(appointment.appointmentDuration())};
+                System.out.println("\n"+appointment.getDescription() +"     " +appointment.getPrettyDateTime(appointment.getBeginDate() + "     " +appointment.getBeginTimeString() )
+                        +"      " + appointment.getPrettyDateTime(appointment.getEndDate() + "      " + appointment.getEndTimeString()) +"      " + appointment.appointmentDuration() +"\n");
+
+
+               /* for(final Object[] row:table){
+                    System.out.println("\n--------------------------------------------------------------------------------------------------------------------\n");
+                    System.out.format("%25s%25s%25s%25s%n",row);
+                }*/
+
+            } catch (MissingFormatArgumentException | ParserException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static boolean checktextfilenameGivenAftertextfileOption(String[] args){
@@ -478,10 +517,16 @@ public class Project3 {
             AppointmentBook appbook = new AppointmentBook(owner, appBook);
           //  System.out.println(appbook.getAppointments());
             var  prettyfilename =  args[Arrays.asList(args).indexOf("-pretty")+1];
-            PrettyPrinter prettyPrinter = new PrettyPrinter(prettyfilename);
-            prettyPrinter.dump(appbook);
-           // System.out.println(appbook.getAppointments());
-            System.out.println("Appointment have been added successfully to pretty print");
+            if(!prettyfilename.equals("-")) {
+                PrettyPrinter prettyPrinter = new PrettyPrinter(prettyfilename);
+                prettyPrinter.dump(appbook);
+
+                // System.out.println(appbook.getAppointments());
+                System.out.println("Appointment have been added successfully to pretty print");
+            }
+            else{
+                PrintToTheConsole(appbook);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

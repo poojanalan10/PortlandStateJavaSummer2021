@@ -27,15 +27,20 @@ public class PrettyPrinter implements AppointmentBookDumper<AppointmentBook> {
         var number_of_appointments = appointmentBook.getAppointments().size();
         int count = number_of_appointments;
         if(file.length() == 0){
-            fileWriter.write( appointmentBook.getOwnerName()+"\n"+
-                    "Number of appointment:"+ number_of_appointments +
-                    "\n Description   Start Date and Time  End Date and Time   Appointment Duration" +
-                    "\n ----------------------------------------------------------------------------\n");
+            fileWriter.write("\n***********************************************\n");
+            fileWriter.write(  "\n"+"Owner : " +appointmentBook.getOwnerName()+"\n"+
+                    "Number of appointments : "+ number_of_appointments +"\n"+
+                    "--------------------------------------------------------------------------------------------------------------------------------------------------"+
+                    String.format("%n%-35s%-35s%-35s%-35s",
+                    "Description","Start Date and Time","End Date and Time","Appointment Duration"));
+
+            fileWriter.write("\n--------------------------------------------------------------------------------------------------------------------------------------------------\n");
         }
         for(Appointment appointment:appointmentBook.getAppointments()){
             try {
-                fileWriter.append("\n"+appointment.getDescription() + appointment.getPrettyDateTime(appointment.getBeginDate() + "   " +appointment.getBeginTimeString() )
-                       +"  " + appointment.getPrettyDateTime(appointment.getEndDate() + "  " + appointment.getEndTimeString()) +"  " + appointment.appointmentDuration() +"\n");
+                fileWriter.append("\n"+
+                        String.format("%n%-35s%-35s%-35s%-35s",appointment.getDescription(), appointment.getPrettyDateTime(appointment.getBeginDate()+ " " + appointment.getBeginTimeString() )
+                       ,appointment.getPrettyDateTime(appointment.getEndDate() + " " + appointment.getEndTimeString()),appointment.appointmentDuration() +"\n"));
             } catch (ParserException e) {
                 e.printStackTrace();
             } catch (ParseException e) {
