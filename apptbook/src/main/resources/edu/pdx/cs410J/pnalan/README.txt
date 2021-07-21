@@ -13,3 +13,6 @@ printing appropriate error message.
 Project 2
 When the -textfile option is entered. This option is followed by the textfilename and then the rest of the parameters as in Project 1. Text Dumper helps write the content of an appointment book into the text file and Text Parser helps read the contents of the textfile.
 When -print is mentioned in the command line all the appointments are read and printed.
+Project 3
+When the -pretty option is entered along with a file name or a -, the appointments from an appointment book has to be dumped into a file in a formatted fashion. If a '-' is specified next to -pretty option, then the formatted content has to be printed to the console
+instead of storing it in a file.
