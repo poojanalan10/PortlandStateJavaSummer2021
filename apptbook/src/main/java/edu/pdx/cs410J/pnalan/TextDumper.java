@@ -43,17 +43,12 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
         BufferedReader bf = new BufferedReader(new FileReader(this.filepath));
         String ownerName = bf.readLine();
         if((ownerName == null && owner == null) || (owner == "" && ownerName == "") || (owner == ""  && ownerName == null)){
-          //  System.err.println("Owner name not found in appointmentbook and the file");
-         //   System.exit(1);
             throw new InvalidParameterException("Owner name not found in appointmentbook");
         }
         else if(owner == null || owner.isEmpty()){
-          //  System.err.println("Owner name not entered in the input");
             throw new InvalidParameterException("Owner name not entered in the input");
         }
         else if(ownerName != null && !owner.equals(ownerName)){
-          //  System.err.println("The owner name in the file and command line do not match");
-           // System.exit(1);
             throw new InvalidParameterException("The owner names in the file and command line do not match");
         }
     }
@@ -71,7 +66,6 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
             var directorytocreate = Arrays.asList(fname.split(regex));
             mkdir = new File(directorytocreate.get(0));
             if (!mkdir.exists() || mkdir == null) {
-              //  System.out.println("Going to create a Folder");
                 mkdir.mkdirs();
             }
             if (!Files.exists(Paths.get(String.valueOf(file)))) {
@@ -80,9 +74,7 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
                     var dir = directorytocreate.get(0).concat("\\\\").trim();
                     var filename = name.get(1);
                     File f1 = new File(dir+filename);
-                   // System.out.println("Going to create a new file since it doen't exist");
                     f1.createNewFile();
-                   // file.getParentFile().createNewFile();
                 }
             }
         } else {
@@ -104,8 +96,8 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
      */
     public String createFilePath(String fname) throws IOException{
         if(fname.matches("^.+?\\..*?") && !fname.matches("^.+?\\.txt")){
-           // throw new IllegalArgumentException("File should only have a .txt extension or can be simply given using a name");
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("File should only have a .txt extension or can be simply given using a name");
+            //throw new IllegalArgumentException();
 
         }
         return (fname.matches("^.+?\\.txt$") ? fname:fname+".txt");

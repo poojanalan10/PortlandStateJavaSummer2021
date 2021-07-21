@@ -164,20 +164,13 @@ public class Appointment extends AbstractAppointment {
    */
   public Date convertDateFormat(String dateString){
     try{
-   //   SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
-     // return dateformat.format(dateString);
-   //   Date d = new Date();
-   //   d = dateformat.parse(dateString);
-     // return DateFormat.getDateInstance().format(d);
 
-     Date date = new Date();
+      Date date = new Date();
       DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
       date = dateFormat.parse(dateString);
-     // String strDate = dateFormat.format(date);
       String strDate = DateFormat.getDateInstance(DateFormat.SHORT).format(date);
       String strTime = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
       date = dateFormat.parse(strDate + " " +strTime, new ParsePosition(0));
-   //   System.out.println(date);
       return date;
 
    } catch (Exception e) {
@@ -186,7 +179,13 @@ public class Appointment extends AbstractAppointment {
     return null;
   }
 
-
+  /**
+   * This method returns the date and time string in a pretty format
+   * @param dateString
+   * @return
+   * @throws ParserException
+   * @throws ParseException
+   */
   public String getPrettyDateTime(String dateString) throws ParserException, ParseException {
     String pattern = "MM/dd/yy HH:mm a";
     DateFormat df = new SimpleDateFormat(pattern);
@@ -209,6 +208,12 @@ public class Appointment extends AbstractAppointment {
 
   }
 
+  /**
+   * This method validates if the begin date entered is greater than the end date entered for a given appointment
+   * @param begin
+   * @param end
+   * @return a message based on the comparison
+   */
   public String validateBeginLessThanEndDate(Date begin,Date end){
     if(begin.after(end)){
       System.err.println("Begin date/time cannot be greater than or equal to the end date/time for an appointment!");

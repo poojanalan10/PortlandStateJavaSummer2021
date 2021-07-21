@@ -280,9 +280,6 @@ public class Project3IT extends InvokeMainTestCase{
     }
 
 
-
-
-
     @Test
     public void missingDescriptionWithPretty(){
         InvokeMainTestCase.MainMethodResult result = invokeMain(Project3.class,"-print","-pretty","prettyfile","Pooja");
@@ -402,12 +399,21 @@ public class Project3IT extends InvokeMainTestCase{
         assertThat(result.getTextWrittenToStandardError(),containsString(Project3.USAGE_MESSAGE));
 
     }
+
+
+
     @Test
-    @Disabled
+   // @Disabled
     public void checkPrettyfilenameAndTextFileNameNotTheSame(){
         InvokeMainTestCase.MainMethodResult result = invokeMain(Project3.class,"-pretty","prettyf5","-textFile","prettyf5","May Thatcher","Football match","11/27/2021","1:15","PM","11/27/2021","5:30","PM");
         assertThat(result.getTextWrittenToStandardError(), containsString(Project3.SAME_NAME));
         assertThat(result.getTextWrittenToStandardError(),containsString(Project3.USAGE_MESSAGE));
+    }
+
+    @Test
+    public void chckPrettyOptionWithDashDoesnotReturnError(){
+        MainMethodResult result = invokeMain(Project3.class,"-textFile","MayPretty","-pretty","-","May Thatcher","Football match","11/27/2021","1:15","pm","11/27/2021","5:30","pm");
+
     }
 
 

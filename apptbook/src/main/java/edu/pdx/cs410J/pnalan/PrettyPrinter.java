@@ -14,12 +14,25 @@ import java.util.Arrays;
 public class PrettyPrinter implements AppointmentBookDumper<AppointmentBook> {
 
     private static String path;
+
+    /**
+     * This constructor initializes the path of the filename given with -pretty option. It creates a new file or writes to an existing file
+     * @param filename
+     * @throws IOException
+     */
     PrettyPrinter(String filename) throws IOException {
         super();
         this.path = new String(createFilePath(filename));
         createNewFileAtEnteredPathIfFileDoesntExist(this.path);
 
     }
+
+    /**
+     * This method dumps all the contents of an appointmentbook to a file
+     * @param appointmentBook
+     *          contains all the appointment information
+     * @throws IOException
+     */
     @Override
     public void dump(AppointmentBook appointmentBook) throws IOException {
         File file = new File(this.path);
@@ -53,7 +66,7 @@ public class PrettyPrinter implements AppointmentBookDumper<AppointmentBook> {
     }
     /**
      * This method creates a file path based on whether a file name is entered with .txt extension or not
-     * @return
+     * @return filename
      * @throws IOException
      */
     public String createFilePath(String fname) throws IOException{

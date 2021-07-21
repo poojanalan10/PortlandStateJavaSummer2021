@@ -13,8 +13,6 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
     private static String filepath ;
     private  static BufferedReader bufferedreader;
     private static File file;
-  //  private static Reader reader;
-
 
     /**
      * This constructor assigns values to the data members
@@ -26,12 +24,8 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
     TextParser(BufferedReader bufferedreader, String filename, Reader reader) throws IOException {
         super();
         this.filepath = new String(createFilePath(filename));
-       // createNewFileAtEnteredPathIfFileDoesntExist(filename);
         this.file = new File(this.filepath);
-      //  this.bufferedreader = bufferedreader;
         this.bufferedreader = new BufferedReader(new FileReader(this.file));
-       // this.bufferedreader = new BufferedReader(reader);
-
 
     }
 
@@ -57,16 +51,11 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
 public AppointmentBook parse () throws ParserException{
     try {
     AppointmentBook result = null;
-   // boolean finished = false;
     AppointmentBook book = null;
     final List<String> listofAppointments = new ArrayList<>();
     String current = null;
     if(!this.bufferedreader.ready()){
-       // System.out.println(this.bufferedreader.readLine());
-       // System.err.println("Missing owner");
         throw new ParserException("Missing owner");
-
-
     }
     else {
         String owner = this.bufferedreader.readLine();
@@ -95,9 +84,8 @@ public AppointmentBook parse () throws ParserException{
             }
         }
 
-        //  if (!finished) {
         result = book;
-        // }
+
     }
     return result;
     } catch (IOException e) {
@@ -106,6 +94,7 @@ public AppointmentBook parse () throws ParserException{
     }
 
     }
+
     /**
      * Validates the input string date against the regex expression and returns the date string back if it matches the regex pattern,
      * else throws unrecognized date format error and exits
@@ -147,16 +136,4 @@ public AppointmentBook parse () throws ParserException{
         return null;
     }
 
-
-    private static String validateMeridiem(String m){
-        if(m.equalsIgnoreCase("AM")){
-            return m;
-        }
-        else if(m.equalsIgnoreCase("PM")){
-            return m;
-        }
-        else{
-            throw new IllegalArgumentException("Merediem other than AM/PM entered : "+m);
-        }
-    }
 }

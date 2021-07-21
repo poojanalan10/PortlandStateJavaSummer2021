@@ -21,9 +21,9 @@ public class Project3 {
     /**
      * USAGE_MESSAGE prints the way an input has to be given for creating an appointment
      */
-    public static final String USAGE_MESSAGE = "java edu.pdx.cs410J.pnalan.Project2 [options] <args> args are in this order: \n"+ argumentList +"\n" + "[options] may appear in any order, " +
+    public static final String USAGE_MESSAGE = "java edu.pdx.cs410J.pnalan.Project3 [options] <args> args are in this order: \n"+ argumentList +"\n" + "[options] may appear in any order, " +
             "but the text file name should follow the -textFile option and the options are:\n"+
-            "-pretty (prettyFile/-)"+
+            "-pretty (prettyFile name/-)"+
             " -print\n"
             +"-README\n"
             +"-textFile textfilename";
@@ -181,7 +181,6 @@ public class Project3 {
 
             }
 
-
             else if ((Arrays.asList(args).contains("-textFile") && Arrays.asList(args).indexOf("-textFile") == 0) && args.length < 5) {
                 printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
                 System.exit(1);
@@ -275,19 +274,12 @@ public class Project3 {
                     textfilename = Arrays.asList(args).get(Arrays.asList(args).indexOf("-textFile") + 1);
                     prettyfilename = Arrays.asList(args).get(Arrays.asList(args).indexOf("-pretty") + 1);
                     argsValues = Arrays.copyOfRange(args, 5, args.length);
-                  /*  if (prettyfilename.equals(textfilename)) {
-                        printErrorMessageAndExit(SAME_NAME);
-                        System.exit(1);
-                    }*/
+
                 } else if (!Arrays.asList(args).contains("-print") && Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-pretty")) {
                     hastextFileoption = true;
                     hasprettyfileoption = true;
                     textfilename = Arrays.asList(args).get(Arrays.asList(args).indexOf("-textFile") + 1);
                     prettyfilename = Arrays.asList(args).get(Arrays.asList(args).indexOf("-pretty") + 1);
-                   /* if (prettyfilename.equals(textfilename)) {
-                        printErrorMessageAndExit(SAME_NAME);
-                        // System.exit(1);
-                    }*/
                     argsValues = Arrays.copyOfRange(args, 4, args.length);
                 }
                 if (argsValues == null || argsValues.length == 0) {
@@ -390,16 +382,13 @@ public class Project3 {
                                 Pretty(args, appBook.getOwnerName(), appBook);
                             }
                             else {
-                                /*writeToFile(args, appBook, sw, prettyfilename);
-                                AppointmentBook readappointment = readFromFile(prettyfilename, sw);
-                                Pretty(args, readappointment.getOwnerName(), readappointment);*/
+
                                 Pretty(args,appBook.getOwnerName(),appBook);
                             }
                         } else if (Arrays.asList(args).contains("-textFile") && Arrays.asList(args).contains("-pretty")) {
                             writeToFile(args, appBook, sw, textfilename);
 
                             AppointmentBook readappointment = readFromFile(textfilename, sw);
-                           // System.out.println(readappointment.getAppointments());
                             if (Arrays.asList(args).contains("-print")) {
                                 System.out.println("Latest appointment information:");
                                 System.out.println(app.toString());
@@ -426,31 +415,25 @@ public class Project3 {
         }
 
     }
+
+    /**
+     * This method prints the formatted appointment information to standard output
+     * @param appointmentBook
+     *        contains all the appointments for the particular owner
+     */
     private static void PrintToTheConsole(AppointmentBook appointmentBook){
         var number_of_appointments = appointmentBook.getAppointments().size();
         System.out.println( "Owner : " +appointmentBook.getOwnerName()+"\n");
         int count = number_of_appointments;
         System.out.println("No of appointments : "+ number_of_appointments);
-       /* final Object[][] table_row_1 = new String[1][];
-        final Object[][] table = new String[number_of_appointments][];
-        table_row_1[0] = new String[]{"Description","Start Date and Time","End Date and Time","Appointment Duration"};
-        System.out.format("%25s%25s%25s%25s%n",table_row_1[0]);*/
         System.out.println(
                     "\n Description   Start Date and Time  End Date and Time   Appointment Duration" +
                     "\n ----------------------------------------------------------------------------\n");
 
         for(Appointment appointment:appointmentBook.getAppointments()){
             try {
-              //  table[--count] = new String[]{appointment.getDescription(),appointment.getPrettyDateTime(appointment.getBeginDate()+" " +appointment.getBeginTimeString()),
-              //          appointment.getPrettyDateTime(appointment.getEndDate()+" " +appointment.getEndTimeString()),String.valueOf(appointment.appointmentDuration())};
                 System.out.println("\n"+appointment.getDescription() +"     " +appointment.getPrettyDateTime(appointment.getBeginDate() + "     " +appointment.getBeginTimeString() )
                         +"      " + appointment.getPrettyDateTime(appointment.getEndDate() + "      " + appointment.getEndTimeString()) +"      " + appointment.appointmentDuration() +"\n");
-
-
-               /* for(final Object[] row:table){
-                    System.out.println("\n--------------------------------------------------------------------------------------------------------------------\n");
-                    System.out.format("%25s%25s%25s%25s%n",row);
-                }*/
 
             } catch (MissingFormatArgumentException | ParserException e) {
                 e.printStackTrace();
@@ -460,23 +443,36 @@ public class Project3 {
         }
     }
 
+    /**
+     * This method checks if the index of -print is not right after index of -textFile, or in other words to check if a text file name follows -textFile option
+     * @param args
+     * @return true or false
+     */
     private static boolean checktextfilenameGivenAftertextfileOption(String[] args){
         int textfile_index = Arrays.asList(args).indexOf("-textFile");
         int print_index = Arrays.asList(args).indexOf("-print");
         return print_index != textfile_index + 1;
     }
+
+    /**
+     * This method checks if the index of -print is not right after index of -pretty, or in other words to check if a pretty file name follows -pretty option
+     * @param args
+     * @return true or false
+     */
     private static boolean checkprettyfilenameGivenAfterPrintfileOption(String[] args){
         int print_index = 0, textfile_index = 0;
         List<String> arguments = Arrays.asList(args);
         int prettyfile_index = arguments.indexOf("-pretty");
         if(arguments.contains("-print"))
             print_index = Arrays.asList(args).indexOf("-print");
-      /*  if(arguments.contains("-textFile"))
-            textfile_index = arguments.indexOf("-textFile");*/
         return (print_index != prettyfile_index + 1);
-       // return arguments.contains("-textFile") && arguments.contains("-print") ? (print_index != prettyfile_index + 1 && textfile_index != prettyfile_index + 1) :
-       //         arguments.contains("-textFile") ? (textfile_index != prettyfile_index + 1) :  (print_index != prettyfile_index + 1);
     }
+
+    /**
+     * This method checks if the index of -textFile is not right after index of -pretty, or in other words to check if a pretty file name follows -pretty option
+     * @param args
+     * @return true or false
+     */
     private static boolean checkprettyfilenameNotGivenAndFoundTextfileOption(String[] args){
         int textfile_index = 0;
         List<String> arguments = Arrays.asList(args);
@@ -485,9 +481,17 @@ public class Project3 {
             textfile_index = arguments.indexOf("-textFile");
         return textfile_index != prettyfile_index + 1;
     }
+
+    /**
+     * This method is to call the Text Parse parse method to read text written to a file, here the text is appointment information
+     * @param textfilename
+     *          the name of the file to read from
+     * @param sw
+     *          the string writer object
+     * @return appointmentBook
+     */
     private static AppointmentBook readFromFile(String textfilename, StringWriter sw){
         try {
-            //BufferedReader bufferedreader = new BufferedReader(new FileReader(textfilename));
             BufferedReader bufferedreader = null;
             TextParser txtParser = new TextParser(bufferedreader,textfilename,new StringReader(sw.toString()));
             AppointmentBook appointmentBook = txtParser.parse();
@@ -501,6 +505,18 @@ public class Project3 {
         }
         return null;
     }
+
+    /**
+     * This method writes to a file all the appointments in the appointment book.
+     * @param args
+     *          the input arguments
+     * @param appointmentBook
+     *          the appointmentbook object that has all the appointments
+     * @param sw
+     *          the string writer object
+     * @param textfilename
+     *          the name of the textfile to write the appointment book contents
+     */
     private static void writeToFile(String[] args, AppointmentBook appointmentBook, StringWriter sw, String textfilename){
         try{
             FileWriter filewriter = null;
@@ -512,16 +528,22 @@ public class Project3 {
         }
     }
 
+    /**
+     * This method calls the PrettyPrinter dump function based on the -pretty option, if '-' is entered it prints the appointments to the console and if a filename is given it dumps it to a file
+     * @param args
+     *          the input arguments
+     * @param owner
+     *          the owner of the appointments
+     * @param appBook
+     *          the book of appointments
+     */
     private static void Pretty(String[] args, String owner, final AppointmentBook appBook){
         try{
             AppointmentBook appbook = new AppointmentBook(owner, appBook);
-          //  System.out.println(appbook.getAppointments());
             var  prettyfilename =  args[Arrays.asList(args).indexOf("-pretty")+1];
             if(!prettyfilename.equals("-")) {
                 PrettyPrinter prettyPrinter = new PrettyPrinter(prettyfilename);
                 prettyPrinter.dump(appbook);
-
-                // System.out.println(appbook.getAppointments());
                 System.out.println("Appointment have been added successfully to pretty print");
             }
             else{
@@ -533,17 +555,6 @@ public class Project3 {
     }
 
 
-    private static String validateMeridiem(String m){
-        if(m.equalsIgnoreCase("AM")){
-            return m;
-        }
-        else if(m.equalsIgnoreCase("PM")){
-            return m;
-        }
-        else{
-            throw new IllegalArgumentException("Merediem other than AM/PM entered : "+m);
-        }
-    }
     /**
      * Validates the input string date against the regex expression and returns the date string back if it matches the regex pattern,
      * else throws unrecognized date format error and exits

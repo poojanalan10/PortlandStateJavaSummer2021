@@ -52,12 +52,21 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
         addAppointment(newAppointment);
     }
 
+    /**
+     * This constructor is called when owner name and an appointment book is passed when creating an object
+     * @param ownerName
+     * @param appointmentBooks
+     */
     public AppointmentBook(final String ownerName,AppointmentBook... appointmentBooks){
         super();
         owner = ownerName;
         copyAppointments(appointmentBooks);
     }
 
+    /**
+     * This method copies all the appointments in the appointment book to an array list
+     * @param appointmentBooks
+     */
     private void copyAppointments(AppointmentBook... appointmentBooks){
         for(var app : appointmentBooks){
             if(app != null && owner.equals(app.getOwnerName())){
