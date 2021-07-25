@@ -12,7 +12,8 @@ public class AboutStrings {
 
     @Koan
     public void implicitStrings() {
-        assertEquals("just a plain ole string".getClass(), __);
+        String str = "just a plain ole string";
+        assertEquals("just a plain ole string".getClass(), str.getClass());
     }
 
     @Koan
@@ -123,9 +124,9 @@ public class AboutStrings {
     public void stringSubstring() {
         String str = "I AM a number ONE!";
         assertEquals(str.substring(0),"I AM a number ONE!" );
-        assertEquals(str.substring(1), "AM a number ONE!");
+        assertEquals(str.substring(1), " AM a number ONE!");
         assertEquals(str.substring(5),"a number ONE!");
-        assertEquals(str.substring(14, 17), "ONE!");
+        assertEquals(str.substring(14, 17), "ONE");
         assertEquals(str.substring(7, str.length()), "number ONE!");
     }
 
@@ -164,7 +165,7 @@ public class AboutStrings {
             String.format("%s %s %s", "a", "b");
             fail("No Exception was thrown!");
         } catch (Exception e) {
-            assertEquals(e.getClass(), "class java.util.MissingArgumentException");
+            assertEquals(e.getClass(), "class java.util.MissingFormatArgumentException");
             assertEquals(e.getMessage(), "Format specifier '%s'");
         }
     }
