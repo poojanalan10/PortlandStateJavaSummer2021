@@ -32,7 +32,7 @@ public class AboutRequireNotNull {
         } catch (NullPointerException ex) {
             s = "caught a NullPointerException";
         }
-        assertEquals(s, 5);
+        assertEquals(s, "5");
     }
 
     private int validateUsingRequireNotNull(String str) {

@@ -42,7 +42,7 @@ public class AboutAutoboxing {
 
         List<Long> longList = new ArrayList<Long>();
         longList.add(0, new Long(42));
-        assertEquals(longList.get(0), 421);
+        assertEquals(longList.get(0), Long.parseLong("42"));
 
         List<Character> characterList = new ArrayList<Character>();
         characterList.add(0, new Character('z'));

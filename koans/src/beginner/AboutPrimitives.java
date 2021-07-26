@@ -15,7 +15,7 @@ public class AboutPrimitives {
     @Koan
     public void primitivesOfTypeIntHaveAnObjectTypeInteger() {
         Object number = 1;
-        assertEquals(getType(number), int.class);
+        assertEquals(getType(number), java.lang.Integer.class);
 
         // Primitives can be automatically changed into their object type via a process called auto-boxing
         // We will explore this in more detail in intermediate.AboutAutoboxing
@@ -67,8 +67,10 @@ public class AboutPrimitives {
 
     @Koan
     public void shortsHaveASmallerRangeThanInts() {
-        assertEquals(Short.MIN_VALUE, -32768);  // hint: You'll need an explicit cast
-        assertEquals(Short.MAX_VALUE, 32767);
+        Short min = -32768;
+        Short max = 32767;
+        assertEquals(Short.MIN_VALUE,min);  // hint: You'll need an explicit cast
+        assertEquals(Short.MAX_VALUE,max);
     }
 
     @Koan
@@ -89,8 +91,10 @@ public class AboutPrimitives {
 
     @Koan
     public void bytesHaveASmallerRangeThanShorts() {
-        assertEquals(Byte.MIN_VALUE, -128);
-        assertEquals(Byte.MAX_VALUE, 127);
+        Byte min =  -128;
+        Byte max = 127;
+        assertEquals(Byte.MIN_VALUE,min);
+        assertEquals(Byte.MAX_VALUE, max);
 
         // Why would you use short or byte considering that you need to do explicit casts?
     }
@@ -171,8 +175,8 @@ public class AboutPrimitives {
     @Koan
     public void primitivesOfTypeFloatCanBeDeclaredWithExponents() {
         assertEquals(getType(1e3f), float.class);
-        assertEquals(1.0e3f, 1000.0);
-        assertEquals(1E3f, 1000.0);
+        assertEquals(1.0e3f, Float.parseFloat("1000.0"));
+        assertEquals(1E3f, Float.parseFloat("1000.0"));
     }
 
     @Koan
@@ -183,8 +187,8 @@ public class AboutPrimitives {
 
     @Koan
     public void floatsHaveASmallerRangeThanDoubles() {
-        assertEquals(Float.MIN_VALUE, 1.4E-45);
-        assertEquals(Float.MAX_VALUE,3.4028235E38);
+        assertEquals(Float.MIN_VALUE, Float.parseFloat("1.4E-45"));
+        assertEquals(Float.MAX_VALUE,Float.parseFloat("3.4028235E38"));
     }
 
     @Koan

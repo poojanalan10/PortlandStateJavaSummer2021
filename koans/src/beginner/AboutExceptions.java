@@ -3,6 +3,7 @@ package beginner;
 import com.sandwich.koan.Koan;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import static com.sandwich.koan.constant.KoanConstants.__;
 import static com.sandwich.util.Assert.assertEquals;
@@ -56,8 +57,10 @@ public class AboutExceptions {
             doStuff();
         } catch (IOException e) {
             whatHappened.append("; the catch block executed");
-            return;
-        } finally {
+           // System.out.println(e);
+            return ;
+        }
+        finally {
             whatHappened.append(", but so did the finally!");
         }
     }
@@ -67,6 +70,7 @@ public class AboutExceptions {
         StringBuilder whatHappened = new StringBuilder();
         tryCatchFinallyWithVoidReturn(whatHappened);
         assertEquals(whatHappened.toString(), "did something dangerous; the catch block executed, but so did the finally!");
+
     }
 
     @SuppressWarnings("finally")
@@ -91,8 +95,8 @@ public class AboutExceptions {
     public void returnInFinallyBlock() {
         StringBuilder whatHappened = new StringBuilder();
         // Which value will be returned here?
-        assertEquals(returnStatementsEverywhere(whatHappened), __);
-        assertEquals(whatHappened.toString(), __);
+        assertEquals(returnStatementsEverywhere(whatHappened), "from finally");
+        assertEquals(whatHappened.toString(), "try, catch, finally");
     }
 
     private void doUncheckedStuff() {
@@ -102,7 +106,14 @@ public class AboutExceptions {
     @Koan
     public void catchUncheckedExceptions() {
         // What do you need to do to catch the unchecked exception?
+        try{
         doUncheckedStuff();
+        }
+        catch (Exception e){
+           // System.out.println("RuntimeException");
+            System.out.println(e);
+        }
+
     }
 
     @SuppressWarnings("serial")

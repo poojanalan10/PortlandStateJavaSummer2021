@@ -50,7 +50,7 @@ public class AboutRegularExpressions {
     public void splittingStrings() {
         String csvDataLine = "1,name,description";
         String[] data = csvDataLine.split(","); // you can use any regex here
-        assertEquals(data[0], 1);
+        assertEquals(data[0], "1");
         assertEquals(data[1], "name");
         assertEquals(data[2], "description");
     }

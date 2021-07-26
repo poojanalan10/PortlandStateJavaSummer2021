@@ -14,9 +14,9 @@ public class AboutCasting {
         int a = 6;
         long b = 10;
         Object c = a + b;
-        assertEquals(c, 16);
-        assertEquals(c instanceof Integer, true);
-        assertEquals(c instanceof Long, false);
+        assertEquals(c, Long.parseLong("16"));
+        assertEquals(c instanceof Integer, false);
+        assertEquals(c instanceof Long, true);
     }
 
     @Koan
@@ -97,8 +97,13 @@ public class AboutCasting {
     @Koan
     public void classCasting() {
         try {
-            Object o = new Object();
-            ((Sleepable) o).sleep(); // would this even compile without the cast?
+           // Object o = new Object();
+            Object o = new Grandparent();
+           // System.out.println((Grandparent)o).sl);
+          //  Sleepable myObj = (Sleepable)o;
+           // myObj.sleep();
+            ((Grandparent) o).sleep(); // would this even compile without the cast?
+
         } catch (ClassCastException x) {
             fail("Object does not implement Sleepable, maybe one of the people classes do?");
         }

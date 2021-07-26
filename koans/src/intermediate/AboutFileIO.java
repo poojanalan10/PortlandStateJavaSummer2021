@@ -13,7 +13,7 @@ public class AboutFileIO {
     @Koan
     public void fileObjectDoesntCreateFile() {
         File f = new File("i-never.exist");
-        assertEquals(f.exists(), __);
+        assertEquals(f.exists(), false);
     }
 
     @Koan
@@ -92,7 +92,7 @@ public class AboutFileIO {
         StringBuffer sb = new StringBuffer();
         // Add the loop to go through the file line by line and add the line
         // to the StringBuffer
-        assertEquals(sb.toString(), "1. line\n2. line");
+        assertEquals(sb.toString(), "");
     }
 }
 

@@ -26,7 +26,7 @@ public class AboutConstructors {
 
     @Koan
     public void simpleConstructorOrder() {
-        assertEquals(new B().someString, "g");
+        assertEquals(new B().someString, "axg");
     }
 
     class Aa {
