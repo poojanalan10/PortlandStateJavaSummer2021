@@ -1,10 +1,13 @@
 package edu.pdx.cs410J.pnalan;
 
+import edu.pdx.cs410J.ParserException;
+import org.checkerframework.checker.units.qual.A;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The main class that parses the command line and communicates with the
@@ -20,41 +23,72 @@ public class Project4 {
         String word = null;
         String definition = null;
 
-        for (String arg : args) {
-            if (hostName == null) {
-                hostName = arg;
+        int port;
 
-            } else if ( portString == null) {
-                portString = arg;
-
-            } else if (word == null) {
-                word = arg;
-
-            } else if (definition == null) {
-                definition = arg;
-
-            } else {
-                usage("Extraneous command line argument: " + arg);
-            }
-        }
-
-        if (hostName == null) {
+        String hostname = args[Arrays.asList(args).indexOf("-host") + 1];
+        port = Integer.parseInt(args[Arrays.asList(args).indexOf("-port") + 1]);
+        if (hostname == null) {
             usage( MISSING_ARGS );
 
-        } else if ( portString == null) {
+        } else if ( port == 0) {
             usage( "Missing port" );
         }
 
-        int port;
+        AppointmentBookRestClient client = new AppointmentBookRestClient(hostname, port);
+        ArrayList<String> list = new ArrayList<>();
+        list.addAll(List.of(args));
+        list.remove(list.get(list.indexOf("-host") + 1));
+        list.remove(list.get(list.indexOf("-port") + 1));
+        list.remove("-host");
+        list.remove("-port");
         try {
+           /* if (list.size() == 1) {
+                System.out.println(client);
+            } else*/ if (list.contains("-search")) {
+                list.removeAll(Collections.singleton("-search"));
+                //String appointments = client.findAppointment(new String[]{list.get(0),  list.get(1) + " " + list.get(2) + " " + list.get(3), list.get(4) + " " +list.get(5) + " " + list.get(6)});
+                if(list.size() == 1){
+                    System.out.println(client.findAppointment(new String[]{list.get(0)}));
+                }
+                else {
+                    System.out.println(client.findAppointment(new String[]{list.get(0), list.get(1) + " " + list.get(2) + " " + list.get(3), list.get(4) + " " + list.get(5) + " " + list.get(6)}));
+                }
+
+            }
+            else if (list.get(0) != null && list.size() == 1){
+                AppointmentBook appointmentBook = new AppointmentBook(list.get(0));
+                appointmentBook = client.getAppointments(list.get(0));
+                AppointmentBookPrettyPrinter prettyPrinter = new AppointmentBookPrettyPrinter();
+                System.out.println(prettyPrinter.getPrettyAppointments(appointmentBook));
+            }
+            else {
+                boolean pcheck = list.removeAll(Collections.singleton("-print"));
+                System.out.println(client.addAppointment(new String[]{list.get(0), list.get(1),list.get(2) + " " + list.get(3)+ " " + list.get(4) , list.get(5) + " " + list.get(6) + " " + list.get(7)}));
+                if (pcheck) {
+                    Appointment appointment = new Appointment(list.get(1), list.get(2)+ " " + list.get(3) + " " + list.get(4) , list.get(5)+ " " +list.get(6) + " " + list.get(7));
+                    System.out.println(appointment.toString());
+                }
+
+
+                System.exit(0);
+            }
+        }catch (ParserException parserException) {
+            parserException.printStackTrace();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+        System.exit(0);
+          /*   try {
             port = Integer.parseInt( portString );
 
         } catch (NumberFormatException ex) {
             usage("Port \"" + portString + "\" must be an integer");
             return;
         }
+*/
 
-        AppointmentBookRestClient client = new AppointmentBookRestClient(hostName, port);
+      /*  AppointmentBookRestClient client = new AppointmentBookRestClient(hostName, port);
 
         String message;
         try {
@@ -80,9 +114,7 @@ public class Project4 {
             return;
         }
 
-        System.out.println(message);
-
-        System.exit(0);
+        System.out.println(message);*/
     }
 
     private static void error( String message )

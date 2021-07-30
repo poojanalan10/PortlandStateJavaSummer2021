@@ -30,21 +30,26 @@
 
 <div>
     <form method="get" action="appointments">
-        List all word/definition pairs <input type="submit" definition="Submit"/>
+        Fetch the appointment book for <input name = "owner" type="text" definition="Submit"/>
+        <input type="submit" definition="Submit"/>
     </form>
 </div>
 
 <div>
     <form method="get" action="appointments">
-        List definition for word <input name="word" type="text" size="10" title="word"/>
+        Fetch the appointment book for <input name = "owner" type="text" definition="Submit"/>
+        From: <input name = "start" type = "text" title="start">
+        To:<input name = "end" type="text" title="end">
         <input type="submit" definition="Submit"/>
     </form>
 </div>
 
 <div>
     <form method="post" action="appointments">
-        Create a new word/definition pair <input name="word" type="text" size="10" title="word"/> /
-        <input name="definition" type="text" size="10" title="definition"/>
+        Create a new appointment for the owner: <input name="owner" type="text" size="10" title="owner"/> /
+        description : <input name="description" type="text" size="10" title="description"/>
+        start date and time : <input name="start" type="text" size="10" title="start"/>
+        end date and time : <input name="end" type="text" size="10" title="end"/>
         <input type="submit" definition="Submit"/>
     </form>
 </div>

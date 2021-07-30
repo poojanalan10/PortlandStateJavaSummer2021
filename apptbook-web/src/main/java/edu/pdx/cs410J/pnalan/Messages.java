@@ -31,6 +31,10 @@ public class Messages
     {
         return String.format( "Defined %s as %s", word, definition );
     }
+    public static String ownerHasNoAppointmentBook(String owner){
+        return String.format("'%s' does not have an appointment book",owner);
+    }
+
 
     public static String allDictionaryEntriesDeleted() {
         return "All dictionary entries have been deleted";
@@ -85,5 +89,17 @@ public class Messages
         }
 
         return map;
+    }
+    public static String addedAppointment(Appointment app){
+        return ("Appointment was successfully added");
+    }
+
+    public static String startTimeEnteredBeforeEndTime(){
+        return ("Start date/time cannot be greater than end date/time");
+    }
+    public static String malformattedDateTime(String Time, String date){
+        final String format = "DateTime: MM/dd/yyy hh:mm am/pm";
+        return String.format("Given %s is not in the correct format. Follow the format %s",Time,format);
+
     }
 }
