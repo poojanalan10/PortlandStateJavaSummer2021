@@ -34,6 +34,10 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
 
     }
 
+    public TextDumper(Writer writer) {
+        this.writer = writer;
+    }
+
     /**
      * This method throws an exception when the owner name is null or when the owner name given by the user doesn't match the name in the corresponding textfile
      * @param owner
