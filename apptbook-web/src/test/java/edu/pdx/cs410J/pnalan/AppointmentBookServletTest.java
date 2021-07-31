@@ -9,6 +9,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.*;
 
 import static edu.pdx.cs410J.pnalan.AppointmentBookServlet.*;
@@ -163,7 +164,7 @@ public class AppointmentBookServletTest {
   }
 
   @Test
-    public void checkppointmentPrettyPrint() throws IOException, ServletException {
+    public void checkppointmentPrettyPrint() throws IOException, ServletException, ParseException {
       String owner = "Pooja";
       AppointmentBook appointmentBook = new AppointmentBook(owner);
 

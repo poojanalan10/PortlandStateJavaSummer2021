@@ -22,15 +22,17 @@ public class AppointmentBookPrettyPrinter {
         this.num = 1;
     }
 
-    public String getPrettyAppointments(AppointmentBook appointmentBook) {
+    public String getPrettyAppointments(AppointmentBook appointmentBook) throws ParseException {
         var num_of_appointments = appointmentBook.getAppointments().size();
         int count = num_of_appointments;
         String prettyAppointments = "";
         if (num == 1) {
             if (appointmentBook.getAppointments().isEmpty()) {
-                prettyAppointments = "For " + appointmentBook.getOwnerName() + " No appointments found in the date range" + this.start + "and " + this.end;
+                prettyAppointments = "No appointments found for "+ appointmentBook.getOwnerName() + " in the date range " + this.start + " and " + this.end;
+                return prettyAppointments;
             } else {
-                prettyAppointments = "Appointments between dates " + start + " and " + end + ":\n";
+                prettyAppointments = "Appointments between dates " + start + " and " + end + " found!\n";
+                appointmentBook = appointmentBook.findAppointmentsWithDateRange(start,end);
 
             }
         }
