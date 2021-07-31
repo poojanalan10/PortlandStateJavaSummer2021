@@ -16,7 +16,6 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
         PrintWriter pw = new PrintWriter(this.writer);
         pw.println(appointmentBook.getOwnerName());
         for(Appointment appointment: appointmentBook.getAppointments()){
-           // this.writer.println(appointment.getDescription() + "," + appointment.getBeginTimeString() + "," + appointment.getEndTimeString());
             pw.println(appointment.getDescription() + "," + appointment.getBeginTimeString() + "," + appointment.getEndTimeString());
 
         }

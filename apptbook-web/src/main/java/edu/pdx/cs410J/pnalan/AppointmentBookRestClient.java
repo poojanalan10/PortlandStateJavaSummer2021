@@ -130,8 +130,8 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
   }
 
 
-  public void removeAllAppointmentBooks() throws IOException {
+  /*public void removeAllAppointmentBooks() throws IOException {
     Response response = delete(this.url, Map.of());
     throwExceptionIfNotOkayHttpStatus(response);
-  }
+  }*/
 }

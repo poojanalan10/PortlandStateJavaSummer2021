@@ -300,7 +300,7 @@ public class AppointmentBookServlet extends HttpServlet
 
     }
 
-
+/*
     private void writePrettyAppointmentWithinRange(HttpServletRequest request,HttpServletResponse response) throws IOException, ParseException {
         String owner = getParameter(OWNER_NAME, request);
         AppointmentBook appointmentBook = books.get(owner);
@@ -327,9 +327,9 @@ public class AppointmentBookServlet extends HttpServlet
             System.out.println(pretty);
         }
 
-    }
+    }*/
 
-    private boolean validateDates(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    /*private boolean validateDates(HttpServletRequest request, HttpServletResponse response) throws IOException{
         String start = getParameter(START_TIME,request);
         String end = getParameter(END_TIME,request);
         String dateregex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}\\s(([0-1]?[0-9]|2[0-3]):[0-5][0-9]\\s[PpAa][Mm])$";
@@ -349,7 +349,7 @@ public class AppointmentBookServlet extends HttpServlet
         }
         return true;
 
-    }
+    }*/
 
     AppointmentBook getAppointment(String owner){
         return this.books.get(owner);
@@ -376,7 +376,7 @@ public class AppointmentBookServlet extends HttpServlet
         }
     }
 
-    private Date getDateAndTime(String dateTime){
+    /*private Date getDateAndTime(String dateTime){
         try{
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
             Date date = dateFormat.parse(dateTime);
@@ -392,7 +392,7 @@ public class AppointmentBookServlet extends HttpServlet
     String getDefinition(String word) {
         return this.dictionary.get(word);
     }
-
+*/
     public AppointmentBook createAppointmentBook(String owner){
         AppointmentBook book = new AppointmentBook(owner);
         this.books.put(owner, book);

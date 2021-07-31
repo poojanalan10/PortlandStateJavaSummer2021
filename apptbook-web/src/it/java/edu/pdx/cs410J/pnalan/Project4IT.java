@@ -25,40 +25,39 @@ class Project4IT extends InvokeMainTestCase {
     private static final String HOSTNAME = "localhost";
     private static final String PORT = System.getProperty("http.port", "8080");
 
-  /*  @Test
-    void test0RemoveAllMappings() throws IOException {
-      AppointmentBookRestClient client = new AppointmentBookRestClient(HOSTNAME, Integer.parseInt(PORT));
-      client.removeAllDictionaryEntries();
-    }
-*/
+
 
     @Test
     void test1NoCommandLineArguments() {
         MainMethodResult result = invokeMain( Project4.class );
         assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString(Project4.MISSING_ARGS));
+        assertThat(result.getTextWrittenToStandardError(), containsString("Hostname and Port must be entered"));
     }
 
 
     @Test
     void test3NoAppointmentBooksT() {
         String owner = "Maggie";
-        MainMethodResult result = invokeMain(Project4.class, HOSTNAME, PORT, owner);
+        MainMethodResult result = invokeMain(Project4.class, "-host",HOSTNAME,"-port", PORT, owner);
         assertThat(result.getTextWrittenToStandardError(), containsString(Messages.ownerHasNoAppointmentBook(owner)));
-        assertThat(result.getExitCode(), equalTo(0));
+        assertThat(result.getExitCode(), equalTo(1));
         }
 
 
-    @Disabled
     @Test
-    void test4AddAppointment() {
-        String owner = "Pooja";
-        String description = "Still teaching java";
-        MainMethodResult result = invokeMain( Project4.class, HOSTNAME, PORT, owner, description );
-        assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
-        result = invokeMain( Project4.class, HOSTNAME, PORT, owner );
-        String out = result.getTextWrittenToStandardOut();
-        assertThat(out, out, containsString(owner));
-        assertThat(out, out, containsString(description));
+    void testPrint(){
+        String[] args = {"-print","-host",HOSTNAME,"-port",PORT,"Pooja","Zxy sdf","10/10/2021","10:00","am","10/10/2021","11:00","am"};
+        MainMethodResult result = invokeMain(Project4.class,args);
+        assertThat(result.getTextWrittenToStandardOut(), equalTo("Zxy sdf from 10/10/2021 10:00 am until 10/10/2021 11:00 am\n"));
+
     }
+
+    @Test
+    void testAddingAppointment(){
+        String[] args = {"-host",HOSTNAME,"-port",PORT,"Pooja","Zxy sdf","10/10/2021","10:00","am","10/10/2021","11:00","am"};
+        MainMethodResult result = invokeMain(Project4.class,args);
+        assertThat(result.getTextWrittenToStandardOut(), equalTo("HTTP Status: 200\nAppointment was successfully added\n"));
+
+    }
+
 }

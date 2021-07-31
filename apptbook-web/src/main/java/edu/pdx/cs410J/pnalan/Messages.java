@@ -32,10 +32,10 @@ public class Messages
         return String.format("The required parameter \"%s\" is missing", parameterName);
     }
 
-    public static String definedWordAs(String word, String definition )
+   /* public static String definedWordAs(String word, String definition )
     {
         return String.format( "Defined %s as %s", word, definition );
-    }
+    }*/
     public static String ownerHasNoAppointmentBook(String owner){
         return String.format("'%s' does not have an appointment book",owner);
     }
@@ -82,13 +82,13 @@ public class Messages
             pw.println(Messages.formatDictionaryEntry(entry.getKey(), entry.getValue()));
         }
     }
-    public static void printAppointmentEntries(PrintWriter pw, Map<String, String> dictionary) {
+   /* public static void printAppointmentEntries(PrintWriter pw, Map<String, String> dictionary) {
         pw.println(Messages.formatWordCount(dictionary.size()));
 
         for (Map.Entry<String, String> entry : dictionary.entrySet()) {
             pw.println(Messages.formatDictionaryEntry(entry.getKey(), entry.getValue()));
         }
-    }
+    }*/
     public static Map<String, String> parseDictionary(String content) {
         Map<String, String> map = new HashMap<>();
 
