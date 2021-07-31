@@ -22,7 +22,7 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
 
     }
     @Override
-    public AppointmentBook parse() throws ParserException {
+    public AppointmentBook parse() throws ParserException, ArrayIndexOutOfBoundsException {
         AppointmentBook book = null;
 
         BufferedReader bufferedreader = new BufferedReader(this.reader);
@@ -31,13 +31,20 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
                 throw new ParserException("Missing owner");
             } else {
                 String owner = bufferedreader.readLine();
+                if(owner == null){
+                    throw new ParserException("Missing owner");
+                }
                 book = new AppointmentBook(owner);
                 for (String line = bufferedreader.readLine(); line != null; line = bufferedreader.readLine()) {
                     String[] args = line.split(",");
+                    if(args.length != 3){
+                        throw new ArrayIndexOutOfBoundsException("The given appointment does not have description, start date and time,  end date and time in the right format!");
+                    }
                     String description = args[0];
                     String startTimeString = args[1];
                     String endTimeString = args[2];
                     book.addAppointment(new Appointment(description, startTimeString, endTimeString));
+
                 }
                 return book;
             }
@@ -45,9 +52,10 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
             e.printStackTrace();
         }
 
+
         return null;
     }
-    public static String validateTime(String dateString){
+   /* public static String validateTime(String dateString){
         String dateregex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}\\s(([0-1]?[0-9]|2[0-3]):[0-5][0-9]\\s[PpAa][Mm])$";
         if(dateString != null) {
             if (Pattern.matches(dateregex, dateString)) {
@@ -59,5 +67,5 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
         }
 
         return null;
-    }
+    }*/
 }

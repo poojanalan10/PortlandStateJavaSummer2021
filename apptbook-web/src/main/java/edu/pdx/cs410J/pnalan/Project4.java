@@ -5,6 +5,7 @@ import org.checkerframework.checker.units.qual.A;
 
 import javax.mail.util.ByteArrayDataSource;
 import java.io.*;
+import java.net.ConnectException;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -127,6 +128,9 @@ public class Project4 {
 
                     } catch (ParserException parserException) {
                         parserException.printStackTrace();
+                    } catch (ConnectException connectException){
+                        System.err.println(connectException.getMessage());
+                        System.err.println("Connection refused to Server "+hostname+ " on port "+port);
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
                     }
@@ -137,8 +141,7 @@ public class Project4 {
         }
         catch (Exception e){
             System.err.println(e);
-        }
-        finally {
+        } finally {
             System.exit(1);
         }
     }

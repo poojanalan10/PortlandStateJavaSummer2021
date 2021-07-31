@@ -70,7 +70,7 @@ public class AppointmentBookServlet extends HttpServlet
             }
 
     }
-    public void getAppointments(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  /*  public void getAppointments(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String owner = getParameter(OWNER_NAME, request);
         AppointmentBook appointmentBook = books.get(owner);
         if(appointmentBook == null){
@@ -84,6 +84,7 @@ public class AppointmentBookServlet extends HttpServlet
        // pw.println(pretty);
         System.out.println(pretty);
     }
+    */
     /**
      * Handles an HTTP POST request by storing the dictionary entry for the
      * "word" and "definition" request parameters.  It writes the dictionary
@@ -249,13 +250,14 @@ public class AppointmentBookServlet extends HttpServlet
         }
 
     }
+
     /**
      * Writes all of the dictionary entries to the HTTP response.
      *
      * The text of the message is formatted with
      * {@link Messages#formatDictionaryEntry(String, String)}
      */
-    private void writeAllDictionaryEntries(HttpServletResponse response ) throws IOException
+   /* private void writeAllDictionaryEntries(HttpServletResponse response ) throws IOException
     {
         PrintWriter pw = response.getWriter();
         Messages.formatDictionaryEntries(pw, dictionary);
@@ -264,7 +266,7 @@ public class AppointmentBookServlet extends HttpServlet
 
         response.setStatus( HttpServletResponse.SC_OK );
     }
-
+*/
     private void findAppointments(HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException{
         String owner = getParameter(OWNER_NAME, request);
         AppointmentBook appointmentBook = books.get(owner);

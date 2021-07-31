@@ -116,13 +116,10 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
 
     Response response = get(this.url, Map.of(OWNER_NAME, owner));
     if(response.getContent().contains("Not Found")){
-     // System.out.println(Messages.ownerHasNoAppointmentBook(owner));
       System.err.println(Messages.ownerHasNoAppointmentBook(owner));
-
       throwExceptionIfNotOkayHttpStatus(response);
       System.exit(1);
     }
-   // throwExceptionIfNotOkayHttpStatus(response);
     String text = response.getContent();
     TextParser parser = new TextParser(new StringReader(text));
     return parser.parse();
