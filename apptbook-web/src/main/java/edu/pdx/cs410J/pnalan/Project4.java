@@ -223,9 +223,9 @@ public class Project4 {
             boolean check = checkInputFormat(3,arguments);
         }
         if(arguments.size() < 5){
-        if(!arguments.contains("-search")) {
+        if(!(arguments.contains("-search"))) {
             if (!(arguments.contains("-print"))) {
-                usage("The options -print and -search are not entered! Cannot process the appointment with insufficient parameters");
+                usage("The options -print or -search are not entered! Cannot process the appointment with insufficient parameters");
             }
         }
         }
