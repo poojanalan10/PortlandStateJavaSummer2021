@@ -14,11 +14,18 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
     @Override
     public void dump(AppointmentBook appointmentBook){
         PrintWriter pw = new PrintWriter(this.writer);
-        pw.println(appointmentBook.getOwnerName());
-        for(Appointment appointment: appointmentBook.getAppointments()){
-            pw.println(appointment.getDescription() + "," + appointment.getBeginTimeString() + "," + appointment.getEndTimeString());
+        if(!appointmentBook.getOwnerName().isEmpty()) {
+            pw.println(appointmentBook.getOwnerName());
+            for (Appointment appointment : appointmentBook.getAppointments()) {
+                pw.println(appointment.getDescription() + "," + appointment.getBeginTimeString() + "," + appointment.getEndTimeString());
 
+            }
+            pw.flush();
         }
-        pw.flush();
+        else{
+            System.err.println("Owner name is empty");
+            pw.println("Owner name is not entered/null");
+            pw.flush();
+        }
     }
 }
