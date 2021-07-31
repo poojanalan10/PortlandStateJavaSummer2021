@@ -29,7 +29,11 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
 
     }
 
-    /**
+    public TextParser(Reader reader) {
+        this.bufferedreader = new BufferedReader(reader);
+    }
+
+  /**
      * This method creates a text file name based on ow its inputted with or without extension
      * @param fname
      * @return
