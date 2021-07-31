@@ -41,11 +41,11 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
   public AppointmentBookRestClient(String hostName, int port) {
     this.url = String.format("http://%s:%d/%s/%s", hostName, port, WEB_APP, SERVLET);
   }
-/*
+
   /**
    * Returns all dictionary entries from the server
    */
- /* public Map<String, String> getAllDictionaryEntries() throws IOException {
+  public Map<String, String> getAllDictionaryEntries() throws IOException {
     Response response = get(this.url, Map.of());
     return Messages.parseDictionary(response.getContent());
   }
@@ -53,7 +53,7 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
   /**
    * Returns the definition for the given word
    */
-  /*public String getDefinition(String word) throws IOException {
+  public String getDefinition(String word) throws IOException {
     Response response = get(this.url, Map.of("word", word));
     throwExceptionIfNotOkayHttpStatus(response);
     String content = response.getContent();
@@ -64,16 +64,16 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
     Response response = postToMyURL(Map.of("word", word, "definition", definition));
     throwExceptionIfNotOkayHttpStatus(response);
   }
-*/
+
   @VisibleForTesting
   Response postToMyURL(Map<String, String> dictionaryEntries) throws IOException {
     return post(this.url, dictionaryEntries);
   }
 
-  /*public void removeAllDictionaryEntries() throws IOException {
+  public void removeAllDictionaryEntries() throws IOException {
     Response response = delete(this.url, Map.of());
     throwExceptionIfNotOkayHttpStatus(response);
-  }*/
+  }
 
   private Response throwExceptionIfNotOkayHttpStatus(Response response) {
     int code = response.getCode();
@@ -127,8 +127,8 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
   }
 
 
-  /*public void removeAllAppointmentBooks() throws IOException {
+  public void removeAllAppointmentBooks() throws IOException {
     Response response = delete(this.url, Map.of());
     throwExceptionIfNotOkayHttpStatus(response);
-  }*/
+  }
 }
