@@ -18,103 +18,128 @@ public class Project4 {
     public static final String MISSING_ARGS = "Missing command line arguments";
 
     public static void main(String... args) {
-        String hostName = null;
-        String portString = null;
-        String word = null;
-        String definition = null;
-
-        int port;
-
-        String hostname = args[Arrays.asList(args).indexOf("-host") + 1];
-        port = Integer.parseInt(args[Arrays.asList(args).indexOf("-port") + 1]);
-        if (hostname == null) {
-            usage( MISSING_ARGS );
-
-        } else if ( port == 0) {
-            usage( "Missing port" );
-        }
-
-        AppointmentBookRestClient client = new AppointmentBookRestClient(hostname, port);
-        ArrayList<String> list = new ArrayList<>();
-        list.addAll(List.of(args));
-        list.remove(list.get(list.indexOf("-host") + 1));
-        list.remove(list.get(list.indexOf("-port") + 1));
-        list.remove("-host");
-        list.remove("-port");
         try {
+            String hostname = null;
+            String portString = null;
+
+            int port;
+
+            String owner = null;
+            String description = null;
+            String startDate = null;
+            String startTime = null;
+            String startMerediem = null;
+            String endDate = null;
+            String endTime = null;
+            String endMerediem = null;
+            for (String arg : args) {
+                if (hostname == null) {
+                    hostname = arg;
+                } else if (portString == null) {
+                    portString = arg;
+                } else if (owner == null) {
+                    owner = arg;
+                } else if (description == null) {
+                    description = arg;
+                } else if (startDate == null) {
+                    startDate = arg;
+                } else if (startTime == null) {
+                    startTime = arg;
+                } else if (startMerediem == null) {
+                    startMerediem = arg;
+                } else if (endDate == null) {
+                    endDate = arg;
+                } else if (endTime == null) {
+                    endTime = arg;
+                } else if (endMerediem == null) {
+                    endMerediem = arg;
+                } else {
+                    usage("Extraneous command line argument: " + arg);
+                }
+            }
+
+            // hostname = args[Arrays.asList(args).indexOf("-host") + 1];
+            if (hostname == null) {
+                usage(MISSING_ARGS);
+
+            }
+            //  portString = args[Arrays.asList(args).indexOf("-port") + 1];
+
+            if (portString == null) {
+                usage("Missing port");
+                //System.exit(1);
+            }
+            port = Integer.parseInt(portString);
+            AppointmentBookRestClient client = new AppointmentBookRestClient(hostname, port);
+            ArrayList<String> list = new ArrayList<>();
+            list.addAll(List.of(args));
+            list.remove(hostname);
+            list.remove(portString);
+            //  list.remove(list.get(list.indexOf("-host") + 1));
+            // list.remove(list.get(list.indexOf("-port") + 1));
+            // list.remove("-host");
+            // list.remove("-port");
+            try {
+
            /* if (list.size() == 1) {
                 System.out.println(client);
-            } else*/ if (list.contains("-search")) {
-                list.removeAll(Collections.singleton("-search"));
-                //String appointments = client.findAppointment(new String[]{list.get(0),  list.get(1) + " " + list.get(2) + " " + list.get(3), list.get(4) + " " +list.get(5) + " " + list.get(6)});
-                if(list.size() == 1){
-                    System.out.println(client.findAppointment(new String[]{list.get(0)}));
+            } else*/
+
+                if (list.isEmpty()) {
+                    System.out.println(Messages.formatAppointmentCount(0));
+                    System.exit(1);
                 }
-                else {
-                    System.out.println(client.findAppointment(new String[]{list.get(0), list.get(1) + " " + list.get(2) + " " + list.get(3), list.get(4) + " " + list.get(5) + " " + list.get(6)}));
+                if (list.contains("-search")) {
+                    list.removeAll(Collections.singleton("-search"));
+                    //String appointments = client.findAppointment(new String[]{list.get(0),  list.get(1) + " " + list.get(2) + " " + list.get(3), list.get(4) + " " +list.get(5) + " " + list.get(6)});
+                    if (list.size() == 1) {
+                        System.out.println(client.findAppointment(new String[]{list.get(0)}));
+                    } else {
+                        System.out.println(client.findAppointment(new String[]{list.get(0), list.get(1) + " " + list.get(2) + " " + list.get(3), list.get(4) + " " + list.get(5) + " " + list.get(6)}));
+                    }
+
+                } else if (list.get(0) != null && list.size() == 1) {
+                    AppointmentBook appointmentBook = new AppointmentBook(list.get(0));
+                    //    if(appointmentBook.getAppointments().isEmpty()){
+                    //      System.err.println(Messages.ownerHasNoAppointmentBook(list.get(0)));
+                    //}
+                    //else {
+                    appointmentBook = client.getAppointments(list.get(0));
+                    AppointmentBookPrettyPrinter prettyPrinter = new AppointmentBookPrettyPrinter();
+                    System.out.println(prettyPrinter.getPrettyAppointments(appointmentBook));
+                    //}
+                } else if (list.contains("-print")) {
+                    boolean pcheck = list.removeAll(Collections.singleton("-print"));
+
+                    System.out.println(client.addAppointment(new String[]{list.get(0), list.get(1), list.get(2) + " " + list.get(3) + " " + list.get(4), list.get(5) + " " + list.get(6) + " " + list.get(7)}));
+                    if (pcheck) {
+                        Appointment appointment = new Appointment(list.get(1), list.get(2) + " " + list.get(3) + " " + list.get(4), list.get(5) + " " + list.get(6) + " " + list.get(7));
+                        System.out.println(appointment.toString());
+                    }
+
+
+                    System.exit(0);
+                } else if (list.size() == 8 && hostname != null && portString != null && description != null && startDate != null && startTime != null &&
+                        startMerediem != null && endDate != null && endTime != null && endMerediem != null) {
+
+                    System.out.println(client.addAppointment(new String[]{list.get(0), list.get(1), list.get(2) + " " + list.get(3) + " " + list.get(4), list.get(5) + " " + list.get(6) + " " + list.get(7)}));
+                } else {
+                    System.err.println("Enter the right parameter");
                 }
-
+            } catch (ParserException parserException) {
+                parserException.printStackTrace();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
-            else if (list.get(0) != null && list.size() == 1){
-                AppointmentBook appointmentBook = new AppointmentBook(list.get(0));
-                appointmentBook = client.getAppointments(list.get(0));
-                AppointmentBookPrettyPrinter prettyPrinter = new AppointmentBookPrettyPrinter();
-                System.out.println(prettyPrinter.getPrettyAppointments(appointmentBook));
-            }
-            else {
-                boolean pcheck = list.removeAll(Collections.singleton("-print"));
-                System.out.println(client.addAppointment(new String[]{list.get(0), list.get(1),list.get(2) + " " + list.get(3)+ " " + list.get(4) , list.get(5) + " " + list.get(6) + " " + list.get(7)}));
-                if (pcheck) {
-                    Appointment appointment = new Appointment(list.get(1), list.get(2)+ " " + list.get(3) + " " + list.get(4) , list.get(5)+ " " +list.get(6) + " " + list.get(7));
-                    System.out.println(appointment.toString());
-                }
 
-
-                System.exit(0);
-            }
-        }catch (ParserException parserException) {
-            parserException.printStackTrace();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
+            System.exit(0);
         }
-
-        System.exit(0);
-          /*   try {
-            port = Integer.parseInt( portString );
-
-        } catch (NumberFormatException ex) {
-            usage("Port \"" + portString + "\" must be an integer");
-            return;
+        catch (Exception e){
+            System.err.println(e);
         }
-*/
-
-      /*  AppointmentBookRestClient client = new AppointmentBookRestClient(hostName, port);
-
-        String message;
-        try {
-            if (word == null) {
-                // Print all word/definition pairs
-                Map<String, String> dictionary = client.getAllDictionaryEntries();
-                StringWriter sw = new StringWriter();
-                Messages.formatDictionaryEntries(new PrintWriter(sw, true), dictionary);
-                message = sw.toString();
-
-            } else if (definition == null) {
-                // Print all dictionary entries
-                message = Messages.formatDictionaryEntry(word, client.getDefinition(word));
-
-            } else {
-                // Post the word/definition pair
-                client.addDictionaryEntry(word, definition);
-                message = Messages.definedWordAs(word, definition);
-            }
-
-        } catch ( IOException ex ) {
-            error("While contacting server: " + ex);
-            return;
+        finally {
+            System.exit(1);
         }
-
-        System.out.println(message);*/
     }
 
     private static void error( String message )

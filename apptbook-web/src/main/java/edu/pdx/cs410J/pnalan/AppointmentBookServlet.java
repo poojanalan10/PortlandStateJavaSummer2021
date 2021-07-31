@@ -53,6 +53,7 @@ public class AppointmentBookServlet extends HttpServlet
         }
         else if (owner != null && start == null && end == null) {
                 writeAppointments(owner,response);
+          //  getAppointments(request,response);
                 return;
             }
 
@@ -60,7 +61,8 @@ public class AppointmentBookServlet extends HttpServlet
             try {
                 findAppointments(request,response);
                // System.out.println("Printing all the appointments:");
-                printAllAppointments(request,response);
+              //  getAppointments(request,response);
+             //   writePrettyAppointmentWithinRange(request,response);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -68,17 +70,19 @@ public class AppointmentBookServlet extends HttpServlet
             }
 
     }
-    public void printAllAppointments(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void getAppointments(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String owner = getParameter(OWNER_NAME, request);
         AppointmentBook appointmentBook = books.get(owner);
         if(appointmentBook == null){
             response.sendError(HttpServletResponse.SC_NOT_FOUND, Messages.ownerHasNoAppointmentBook(owner));
+            System.err.println(Messages.ownerHasNoAppointmentBook(owner));
             return;
         }
         AppointmentBookPrettyPrinter prettyPrinter = new AppointmentBookPrettyPrinter();
         String pretty = prettyPrinter.getPrettyAppointments(appointmentBook);
-        PrintWriter pw = response.getWriter();
-        pw.println(pretty);
+        //PrintWriter pw = response.getWriter();
+       // pw.println(pretty);
+        System.out.println(pretty);
     }
     /**
      * Handles an HTTP POST request by storing the dictionary entry for the
@@ -297,31 +301,32 @@ public class AppointmentBookServlet extends HttpServlet
     }
 
 
-    private void writePrettyAppointmentWithinRange(String owner, String starttimedate, String endtimedate, HttpServletResponse response) throws IOException, ParseException {
-        AppointmentBook appointmentBook = getAppointment(owner);
+    private void writePrettyAppointmentWithinRange(HttpServletRequest request,HttpServletResponse response) throws IOException, ParseException {
+        String owner = getParameter(OWNER_NAME, request);
+        AppointmentBook appointmentBook = books.get(owner);
         if(appointmentBook == null){
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        }else{
-            DateFormat originaldateformat = new SimpleDateFormat("MM/dd/yyy hh:mm a");
-            Date startTime = originaldateformat.parse(starttimedate);
-            Date endTime = originaldateformat.parse(endtimedate);
-            Collection<Appointment> appointments = appointmentBook.getAppointments();
-            AppointmentBook daterangeAppointments = new AppointmentBook(owner);
-            for(Appointment appointment:appointments){
-                if(appointment.getBeginTime().after(startTime) && appointment.getEndTime().before(endTime)){
-                    daterangeAppointments.addAppointment(appointment);
-                }
-            }
-            if(daterangeAppointments.getAppointments().isEmpty()){
-                response.setStatus(HttpServletResponse.SC_OK);
-                System.out.println("Query returned an empty appointment book");
-                return;
-            }
-            PrintWriter writer = response.getWriter();
-            //  PrettyPrinter prettyPrinter = new PrettyPrinter(writer);
-
-
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, Messages.ownerHasNoAppointmentBook(owner));
+            return;
         }
+
+        var startDateTime = (getParameter(START_TIME,request));
+        var endDateTime = (getParameter(END_TIME, request));
+        AppointmentBook appbookFind = appointmentBook.findAppointmentsWithDateRange(startDateTime,endDateTime);
+        if( appbookFind.getAppointments().isEmpty()){
+           // PrintWriter pw = response.getWriter();
+           // pw.println("Appointments between range doesn't exist!");
+            //pw.flush();
+            System.out.println("Appointments between range doesn't exist!");
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else {
+            AppointmentBookPrettyPrinter prettyPrinter = new AppointmentBookPrettyPrinter();
+            String pretty = prettyPrinter.getPrettyAppointments(appointmentBook);
+            //PrintWriter pw = response.getWriter();
+            // pw.println(pretty);
+            System.out.println(pretty);
+        }
+
     }
 
     private boolean validateDates(HttpServletRequest request, HttpServletResponse response) throws IOException{

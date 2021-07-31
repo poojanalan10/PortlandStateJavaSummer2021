@@ -188,4 +188,26 @@ public class AppointmentBookServletTest {
       //verify(response).setStatus(HttpServletResponse.SC_OK);
   }
 
+    @Test
+    public void checkAppointmentForOwnerWhoasnoAppointmentBook() throws IOException, ServletException {
+        String owner = "Dave";
+        AppointmentBook appointmentBook = new AppointmentBook(owner);
+
+        AppointmentBookServlet servlet = new AppointmentBookServlet();
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        when(request.getParameter(OWNER_NAME)).thenReturn(owner);
+        HttpServletResponse query = mock(HttpServletResponse.class);
+
+
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw, true);
+
+        servlet.doGet(request, query);
+        when(query.getWriter()).thenReturn(pw);
+        System.out.println(sw.toString());
+        String textappointment = sw.toString();
+     //   assertThat(textappointment, containsString(Messages.ownerHasNoAppointmentBook(owner)));
+
+    }
+
 }

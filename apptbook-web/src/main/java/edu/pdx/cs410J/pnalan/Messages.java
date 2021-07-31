@@ -17,6 +17,11 @@ public class Messages
         return String.format( "Dictionary on server contains %d words", count );
     }
 
+    public static String formatAppointmentCount(int count )
+    {
+        return String.format( "Appointment book on server contains %d appointments", count );
+    }
+
     public static String formatDictionaryEntry(String word, String definition )
     {
         return String.format("  %s : %s", word, definition);
@@ -77,7 +82,13 @@ public class Messages
             pw.println(Messages.formatDictionaryEntry(entry.getKey(), entry.getValue()));
         }
     }
+    public static void printAppointmentEntries(PrintWriter pw, Map<String, String> dictionary) {
+        pw.println(Messages.formatWordCount(dictionary.size()));
 
+        for (Map.Entry<String, String> entry : dictionary.entrySet()) {
+            pw.println(Messages.formatDictionaryEntry(entry.getKey(), entry.getValue()));
+        }
+    }
     public static Map<String, String> parseDictionary(String content) {
         Map<String, String> map = new HashMap<>();
 

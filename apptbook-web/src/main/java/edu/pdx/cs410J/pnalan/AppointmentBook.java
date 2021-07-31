@@ -144,9 +144,6 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
     final AppointmentBook findAppointmentsWithDateRange(String start, String end) throws InvalidParameterException, ParseException {
         String aprettyappointments = null;
         AppointmentBook appointmentBook = new AppointmentBook(this.owner);
-        AppointmentBookPrettyPrinter appointmentBookPrettyPrinter = new AppointmentBookPrettyPrinter();
-
-
        var start1 = convertDateTime(start.toString());
        var end1 = convertDateTime(end.toString());
 
@@ -166,8 +163,6 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
             }
 
         }
-        //String pretty = appointmentBookPrettyPrinter.getPrettyAppointments(appointmentBook);
-        //System.out.println(pretty);
         return appointmentBook;
     }
 public static Date convertDateTime(String datestring) throws ParseException {
