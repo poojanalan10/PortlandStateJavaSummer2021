@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.equalTo;
  * An integration test for {@link Project4} that invokes its main method with
  * various arguments
  */
-@Disabled
+
 @TestMethodOrder(MethodName.class)
 class Project4IT extends InvokeMainTestCase {
     private static final String HOSTNAME = "localhost";
@@ -58,7 +58,7 @@ class Project4IT extends InvokeMainTestCase {
     void noAppointmentArgumentsAndOptions(){
         String[] args = {"-host",HOSTNAME,"-port",PORT};
         MainMethodResult result = invokeMain(Project4.class,args);
-        assertThat(result.getTextWrittenToStandardError(), containsString("The options -print and -search are not entered! Cannot process the appointment with insufficient parameters"));
+        assertThat(result.getTextWrittenToStandardError(), containsString("The options -print or -search are not entered! Cannot process the appointment with insufficient parameters"));
     }
 
     @Test

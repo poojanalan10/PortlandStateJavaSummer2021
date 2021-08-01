@@ -172,17 +172,27 @@ public class Project4 {
         PrintStream err = System.err;
         err.println("** " + message);
         err.println();
-        err.println("usage: java Project4 host port [word] [definition]");
-        err.println("  host         Host of web server");
-        err.println("  port         Port of web server");
-        err.println("  word         Word in dictionary");
-        err.println("  definition   Definition of word");
+        err.println("usage: java Project4 " +
+                "-search -host hostname -port portname <owner> <start date> <start time> <am/pm> <end date> <end time> <am/pm>" +
+                "-print -host hostname -port portname <owner> <description> <start date> <start time> <am/pm> <end date> <end time> <am/pm>" +
+                "-host hostname -port portname <owner> <description> <start date> <start time> <am/pm> <end date> <end time> <am/pm>");
+        err.println("");
+        err.println("  hostname         Host of web server");
+        err.println("  portname         Port of web server");
+        err.println("  owner         owner of the appointment book");
+        err.println("  description   description of the appointment");
+        err.println("  start date   start date of the appointment");
+        err.println("  start time   start time of the appointment");
+        err.println("  start time am/pm    am/pm of start time of the appointment");
+        err.println("  end date   end date of the appointment");
+        err.println("  end time   end time of the appointment");
+        err.println("  end time am/pm    am/pm of end time of the appointment");
         err.println();
-        err.println("This simple program posts words and their definitions");
+        err.println("This program generates an appointment book when appointments are added for a owner");
         err.println("to the server.");
-        err.println("If no definition is specified, then the word's definition");
-        err.println("is printed.");
-        err.println("If no word is specified, all dictionary entries are printed");
+        err.println("If only owner name is specified, then all the appointments of that owner are displayed");
+        err.println("If the owner name and the date ranges is given all the appointments within the date range for that owner is printed");
+        //err.println("If no word is specified, all dictionary entries are printed");
         err.println();
 
         System.exit(1);
@@ -371,7 +381,13 @@ public class Project4 {
                   "When -print is mentioned in the command line all the appointments are read and printed.\n" +
                   "Project 3\n" +
                   "When the -pretty option is entered along with a file name or a -, the appointments from an appointment book has to be dumped into a file in a formatted fashion. If a '-' is specified next to -pretty option, then the formatted content has to be printed to the console\n" +
-                  "instead of storing it in a file.";
+                  "instead of storing it in a file." +
+                  "Project 4\n"+
+                  "This project focuses on the interaction between a client and a server for a web application where all the add appointments, get appointments and remove appointments are implemented in both the client and server side. The servlet does the " +
+                  "doGet, doPost and doDelete functionalities accordingly. The input is given as follows:" +
+                  "-search -host hostname -port portname <owner> <start date> <start time> <am/pm> <end date> <end time> <am/pm>\" +\n" +
+                  "-print -host hostname -port portname <owner> <description> <start date> <start time> <am/pm> <end date> <end time> <am/pm>\" +\n" +
+                  "-host hostname -port portname <owner> <description> <start date> <start time> <am/pm> <end date> <end time> <am/pm>\"";
           System.out.println(readme);
           System.exit(0);
     }

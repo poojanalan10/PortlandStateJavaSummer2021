@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * Integration test that tests the REST calls made by {@link AppointmentBookRestClient}
  */
 
-@Disabled
+
 @TestMethodOrder(MethodName.class)
 class AppointmentBookRestClientIT {
 
