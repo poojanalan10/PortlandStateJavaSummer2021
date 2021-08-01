@@ -15,8 +15,17 @@ import java.util.regex.Pattern;
  */
 public class Project4 {
 
+    /**
+     * Missing arguments message
+     */
     public static final String MISSING_ARGS = "Missing command line arguments";
+    /**
+     * search arguments parameters
+     */
     public static final String searchArguments = "<owner> <start date> <start time> <am/pm> <end date> <end time> <am/pm>";
+    /**
+     * print arguments parameters
+     */
     public static final String printArguments = "<owner> <start date> <start time> <am/pm> <end date> <end time> <am/pm>";
 
     public static void main(String... args) {
@@ -178,6 +187,13 @@ public class Project4 {
 
         System.exit(1);
     }
+
+    /**
+     * Validates the input
+     * @param args
+     *      the input arguments
+     * @return true or false
+     */
     public static boolean validateInput(String[] args){
         int length = args.length;
         List<String> arguments = Arrays.asList(args);

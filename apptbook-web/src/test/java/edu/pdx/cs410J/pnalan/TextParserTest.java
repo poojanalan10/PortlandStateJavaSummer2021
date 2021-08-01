@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidParameterException;
 import java.util.Map;
 
 import static edu.pdx.cs410J.pnalan.AppointmentBookServlet.*;
@@ -105,7 +106,7 @@ public class TextParserTest {
 
         servlet.addAppointmentBook(appointmentBook);
         HttpServletRequest queryrequest = mock(HttpServletRequest.class);
-        when(queryrequest.getParameter("")).thenReturn(queryowner);
+        when(queryrequest.getParameter(OWNER_NAME)).thenReturn(queryowner);
         when(queryrequest.getParameter(START_TIME)).thenReturn(queryStartDateTime);
         when(queryrequest.getParameter(END_TIME)).thenReturn(queryEndDateTime);
 
@@ -122,7 +123,7 @@ public class TextParserTest {
     }
 
     @Test
-    void tetParserThrowsIOException() throws IOException, ParserException, ServletException {
+    void tetParserThrowsIndexOutOfBound() throws IOException, ParserException, ServletException {
 
         String owner = "Pooja";
         AppointmentBook appointmentBook = new AppointmentBook(owner);
@@ -163,4 +164,5 @@ public class TextParserTest {
         assertThrows(ArrayIndexOutOfBoundsException.class,parser::parse);
 
     }
+
 }

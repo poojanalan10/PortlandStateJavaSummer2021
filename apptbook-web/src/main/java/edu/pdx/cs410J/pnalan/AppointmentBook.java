@@ -59,7 +59,9 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
     /**
      * This constructor is called when owner name and an appointment book is passed when creating an object
      * @param ownerName
+     *         the name of the owner of the appointment
      * @param appointmentBooks
+     *         the list of appointmentbook
      */
     public AppointmentBook(final String ownerName,AppointmentBook... appointmentBooks){
         super();
@@ -70,8 +72,9 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
     /**
      * This method copies all the appointments in the appointment book to an array list
      * @param appointmentBooks
+     *          the appointment book
      */
-    private void copyAppointments(AppointmentBook... appointmentBooks){
+    protected void copyAppointments(AppointmentBook... appointmentBooks){
         for(var app : appointmentBooks){
             if(app != null && owner.equals(app.getOwnerName())){
                 appointments.addAll(app.getAppointments());
@@ -141,6 +144,18 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
         }
     };
 
+    /**
+     *
+     * @param start
+     *          the start of an appointment
+     * @param end
+     *          the end of an appointment
+     * @return
+     * @throws InvalidParameterException
+     *          throws invalid parameter when a parameter is invalid
+     * @throws ParseException
+     *          throws invalid parameter when a date is parsed incorrectly
+     */
     final AppointmentBook findAppointmentsWithDateRange(String start, String end) throws InvalidParameterException, ParseException {
         String aprettyappointments = null;
         AppointmentBook appointmentBook = new AppointmentBook(this.owner);
@@ -165,7 +180,17 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
         }
         return appointmentBook;
     }
-public static Date convertDateTime(String datestring) throws ParseException {
+
+    /**
+     *
+     * @param datestring
+     *          the date which needs to be converted
+     * @return date
+     *          the formatted date
+     * @throws ParseException
+     *          an exception when parse error
+     */
+    public static Date convertDateTime(String datestring) throws ParseException {
     Date date = new Date();
     DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
     date = dateFormat.parse(datestring);

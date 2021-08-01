@@ -93,6 +93,16 @@ public class Appointment extends AbstractAppointment {
     this.end = convertDateFormat(this.getEndDate() + " " + this.getEndTimeString());
 
   }
+
+  /**
+   *
+   * @param description
+   *        the description of appointment
+   * @param beginTimeString
+   *        the begin date in string format
+   * @param endTimeString
+   *        the end date in string format
+   */
   public Appointment(String description,String beginTimeString, String endTimeString) {
     this.description = description;
     this.beginTimeString = beginTimeString ;
@@ -190,11 +200,12 @@ public class Appointment extends AbstractAppointment {
   /**
    * This method returns the date and time string in a pretty format
    * @param dateString
-   * @return
-   * @throws ParserException
+   *        the datestring to convert
+   * @return prettyDate
+   *         the formatted date
    * @throws ParseException
    */
-  public String getPrettyDateTime(String dateString) throws ParserException, ParseException {
+  public String getPrettyDateTime(String dateString) throws ParseException {
     String pattern = "MM/dd/yy HH:mm a";
     DateFormat df = new SimpleDateFormat(pattern);
     Date date = null;
@@ -219,7 +230,9 @@ public class Appointment extends AbstractAppointment {
   /**
    * This method validates if the begin date entered is greater than the end date entered for a given appointment
    * @param begin
+   *        the begin date
    * @param end
+   *        the end date
    * @return a message based on the comparison
    */
   public String validateBeginLessThanEndDate(Date begin,Date end){

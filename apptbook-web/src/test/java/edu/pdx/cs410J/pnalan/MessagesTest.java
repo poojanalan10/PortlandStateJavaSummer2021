@@ -89,4 +89,8 @@ class MessagesTest {
   void malformattedDateTimeCheck(){
     assertThat(Messages.malformattedDateTime("10:345 am","07/31/2021"), containsString("Given 10:345 am is not in the correct format. Follow the format DateTime: MM/dd/yyy hh:mm am/pm"));
   }
+  @Test
+  void formatAppointmentCountCheck(){
+    assertThat(Messages.formatAppointmentCount(0),containsString("Appointment book on server contains 0 appointments"));
+  }
 }

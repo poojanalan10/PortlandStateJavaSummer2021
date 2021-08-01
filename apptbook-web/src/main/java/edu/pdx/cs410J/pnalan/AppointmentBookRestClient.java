@@ -44,6 +44,7 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
 
   /**
    * Returns all dictionary entries from the server
+   * @return Messages.parseDictionary(response.getContent())
    */
   public Map<String, String> getAllDictionaryEntries() throws IOException {
     Response response = get(this.url, Map.of());
@@ -52,6 +53,7 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
 
   /**
    * Returns the definition for the given word
+   * @return Messages.parseDictionaryEntry(content).getValue()
    */
   public String getDefinition(String word) throws IOException {
     Response response = get(this.url, Map.of("word", word));
@@ -60,21 +62,39 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
     return Messages.parseDictionaryEntry(content).getValue();
   }
 
-  public void addDictionaryEntry(String word, String definition) throws IOException {
+ /* public void addDictionaryEntry(String word, String definition) throws IOException {
     Response response = postToMyURL(Map.of("word", word, "definition", definition));
     throwExceptionIfNotOkayHttpStatus(response);
   }
+*/
 
+  /**
+   * Posts to URL
+   * @param dictionaryEntries
+   *        the entries given by user
+   * @return post(this.url, dictionaryEntries)
+   *          the posted URL
+   * @throws IOException
+   */
   @VisibleForTesting
   Response postToMyURL(Map<String, String> dictionaryEntries) throws IOException {
     return post(this.url, dictionaryEntries);
   }
-
+/**
+ * removes all dictionary entries
+ */
   public void removeAllDictionaryEntries() throws IOException {
     Response response = delete(this.url, Map.of());
     throwExceptionIfNotOkayHttpStatus(response);
   }
 
+  /**
+   * This method throws an error when HTTP is not OK
+   * @param response
+   *        the response from the server
+   * @return response
+   *        the response from the server
+   */
   private Response throwExceptionIfNotOkayHttpStatus(Response response) {
     int code = response.getCode();
     if (code != HTTP_OK) {
@@ -84,6 +104,13 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
     return response;
   }
 
+  /**
+   *
+   * @param appointmentValues
+   *        the input values
+   * @return response.getContent();
+   * @throws IOException
+   */
   public String addAppointment(final String[] appointmentValues) throws IOException {
     String owner = appointmentValues[0];
     String description =appointmentValues[1];
@@ -95,6 +122,14 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
     return response.getContent();
   }
 
+  /**
+   * Returns the found appointments
+   * @param appointmentValues
+   *        the input values
+   * @return text
+   * @throws IOException
+   * @throws ParserException
+   */
   public String findAppointment(final String[] appointmentValues) throws IOException, ParserException {
     Response response = null;
     if(appointmentValues.length == 1){
@@ -112,6 +147,15 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
     return text;
 
   }
+
+  /**
+   *
+   * @param owner
+   *        the name of the owner of the appointment
+   * @return parser.parse();
+   * @throws IOException
+   * @throws ParserException
+   */
   public AppointmentBook getAppointments(String owner) throws IOException, ParserException {
 
     Response response = get(this.url, Map.of(OWNER_NAME, owner));
@@ -126,7 +170,10 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
 
   }
 
-
+  /**
+   * Removes all appointments
+   * @throws IOException
+   */
   public void removeAllAppointmentBooks() throws IOException {
     Response response = delete(this.url, Map.of());
     throwExceptionIfNotOkayHttpStatus(response);
