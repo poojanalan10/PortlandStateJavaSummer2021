@@ -1,8 +1,5 @@
 package edu.pdx.cs410J.pnalan;
-
 import edu.pdx.cs410J.AbstractAppointment;
-import edu.pdx.cs410J.ParserException;
-
 import java.text.*;
 import java.util.concurrent.TimeUnit;
 import java.util.Date;

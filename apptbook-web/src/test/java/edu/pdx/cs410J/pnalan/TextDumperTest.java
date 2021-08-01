@@ -1,19 +1,11 @@
 package edu.pdx.cs410J.pnalan;
-
-import edu.pdx.cs410J.ParserException;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.security.InvalidParameterException;
-
 import static edu.pdx.cs410J.pnalan.AppointmentBookServlet.*;
 import static edu.pdx.cs410J.pnalan.AppointmentBookServlet.END_TIME;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

@@ -1,17 +1,10 @@
 package edu.pdx.cs410J.pnalan;
-
-import edu.pdx.cs410J.InvokeMainTestCase;
 import org.junit.jupiter.api.Test;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
+
 
 public class Project4Test /*extends InvokeMainTestCase*/{
 

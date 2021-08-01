@@ -1,7 +1,4 @@
 package edu.pdx.cs410J.pnalan;
-
-import edu.pdx.cs410J.ParserException;
-
 import java.io.PrintWriter;
 import java.text.ParseException;
 

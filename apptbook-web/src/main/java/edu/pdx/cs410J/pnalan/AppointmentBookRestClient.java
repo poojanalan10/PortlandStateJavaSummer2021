@@ -3,17 +3,9 @@ package edu.pdx.cs410J.pnalan;
 import com.google.common.annotations.VisibleForTesting;
 import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.StringReader;
 import java.util.Map;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
-import static edu.pdx.cs410J.pnalan.AppointmentBookServlet.*;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 /**

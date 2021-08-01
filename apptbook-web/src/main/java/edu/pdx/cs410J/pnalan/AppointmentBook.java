@@ -1,8 +1,5 @@
 package edu.pdx.cs410J.pnalan;
 import edu.pdx.cs410J.AbstractAppointmentBook;
-import edu.pdx.cs410J.AbstractAppointment;
-import edu.pdx.cs410J.*;
-
 import java.security.InvalidParameterException;
 import java.text.DateFormat;
 import java.text.ParseException;

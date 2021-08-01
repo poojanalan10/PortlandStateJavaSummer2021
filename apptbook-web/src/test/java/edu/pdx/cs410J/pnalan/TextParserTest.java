@@ -1,26 +1,17 @@
 package edu.pdx.cs410J.pnalan;
 import edu.pdx.cs410J.ParserException;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.security.InvalidParameterException;
-import java.util.Map;
-
 import static edu.pdx.cs410J.pnalan.AppointmentBookServlet.*;
 import static edu.pdx.cs410J.pnalan.AppointmentBookServlet.END_TIME;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
-import edu.pdx.cs410J.web.HttpRequestHelper;
-import edu.pdx.cs410J.web.HttpRequestHelper.Response;
+
 
 
 public class TextParserTest {
