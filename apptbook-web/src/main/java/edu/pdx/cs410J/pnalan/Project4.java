@@ -1,9 +1,6 @@
 package edu.pdx.cs410J.pnalan;
 
 import edu.pdx.cs410J.ParserException;
-import org.checkerframework.checker.units.qual.A;
-
-import javax.mail.util.ByteArrayDataSource;
 import java.io.*;
 import java.net.ConnectException;
 import java.util.*;
