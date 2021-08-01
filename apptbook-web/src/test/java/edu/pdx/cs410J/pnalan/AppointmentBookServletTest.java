@@ -1,21 +1,20 @@
 package edu.pdx.cs410J.pnalan;
 
-import edu.pdx.cs410J.ParserException;
-import org.apache.groovy.json.internal.IO;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
-import org.mockito.ArgumentCaptor;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.security.InvalidParameterException;
-import java.security.Principal;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
 
 import static edu.pdx.cs410J.pnalan.AppointmentBookServlet.*;
 import static org.hamcrest.MatcherAssert.assertThat;
