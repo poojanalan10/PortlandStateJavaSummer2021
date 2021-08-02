@@ -66,7 +66,7 @@ class AppointmentBookRestClientIT {
     }
 
 
-    @Test
+   /* @Test
     public void testNonExistantAppointmentBookThrowsError() throws ParserException, IOException {
         AppointmentBookRestClient client = newAppointmentBookRestClient();
         try {
@@ -77,7 +77,7 @@ class AppointmentBookRestClientIT {
             assertThat(ex.getHttpStatusCode(),equalTo(HttpURLConnection.HTTP_NOT_FOUND));
         }
 
-    }
+    }*/
     @Test
     public void addAppointmentAndGetAllAppointments() throws ParserException, IOException {
         AppointmentBookRestClient client = newAppointmentBookRestClient();
@@ -129,6 +129,18 @@ class AppointmentBookRestClientIT {
         String appointments = client.findAppointment(queryargsnotfound);
         System.out.println(appointments);
         assertThat(appointments, equalTo("Appointments between range doesn't exist!"));
+    }
+    @Test
+    public void findAppointmentsForOwnerWhoHasNoAppointments() throws IOException, ParserException {
+        AppointmentBookRestClient client = newAppointmentBookRestClient();
+        client.removeAllAppointmentBooks();
+        String[] queryargsnotfound = {queryownernotfound,queryStartDateTimenotfound,queryEndDateTimenotfound};
+        try {
+            String appointments = client.findAppointment(queryargsnotfound);
+        }
+        catch (AppointmentBookRestClient.RestException ex){
+            assertThat(ex.getHttpStatusCode(),equalTo(HttpURLConnection.HTTP_NOT_FOUND));
+        }
     }
 
     @Test

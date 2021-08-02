@@ -56,7 +56,6 @@ public class AppointmentBookServlet extends HttpServlet
         String start = getParameter(START_TIME,request);
         String end = getParameter(END_TIME,request);
         if(owner == null){
-           // missingRequiredParameter(response, OWNER_NAME);
             String message = Messages.missingRequiredParameter(OWNER_NAME);
             response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED, message);
             throw new InvalidParameterException(message);
@@ -163,34 +162,17 @@ public class AppointmentBookServlet extends HttpServlet
         throw new InvalidParameterException(message);
     }
 
-    /**
-     * Writes the definition of the given word to the HTTP response.
-     *
-     * The text of the message is formatted with
-     * {@link Messages#formatDictionaryEntry(String, String)}
-     */
-  /*  private void writeDefinition(String word, HttpServletResponse response) throws IOException {
-        String definition = this.dictionary.get(word);
-
-        if (definition == null) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-        } else {
-            PrintWriter pw = response.getWriter();
-            pw.println(Messages.formatDictionaryEntry(word, definition));
-
-            pw.flush();
-
-            response.setStatus(HttpServletResponse.SC_OK);
-        }
-    }
-
-*/
-
     private void writeAppointments(String owner, HttpServletResponse response) throws IOException {
         AppointmentBook appointmentBook = this.books.get(owner);
         if(appointmentBook == null){
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            System.err.println(Messages.ownerHasNoAppointmentBook(owner));
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, Messages.ownerHasNoAppointmentBook(owner));
+            String message = Messages.ownerHasNoAppointmentBook(owner);
+            PrintWriter pw = response.getWriter();
+            pw.println(message);
+            pw.flush();
+            return;
           //  throw new IllegalArgumentException("Appointment book for owner"+ owner + " is empty!");
         }else{
             PrintWriter pw = response.getWriter();
@@ -203,55 +185,47 @@ public class AppointmentBookServlet extends HttpServlet
 
     }
 
-    /**
-     * Writes all of the dictionary entries to the HTTP response.
-     *
-     * The text of the message is formatted with
-     * {@link Messages#formatDictionaryEntry(String, String)}
-     */
-   /* private void writeAllDictionaryEntries(HttpServletResponse response ) throws IOException
-    {
-        PrintWriter pw = response.getWriter();
-        Messages.formatDictionaryEntries(pw, dictionary);
-
-        pw.flush();
-
-        response.setStatus( HttpServletResponse.SC_OK );
-    }
-*/
     private void findAppointments(HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException{
         String owner = getParameter(OWNER_NAME, request);
         AppointmentBook appointmentBook = books.get(owner);
         if(appointmentBook == null){
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            System.err.println(Messages.ownerHasNoAppointmentBook(owner));
             response.sendError(HttpServletResponse.SC_NOT_FOUND, Messages.ownerHasNoAppointmentBook(owner));
+            String message = Messages.ownerHasNoAppointmentBook(owner);
+            PrintWriter pw = response.getWriter();
+            pw.println(message);
+            pw.flush();
             return;
         }
-
         var startDateTime = (getParameter(START_TIME,request));
         var endDateTime = (getParameter(END_TIME, request));
-     //   try{
-            AppointmentBook appbookFind = appointmentBook.findAppointmentsWithDateRange(startDateTime,endDateTime);
-            if( appbookFind.getAppointments().isEmpty()){
+        try {
+            AppointmentBook appbookFind = appointmentBook.findAppointmentsWithDateRange(startDateTime, endDateTime);
+            if (appbookFind.getAppointments().isEmpty()) {
                 PrintWriter pw = response.getWriter();
                 pw.println("Appointments between range doesn't exist!");
                 pw.flush();
                 response.setStatus(HttpServletResponse.SC_OK);
-            }
-            else {
+            } else {
                 PrintWriter pw = response.getWriter();
                 TextDumper dumper = new TextDumper(pw);
                 dumper.dump(appbookFind);
                 pw.flush();
                 response.setStatus(HttpServletResponse.SC_OK);
 
-
             }
-
-      //  }
-      //  catch (InvalidParameterException e){
-        //    response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
-        //}
-
+        }
+        catch (ParseException e){
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            System.err.println(Messages.malformattedDateTime(startDateTime,endDateTime));
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, Messages.malformattedDateTime(startDateTime,endDateTime));
+            String message = Messages.malformattedDateTime(startDateTime,endDateTime);
+            PrintWriter pw = response.getWriter();
+            pw.println(message);
+            pw.flush();
+            return;
+        }
     }
 
 /*

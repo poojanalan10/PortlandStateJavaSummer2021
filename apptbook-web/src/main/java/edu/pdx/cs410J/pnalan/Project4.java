@@ -35,6 +35,7 @@ public class Project4 {
                 String hostname = null;
                 String portString = null;
                 boolean print = false;
+                boolean search = false;
                 int port;
                 String owner = null;
                 String description = null;
@@ -59,6 +60,10 @@ public class Project4 {
                     if (Arrays.asList(args).contains("-port")) {
                         list.remove("-port");
                     }
+                    if(Arrays.asList(args).contains("-search")){
+                        list.remove("-search");
+                        search = true;
+                    }
                     for (String arg : list) {
                         if (hostname == null) {
                             hostname = arg;
@@ -66,7 +71,7 @@ public class Project4 {
                             portString = arg;
                         } else if (owner == null) {
                             owner = arg;
-                        } else if (description == null) {
+                        } else if (description == null && !Arrays.asList(args).contains("-search")) {
                             description = arg;
                         } else if (startDate == null) {
                             startDate = arg;
@@ -105,8 +110,8 @@ public class Project4 {
                             System.out.println(Messages.formatAppointmentCount(0));
                             System.exit(1);
                         }
-                        if (list.contains("-search")) {
-                            list.removeAll(Collections.singleton("-search"));
+                        if (search) {
+                            //list.removeAll(Collections.singleton("-search"));
                             //String appointments = client.findAppointment(new String[]{list.get(0),  list.get(1) + " " + list.get(2) + " " + list.get(3), list.get(4) + " " +list.get(5) + " " + list.get(6)});
                             if (list.size() == 1) {
                                 System.out.println(client.findAppointment(new String[]{list.get(0)}));

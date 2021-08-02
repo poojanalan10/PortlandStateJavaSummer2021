@@ -132,7 +132,11 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
               START_TIME, appointmentValues[1],
               END_TIME, appointmentValues[2]));
     }
-    throwExceptionIfNotOkayHttpStatus(response);
+    if(response.getContent().contains("Not Found")){
+      System.err.println(Messages.ownerHasNoAppointmentBook(appointmentValues[0]));
+      throwExceptionIfNotOkayHttpStatus(response);
+     // System.exit(1);
+    }
     String text = response.getContent();
 
 

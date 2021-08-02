@@ -196,17 +196,33 @@ public class AppointmentBookServletTest {
         AppointmentBookServlet servlet = new AppointmentBookServlet();
         HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getParameter(OWNER_NAME)).thenReturn(owner);
-        HttpServletResponse query = mock(HttpServletResponse.class);
-
-
+        HttpServletResponse response = mock(HttpServletResponse.class);
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw, true);
+        when(response.getWriter()).thenReturn(pw);
+        servlet.doGet(request, response);
+        verify(response).setStatus(HttpServletResponse.SC_NOT_FOUND);
+        assertThat(sw.toString(), equalTo("'Dave' does not have an appointment book\n"));
 
-        servlet.doGet(request, query);
-        when(query.getWriter()).thenReturn(pw);
-        System.out.println(sw.toString());
-        String textappointment = sw.toString();
-     //   assertThat(textappointment, containsString(Messages.ownerHasNoAppointmentBook(owner)));
+    }
+    @Test
+    public void checkAppointmentForOwnerWhoasnoAppointmentBookGivenDateRange() throws IOException, ServletException {
+        String owner = "Project4";
+        AppointmentBook appointmentBook = new AppointmentBook(owner);
+
+        AppointmentBookServlet servlet = new AppointmentBookServlet();
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        when(request.getParameter(OWNER_NAME)).thenReturn(owner);
+        when(request.getParameter(START_TIME)).thenReturn("01/08/2021 8;00 am");
+        when(request.getParameter(END_TIME)).thenReturn("01/08/2021 8:02 am");
+
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw, true);
+        when(response.getWriter()).thenReturn(pw);
+        servlet.doGet(request, response);
+        verify(response).setStatus(HttpServletResponse.SC_NOT_FOUND);
+        assertThat(sw.toString(), equalTo("'Project4' does not have an appointment book\n"));
 
     }
 
@@ -372,12 +388,17 @@ public class AppointmentBookServletTest {
         when(queryrequest.getParameter(START_TIME)).thenReturn("10-01-2020 1:00 am");
         when(queryrequest.getParameter(END_TIME)).thenReturn(startDateTime);
         HttpServletResponse queryresponse = mock(HttpServletResponse.class);
-
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw, true);
+        when(queryresponse.getWriter()).thenReturn(pw);
         try {
             servlet.doGet(queryrequest, queryresponse);
+            String textappointment = sw.toString().replaceAll("[\\n\\t]","");
+            assertThat(textappointment,containsString("Given 10-01-2020 1:00 am is not in the correct format. Follow the format DateTime: MM/dd/yyy hh:mm am/pm"));
         }
         catch (ServletException e) {
             assertThat(e.getStackTrace(),equalTo("java.text.ParseException: Unparseable date: \"10-01-2020 1:00 am\""));
+
         }
 
     }
