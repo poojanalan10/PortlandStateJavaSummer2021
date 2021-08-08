@@ -17,4 +17,6 @@
     <string name="owner_name">owner_name</string>
     <string name="title_activity_search_for_appointments">SearchForAppointmentsActivity</string>
     <string name="title_activity_appointments_in_given_date_range">title_activity_appointments_in_given_range</string>
+    <string name="title_activity_read_me">ReadMeActivity</string>
+    <string name="view_appointments_within_given_dates">view appointments within given dates</string>
 </resources>

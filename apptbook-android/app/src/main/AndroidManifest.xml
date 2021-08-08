@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppointmentBook">
         <activity
+            android:name=".ReadMeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_read_me"
+            android:theme="@style/Theme.AppointmentBook.NoActionBar" />
+        <activity
             android:name=".SearchForAppointmentsActivity"
             android:exported="true"
             android:label="@string/title_activity_search_for_appointments"

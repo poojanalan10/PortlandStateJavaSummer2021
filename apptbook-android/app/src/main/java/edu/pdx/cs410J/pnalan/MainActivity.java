@@ -69,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-      /*  Button button = (Button) findViewById(R.id.add_appointment);
-        button.setOnClickListener(new View.OnClickListener() {
+       button = (Button) findViewById(R.id.launch_read_me);
+       button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddAppointment.class);
+                Intent intent = new Intent(MainActivity.this, ReadMeActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
     }
 
     @Override
