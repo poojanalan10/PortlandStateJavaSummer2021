@@ -10,6 +10,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppointmentBook">
         <activity
+            android:name=".SearchForAppointmentsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_search_for_appointments"
+            android:theme="@style/Theme.AppointmentBook.NoActionBar" />
+        <activity
+            android:name=".appointmentsInGivenDateRangeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_appointments_in_given_date_range"
+            android:theme="@style/Theme.AppointmentBook.NoActionBar" />
+        <activity
+            android:name=".GetAppointments"
+            android:exported="true"
+            android:label="@string/title_activity_get_appointments"
+            android:theme="@style/Theme.AppointmentBook.NoActionBar" />
+        <activity
+            android:name=".ViewAppointmentsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_view_appointments"
+            android:theme="@style/Theme.AppointmentBook.NoActionBar" />
+        <activity
+            android:name=".AddAppointment"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"

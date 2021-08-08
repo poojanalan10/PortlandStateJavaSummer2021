@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".appointmentsInGivenDateRangeActivity">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="302dp"
+        android:layout_height="26dp"
+        android:text="APPOINTMENTS IN GIVEN DATE RANGE ARE"
+        android:textColor="#191818"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/appointmentsInGivenRangeSearchResult"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/appointmentsInGivenRangeSearchResult"
+        android:layout_width="297dp"
+        android:layout_height="453dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="79dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+

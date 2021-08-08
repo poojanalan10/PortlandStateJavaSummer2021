@@ -7,6 +7,14 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_first_fragment">Appointment Book</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="add_appointment">add appointment</string>
+    <string name="title_activity_view_appointments">ViewAppointments</string>
+    <string name="enter_the_owner_name_appointment_book_to_pretty_print_their_appointment_book">enter_the_owner_name_appointment_book_to_pretty_print_their_appointment_book</string>
+    <string name="title_activity_get_appointments">GetAppointments</string>
+    <string name="view_appointments">View Appointments</string>
+    <string name="owner_name">owner_name</string>
+    <string name="title_activity_search_for_appointments">SearchForAppointmentsActivity</string>
+    <string name="title_activity_appointments_in_given_date_range">title_activity_appointments_in_given_range</string>
 </resources>

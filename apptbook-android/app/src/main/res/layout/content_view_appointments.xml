@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <TextView
+        android:id="@+id/viewAppointmentBookLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VIEW AN APPOINTMENT BOOK"
+        android:textColor="#101010"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.037" />
+
+    <TextView
+        android:id="@+id/viewownerlabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/owner_name"
+        android:textColor="#191818"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewAppointmentBookLabel"
+        app:layout_constraintVertical_bias="0.125" />
+
+
+    <EditText
+        android:id="@+id/viewowneredit"
+        android:layout_width="112dp"
+        android:layout_height="45dp"
+        android:autoText="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.316"
+        app:layout_constraintStart_toEndOf="@+id/viewownerlabel"
+        app:layout_constraintTop_toBottomOf="@+id/viewAppointmentBookLabel"
+        app:layout_constraintVertical_bias="0.102" />
+
+    <Button
+        android:id="@+id/view_appointment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Appointment Book"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewowneredit"
+        app:layout_constraintVertical_bias="0.372" />
+
+    <TextView
+        android:id="@+id/viewDescriptionTextView"
+        android:layout_width="355dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="12dp"
+        android:text="Enter the owner name appointment book to pretty print their appointment book"
+        android:textColor="#7E7878"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.325"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewAppointmentBookLabel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
