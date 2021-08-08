@@ -2,6 +2,8 @@ package edu.pdx.cs410J.pnalan;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -58,6 +60,13 @@ public class appointmentsInGivenDateRangeActivity extends AppCompatActivity {
                             + " ------------------------------------------------------------------------------------------------\n\n";
                 }
                 searchResultTextView.setText(heading + "" +appointments);
+
+                Button backtoMain = findViewById(R.id.returntomain);
+                backtoMain.setOnClickListener(view -> sendNavBackToMain());
+
+                Button backtoSearch = findViewById(R.id.backbutton);
+                backtoSearch.setOnClickListener(view -> backToPreviousPage());
+
             } catch (FileNotFoundException e) {
                 openDialogBox("ERROR", "File for the owner doesn't exist or is corrupted!");
                 e.printStackTrace();
@@ -65,6 +74,15 @@ public class appointmentsInGivenDateRangeActivity extends AppCompatActivity {
                 openDialogBox("ERROR", "An unexpected error has occurred!");
                 e.printStackTrace();
             }
+        }
+        public void backToPreviousPage(){
+            Intent intent = new Intent(this,SearchForAppointmentsActivity.class);
+            startActivity(intent);
+
+        }
+        public void sendNavBackToMain(){
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
         }
         public void openDialogBox(String title, String message){
          DialogBox dialog = new DialogBox(title, message);

@@ -19,4 +19,8 @@
     <string name="title_activity_appointments_in_given_date_range">title_activity_appointments_in_given_range</string>
     <string name="title_activity_read_me">ReadMeActivity</string>
     <string name="view_appointments_within_given_dates">view appointments within given dates</string>
+    <string name="back_to_main_appointment_book">back to main appointment book</string>
+    <string name="back">back</string>
+    <string name="back_to_appointment_search">back to appointment search</string>
+    <string name="back_to_appointments_search">back to appointments search</string>
 </resources>

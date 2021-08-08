@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
@@ -42,7 +43,16 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-         button = findViewById(R.id.launch_add_appointment);
+        button = (Button) findViewById(R.id.launch_read_me);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ReadMeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        button = findViewById(R.id.launch_add_appointment);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,14 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-       button = (Button) findViewById(R.id.launch_read_me);
-       button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ReadMeActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
 
     @Override

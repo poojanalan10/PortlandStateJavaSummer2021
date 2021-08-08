@@ -2,6 +2,10 @@ package edu.pdx.cs410J.pnalan;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.View;
+import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -38,8 +42,13 @@ public class GetAppointments extends AppCompatActivity {
             else{
                 viewResult.setText("\n\n"+"Owner: "+owner_name + "\n\n"
                         + "Description, Start date and time, end date and time, Appointment duration in minutes"+"\n"+
-                        "-----------------------------------------------------------------------------------\n"+ stringBuilder.toString());
+                        "-----------------------------------------------------------------------\n"+ stringBuilder.toString());
             }
+            Button backbutton = findViewById(R.id.backtoviewappointments);
+            backbutton.setOnClickListener(view -> backToPreviousPage());
+            Button backtomainbutton = findViewById(R.id.backtomainmenu);
+            backtomainbutton.setOnClickListener(view -> sendNavBackToMain());
+
         } catch (FileNotFoundException e) {
             openDialogBox("File not found or corrupted for the given owner name!", "No appointments exist for "+owner_name);
             e.printStackTrace();
@@ -47,6 +56,15 @@ public class GetAppointments extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+    public void backToPreviousPage(){
+        Intent intent = new Intent(this,ViewAppointmentsActivity.class);
+        startActivity(intent);
+
+    }
+    public void sendNavBackToMain(){
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
     public void openDialogBox(String title_of_dialog, String message){
         DialogBox dialog = new DialogBox(title_of_dialog, message);

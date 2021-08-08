@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".appointmentsInGivenDateRangeActivity">
+
     <TextView
         android:id="@+id/appointmentsInGivenRangeSearchResultStaticText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="APPOINTMENTS IN THE GIVEN DATE RANGE"
-        android:textSize="19sp"
         android:textColor="#101010"
+        android:textSize="19sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,18 +20,59 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.037" />
-    <TextView
-        android:id="@+id/appointmentsInGivenRangeSearchResult"
+
+    <ScrollView
+        android:id="@+id/scrollviewappointments"
+        android:layout_width="446dp"
+        android:layout_height="580dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="54dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/appointmentsInGivenRangeSearchResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.471"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.037" />
+        </LinearLayout>
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/returntomain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textColor="#101010"
+        android:text="@string/back_to_main_appointment_book"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintHorizontal_bias="0.992"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/backbutton"
+        android:layout_width="294dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="544dp"
+        android:text="@string/back_to_appointments_search"
+        app:layout_constraintBottom_toTopOf="@+id/returntomain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.037" />
+        app:layout_constraintTop_toBottomOf="@+id/appointmentsInGivenRangeSearchResultStaticText"
+        app:layout_constraintVertical_bias="0.609" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
