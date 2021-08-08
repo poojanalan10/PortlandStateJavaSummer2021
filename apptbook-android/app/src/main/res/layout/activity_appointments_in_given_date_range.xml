@@ -5,25 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".appointmentsInGivenDateRangeActivity">
-
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="302dp"
-        android:layout_height="26dp"
-        android:text="APPOINTMENTS IN GIVEN DATE RANGE ARE"
-        android:textColor="#191818"
+        android:id="@+id/appointmentsInGivenRangeSearchResultStaticText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="APPOINTMENTS IN THE GIVEN DATE RANGE"
+        android:textSize="19sp"
+        android:textColor="#101010"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/appointmentsInGivenRangeSearchResult"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.037" />
     <TextView
         android:id="@+id/appointmentsInGivenRangeSearchResult"
-        android:layout_width="297dp"
-        android:layout_height="453dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="#101010"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="79dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.037" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

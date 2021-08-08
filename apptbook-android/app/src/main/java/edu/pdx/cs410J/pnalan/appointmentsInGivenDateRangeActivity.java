@@ -1,11 +1,8 @@
 package edu.pdx.cs410J.pnalan;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,82 +15,74 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 public class appointmentsInGivenDateRangeActivity extends AppCompatActivity {
     TextView searchResultTextView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_appointments_in_given_date_range);
             searchResultTextView = findViewById(R.id.appointmentsInGivenRangeSearchResult);
             Intent intent = getIntent();
-            String owner = intent.getStringExtra("value_key");
-            String startInput = intent.getStringExtra("start_key");
-            Date startTime = convertDateTime(startInput);
-            String endInput = intent.getStringExtra("end_key");
-            Date endTime = convertDateTime(endInput);
-            String fileName = owner+".txt";
-
+            String owner_search = intent.getStringExtra("owner_name_search");
+            String start_search = intent.getStringExtra("start_datetime_search");
+            String end_search = intent.getStringExtra("end_datetime_search");
+            Date startDateTime = convertDateTime(start_search);
+            Date endDateTime = convertDateTime(end_search);
             FileInputStream fileInputStream = null;
             try {
+                String fileName = owner_search+".txt";
                 fileInputStream = openFileInput(fileName);
                 InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
-                BufferedReader fileData = new BufferedReader(inputStreamReader);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 final List<String> listOfAppointments = new ArrayList<>();
-                String strCurrentLine;
-                String contentHead = "The appointments between "+startInput+" and "+endInput+" for owner "+owner;
-                String content = "";
-                while((strCurrentLine = fileData.readLine()) != null){
-                    listOfAppointments.add(strCurrentLine);
+                String heading = "\n\n\n   The appointments between "+start_search+" and "+end_search+" for owner "+owner_search;
+                String appointments = "";
+                String current;
+                String date_read;
+                while((current = bufferedReader.readLine()) != null){
+                    listOfAppointments.add(current);
                 }
                 for(String appointment: listOfAppointments) {
-                    String[] args = appointment.split(", ");
-                    System.out.println(args.length);
-                    String datefile = args[1];
-                    Date dateFromFile = convertDateTime(datefile);
-                    if((dateFromFile.after(startTime) || startTime.equals(dateFromFile)) && (dateFromFile.before(endTime) || endTime.equals(dateFromFile))) {
-                        content += appointment + "\n\n";
+                    String[] args = appointment.split(",");
+                    date_read = args[1];
+                    Date convertedDateTime = convertDateTime(date_read);
+                    if((convertedDateTime.after(startDateTime) || convertedDateTime.equals(startDateTime)) && (convertedDateTime.before(endDateTime) || convertedDateTime.equals(endDateTime))) {
+                        appointments += appointment + "\n\n";
                     }
                 }
-                if(content.length() == 0){
-                    content = "\n\nNo appointments found in the given date range";
+                if(appointments.length() == 0){
+                    appointments = "\n\n    No appointments found in the given date range "+ startDateTime + " and "+ endDateTime;
                 }
                 else{
-                    contentHead += "\n\nDescription,StartDate, EndDate, Appointment Duration\n"
-                            + "-----------------------------------------------------------------------------------\n\n";
+                    heading += "\n\n\n    Description,StartDate, EndDate, Appointment Duration\n\n"
+                            + " ------------------------------------------------------------------------------------------------\n\n";
                 }
-                searchResultTextView.setText(contentHead + "" +content);
+                searchResultTextView.setText(heading + "" +appointments);
             } catch (FileNotFoundException e) {
-                openDialogBox("ERROR", "File Does not exist");
+                openDialogBox("ERROR", "File for the owner doesn't exist or is corrupted!");
                 e.printStackTrace();
             }  catch (IOException e) {
                 openDialogBox("ERROR", "An unexpected error has occurred!");
                 e.printStackTrace();
             }
         }
-
+        public void openDialogBox(String title, String message){
+         DialogBox dialog = new DialogBox(title, message);
+         dialog.show(getSupportFragmentManager(), "Dialog");
+         }
         public Date convertDateTime(String datestring) {
             try {
-                SimpleDateFormat formatter1 = new SimpleDateFormat("MM/dd/yy hh:mm a");
-                Date date1 = formatter1.parse(datestring);
-                return date1;
-            /*    Date date = new Date();
+                Date date = new Date();
                 DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
                 date = dateFormat.parse(datestring);
                 String strDate = DateFormat.getDateInstance(DateFormat.SHORT).format(date);
                 String strTime = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
                 date = dateFormat.parse(strDate + " " + strTime, new ParsePosition(0));
-                return date;*/
+                return date;
             } catch (ParseException e){
-                openDialogBox("DATE PARSE ERROR","Date time cannot be parsed :" + datestring);
+                openDialogBox("DATE PARSE ERROR","The given date time cannot be parsed " + datestring + " Enter date and time in the format "
+                        + "MM/dd/yyyy hh:mm a");
                 return null;
             }
         }
-
-        public void openDialogBox(String title, String message){
-            DialogBox dialog = new DialogBox(title, message);
-            dialog.show(getSupportFragmentManager(), "Dialog");
-        }
-
 }

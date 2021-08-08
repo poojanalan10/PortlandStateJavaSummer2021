@@ -150,9 +150,9 @@ public class SearchForAppointmentsActivity extends AppCompatActivity {
         String customerNameInput = ownerName_et.getText().toString().trim();
         String startInput = start_et.getText().toString().trim();
         String endInput = end_et.getText().toString().trim();
-        intent.putExtra("value_key", customerNameInput);
-        intent.putExtra("start_key", startInput);
-        intent.putExtra("end_key", endInput);
+        intent.putExtra("owner_name_search", customerNameInput);
+        intent.putExtra("start_datetime_search", startInput);
+        intent.putExtra("end_datetime_search", endInput);
         startActivity(intent);
     }
 
