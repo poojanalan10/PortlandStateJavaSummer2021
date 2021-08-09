@@ -2,10 +2,7 @@ package edu.pdx.cs410J.pnalan;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -19,14 +16,13 @@ public class GetAppointments extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_appointments);
-        viewResult = (TextView) findViewById(R.id.viewAppointmentBookLabel);
+        viewResult = findViewById(R.id.viewAppointmentBookLabel);
         Intent intent = getIntent();
         String owner_name = null;
         try {
             owner_name = intent.getStringExtra("owner_name");
             String fileName = owner_name + ".txt";
-            FileInputStream fileInputStream = null;
-            fileInputStream = openFileInput(fileName);
+            FileInputStream fileInputStream = openFileInput(fileName);
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             StringBuilder stringBuilder = new StringBuilder();
